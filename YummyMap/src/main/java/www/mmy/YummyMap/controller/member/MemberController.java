@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
-import www.mmy.YummyMap.dao.MemberDAO;
+import www.mmy.YummyMap.Service.member.MemberService;
 import www.mmy.YummyMap.vo.MemberVO;
 
 @RequestMapping("/member")
@@ -16,7 +16,7 @@ import www.mmy.YummyMap.vo.MemberVO;
 public class MemberController {
 	
 	@Autowired
-	MemberDAO memberDao;
+	MemberService memberService;
 	
 	@RequestMapping("/loginView.mmy")
 	public String looginView() {
@@ -26,14 +26,23 @@ public class MemberController {
 	
 	@RequestMapping("/loginProcess.mmy")
 	public ModelAndView loginProcess(MemberVO memberVo, ModelAndView mv, RedirectView rv, HttpSession session) {
-		if((String)session.getAttribute("SID") != null)
-			rv.setUrl("/YummyMap/mainList.mmy");
-		int resultCnt = memberDao.loginCheck(memberVo);
-		if(resultCnt == 1) {
-			rv.setUrl("/YummyMap/mainList.mmy");
+		if(memberService.isUserLogin(session)) {
+			rv.setUrl("/YummyMap/main.mmy");
 		} else {
-			rv.setUrl("/YummyMap/member/loginView.mmy");
+			int resultCnt = memberService.loginCheck(memberVo, session);
+			if(resultCnt == 1) {
+				rv.setUrl("/YummyMap/main.mmy");
+			} else {
+				rv.setUrl("/YummyMap/member/loginView.mmy");
+			}
 		}
+		mv.setView(rv);
+		return mv;
+	}
+	@RequestMapping("/logoutProcess.mmy")
+	public ModelAndView logoutProcess(ModelAndView mv, RedirectView rv, HttpSession session) {
+		memberService.logoutProcess(session);
+		rv.setUrl("/YummyMap/main.mmy");
 		mv.setView(rv);
 		return mv;
 	}

@@ -1,0 +1,219 @@
+@charset "UTF-8";
+
+body,input,textarea,select,html,a,p,div {
+    font-family: '나눔고딕', NanumGothic, -apple-system, BlinkMacSystemFont, Apple SD Gothic Neo, '맑은 고딕', Malgun Gothic, '돋움', dotum, sans-serif;
+}
+a, a:hover, a:link, a:visited{
+    text-decoration: none !important;
+    color: white !important;
+}
+.dnone{
+    display: none;
+}
+.topNav{
+    position: fixed;
+    background-color: rgb(255, 128, 89);
+    width: 100%;
+    height: 120px;
+    z-index :99999;
+}
+.topNavLogo{
+    position: relative;
+    top: 30px;
+    left: 60px;
+}
+.topNavLogo a{
+    color: white;
+    font-size: 25pt !important;
+    font-weight: bold;
+}
+.topNavItem{
+    position: absolute;
+    top: 5px;
+    left: 1285px;
+    width: 200px;
+    padding: 0px;
+}
+.topNavItem-icon{
+    font-size: 18pt;
+}
+.topNavItem-font{
+    font-size: 10pt;
+}
+ul{
+    list-style: none;
+}
+.topNavItem li{
+    padding-left: 20px;
+}
+
+/*leftNav*/
+.leftNav{
+    position: fixed;
+    top: 119px;
+    width: 350px;
+    height: 100%;
+    background-color: white;
+}
+.leftNavSearch{
+    width: 270px;
+    height: 40px;
+    margin-left: 60px;
+    margin-top: 30px;
+    border: 1.5px solid rgb(255, 128, 89);
+}
+.leftNavSearch p{
+    width: 10%;
+    height: 100%;
+    padding-top: 5px;
+}
+.leftNavSearch input{
+    width: 90%;
+    height: 90%;
+    padding-left: 10px;
+    border: 0px;
+}
+.leftNavSearch input:focus{
+    outline: none;
+}
+.leftNavTitle{
+    width: 270px;
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 15pt;
+    margin-left: 60px;
+    margin-top: 20px;
+}
+
+
+/* banner */
+.gameBanner{
+    position: fixed;
+    width: 160px;
+    height: 50px;
+    top: 150px;
+    left: 1300px;
+    background-color: rgba(0, 0, 0, 0.05);
+}
+.boardBanner{
+    position: fixed;
+    width: 160px;
+    height: 50px;
+    top: 210px;
+    left: 1300px;
+    background-color: rgba(0, 0, 0, 0.05);
+}
+.gameBanner i, .gameBanner p, .boardBanner i, .boardBanner p{
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 13pt;
+}
+.gameBannerItem{
+    padding-top: 10px;
+    padding-left: 30px;
+}
+
+/*itemBody*/
+.itemBody{
+    padding-top: 120px;
+    padding-left: 350px;
+    width: 1300px;
+    height: 100%;
+}
+.itemBody-categoryBox{
+    width: 900px;
+    height: 68px;
+    margin-top: 25px;
+    padding-left: 45px;
+    padding-right: 45px;
+}
+.category{
+    padding-top: 12px;
+}
+.category div{
+    font-size: 12pt;
+    font-weight: 500;
+    cursor: pointer;
+}
+.selBox {
+    font-size: 12pt;
+    font-weight: 500;
+    border: 0;
+    cursor: pointer;
+}
+.arBox{
+    padding-left: 7px;
+    padding-top: 2px;
+}
+.ar{
+    font-size: 11pt !important;
+    color: rgba(0, 0, 0, 0.9);
+}
+.itemBody-subTitle-msg{
+    color: rgba(0, 0, 0, 0.7);
+    font-size: 14pt;
+    padding-top: 30px;
+    padding-left: 45px;
+}
+.itemBody-row{
+    margin-top: 26px;
+}
+.itemBody-item{
+    display: inline-block;
+    width: 252px;
+    height: 260px;
+    margin-left: 45px;
+}
+.itemBody-img{
+    width: 250px;
+    height: 200px;
+}
+.itemBody-img img{
+    width: 100%;
+    height: 100%;
+}
+.itemBody-info p{
+    height: 30px;
+    font-size: 10pt;
+    margin: 0;
+    padding-left: 10px;
+}
+.itemBody-info-name{
+    font-weight: 900;
+    color: rgba(0, 0, 0, 0.8);
+    padding-top: 5px;
+}
+.itemBody-info-star{
+    width: 200px ;
+    color: rgba(0, 0, 0, 0.2);
+}
+.itemBody-info-review{
+    font-size: 9pt !important;
+}
+.chartFrame{
+    position: relative;
+    top: 0px;
+    left: 330px;
+    width: 180px;
+    height: 160px;
+    background-color: white;
+}
+.la label {
+    font-size: 10pt;
+}
+.la input{
+    width: 10px;
+}
+#chartModalInput{
+    border: 0;
+    font-size: 10pt;
+}
+.chartModalBtnBox{
+    margin-top: 80px;
+    padding-left: 36px;
+}
+#chartModalBtn{
+    font-size: 8pt;
+    background-color: rgb(0, 0, 0);
+    border: 0;
+    color: white;
+    border-radius: 10%;
+}
