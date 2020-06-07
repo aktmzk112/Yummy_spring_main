@@ -6,7 +6,7 @@ import java.text.SimpleDateFormat;
 
 public class AdminVO {
 	private int mno, rno;
-	private String mname , mid , mpw, mtel  ,issue , memail , sDate;
+	private String mname , mid , mpw, mtel  ,issue , memail , sDate ,email , domain;
 	private Date joindate;
 	private Time jointime;
 	public int getMno() {
@@ -20,6 +20,19 @@ public class AdminVO {
 	}
 	public void setRno(int rno) {
 		this.rno = rno;
+	}
+	
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getDomain() {
+		return domain;
+	}
+	public void setDomain(String domain) {
+		this.domain = domain;
 	}
 	public String getMname() {
 		return mname;
@@ -71,6 +84,9 @@ public class AdminVO {
 	}
 	public void setIssue(String issue) {
 		this.issue = issue;
+	}
+	public void setIssue() {
+		this.issue = issue.equals("X") ? "O" : "";
 	}
 	public Date getJoindate() {
 		return joindate;

@@ -46,31 +46,45 @@ public class Admin {
 	}
 	//메인 화면 *(회원관리 페이지) 뷰 요청
 	@RequestMapping("/main.mmy")
-	public ModelAndView mainView(ModelAndView mv , AdminVO avo ,PageUtil page ,String opts) {
+	public ModelAndView mainView(ModelAndView mv , AdminVO avo ,PageUtil page ,String opts ,HttpSession session) {
 		String view = "admin/main";
+		if(session.getAttribute("SID") == null) {
+			view = "/YummyMap/admin/login.mmy";
+			RedirectView rv = new RedirectView(view);
+			mv.setView(rv);
+			return mv;
+		}
+			
 		
+		page.setNowPage(page.getNowPage());
 		if(opts == null) {
 		}
 		else if(opts.equals("idch")) {
 			mv.addObject("SCH" , avo.getMid());
 			mv.addObject("OPT",opts);
+			page.setNowPage(1);
 		}else if(opts.equals("namech")) {
 			mv.addObject("SCH" , avo.getMname());
 			mv.addObject("OPT",opts);
+			page.setNowPage(1);
 		}
 		int cnt = adminDao.memberCnt(avo);
-		page.setNowPage(page.getNowPage());
 		page.setTotalCount(cnt);
 		page.setPageRow(5);
 		page.setPageGroup(3);
 		page.totalfun();
 		
+		
+		System.out.println(avo.getMid() + "id #########################");
 		HashMap hmap = new HashMap();
 		hmap.put("avo" , avo);
 		hmap.put("page" , page);
 		
 		ArrayList<AdminVO> list =  (ArrayList<AdminVO>) adminDao.getMemberList(hmap);
-		
+		System.out.println("list size ###### " + list.size());
+		for(int i=0; i<list.size(); i++) {
+			list.get(i).setIssue();
+		}
 		
 		mv.addObject("LIST" , list);
 		mv.addObject("PAGE" , page);
@@ -79,6 +93,52 @@ public class Admin {
 		return mv;
 	}
 	
+	//회원정보 수정 페이지
+	@RequestMapping("/memberEdit.mmy")
+	public ModelAndView memberEdit(AdminVO avo , ModelAndView mv) {
+		String view = "admin/remember";
+		
+		avo = adminDao.getMemberInfo(avo);
+		avo.setIssue();
+		mv.addObject("MVO", avo);
+		mv.setViewName(view);
+		return mv;
+	}
 	
+	//회원 정보 수정 전담 함수
+	@RequestMapping("/memberEditProc.mmy")
+	public ModelAndView memberEditProc(AdminVO avo , int nowPage , ModelAndView mv) {
+		String view = "";
+		avo.setMemail(avo.getEmail() +"@"+avo.getDomain());
+		
+		if(avo.getIssue() == null) {
+			avo.setIssue("N");
+		}else if(avo.getIssue().equals("ok")) {
+			avo.setIssue("X");
+		}
+		int cnt = adminDao.memberEdit(avo);
+		
+		if(cnt == 1) {
+			view = "/YummyMap/admin/main.mmy?nowPage="+nowPage;
+		}
+		
+		RedirectView rv = new RedirectView(view);
+		mv.setView(rv);
+		return mv;
+	}
 	
+	//관리자 정보 수정 페이지 요청
+	@RequestMapping("/adminEdit.mmy")
+	public ModelAndView adminEdit(ModelAndView mv , HttpSession session , AdminVO avo) {
+		
+		avo.setMid((String) session.getAttribute("SID"));
+		avo = adminDao.getMemberInfo(avo);
+		
+		String view = "admin/adminreview";
+		
+		mv.addObject("MVO" ,avo);
+		mv.setViewName(view);
+		
+		return mv;
+	}
 }

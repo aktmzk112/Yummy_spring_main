@@ -42,7 +42,7 @@
 		<div class="row row-cols-2 sub ml-1">
 			<div class="col-3 pt-5 pr-4 text-right bar-ri">
 				<div class="text-left mt-3">
-					<a href="./admin/main.mmy">
+					<a href="./main.mmy">
 						<h5>회원 관리</h5>
 					</a>
 				</div>
@@ -63,15 +63,15 @@
 
 					<form action="" method="POST" id="frm">
 						<input type="hidden" name="nowPage" id="nowPage" value="${param.nowpage}">
-						<input type="hidden" name="id"  value="${MVO.mid}">
+						<input type="hidden" name="mid"  value="${MVO.mid}">
 						<div class="mt-4 row ml-1">
 							<h5 class="in-bl text-left ml-2 col-3 mt-1">이름</h5>
-							<input class="col-6 form-control border-b margin-name text-center"  type="text" id="name" name="name" value="${MVO.mname }">
+							<input class="col-6 form-control border-b margin-name text-center"  type="text" id="name" name="mname" value="${MVO.mname }">
 						</div>
 						<div class="mt-3 text-left ml-4" style="font-size: 14px;" id="namehint"></div>
 						<div class="mt-4 row ml-1">
 							<h5 class="in-bl col-3  mt-1">비밀번호 </h5>
-							<input type="password" class="col-6 form-control border-b margin-pw text-center" id="pw" name="pw">
+							<input type="password" class="col-6 form-control border-b margin-pw text-center" id="pw" name="mpw">
 						</div>
 						<div class="mt-3" style="font-size: 14px;" id="pwhint"></div>
 						<div class="mt-4  row ml-1">
@@ -81,13 +81,13 @@
 						<div class="mt-3  text-left ml-4" style="font-size: 14px;" id="pwok"></div>
 						<div class="mt-4 row ml-1">
 							<h5 class="in-bl col-3 mt-1  text-left ml-2">연락처 </h5>
-							<input type="text" class="col-6 form-control border-b margin-tel text-center" id="tel" name="tel" value="${MVO.mtel }">
+							<input type="text" class="col-6 form-control border-b margin-tel text-center" id="tel" name="mtel" value="${MVO.mtel }">
 						</div>
 						<div class="mt-4 row ml-1">
 							<h5 class="in-bl col-3 mt-1  text-left ml-2">이메일 </h5>
-							<input type="text" class="col-3 form-control border-b margin-mail text-center" id="mail" name="mail" value="${MVO.memail }">
+							<input type="text" class="col-3 form-control border-b margin-mail text-center" id="mail" name="memail" value="${MVO.email }">
 							<span class="mt-2">@</span><input type="text" class="col-3 form-control border-b text-center" id="domain"
-								name="domain" value="${MVO.mdomain}">
+								name="domain" value="${MVO.domain}">
 
 							<select class="col-3 form-control border-b  mt-1 margin-domain" id="mailSelect">
 								<option value="">직접입력</option>

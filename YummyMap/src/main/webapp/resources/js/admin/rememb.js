@@ -5,20 +5,20 @@
 */
 $(function(){
 	
-	$('#pw').keyup(function(){
-		let pw = $('#pw').val();
+	$('#mpw').keyup(function(){
+		let pw = $('#mpw').val();
 		let pwck = pwchk(pw);
 		
 		if(!pwck){
 			$('#pwhint').css('color','red');
-			$('#pwhint').text('* 숫자/특수문자/영문 대/소문자 1자리이상 포함한 8자리 이상 15자리 입니다');
+			$('#pwhint').text('* 숫자/특수문자 1자리이상 영문 2자리 이상 포함한 8자리 이상 15자리 입니다');
 		}else{
 			$('#pwhint').text('');
 		}
 	});
 	
 	$('#pwck').keyup(function(){
-		let pw = $('#pw').val();
+		let pw = $('#mpw').val();
 		let pwck = $('#pwck').val();
 		
 		if(pw == pwck){
@@ -93,13 +93,13 @@ $(function(){
 	 });
 	
 	 $('#okbtn').click(function(){
-		let check = ['name','pw','pwck','tel','mail','domain'];
+		let check = ['mname','mpw','pwck','mtel','email','domain'];
 		
 		for(let i=0; i<check.length; i++){
 			
 			let val = $('#'+check[i]).val();
 			
-			if(check[i] == 'pw' && !val){
+			if(check[i] == 'mpw' && !val){
 				continue;
 			}
 			
@@ -118,7 +118,7 @@ $(function(){
 		
 		
 		//비밀번호 랑 비밀번호 확인중 하나만 비어있는 경우
-		let pwval = $('#pw').val();
+		let pwval = $('#mpw').val();
 		let pwckval = $('#pwck').val();
 		if(pwval  &&  !pwckval){
 			$('.modal-body').text('비밀번호 확인이 비어 있습니다.');
@@ -127,7 +127,7 @@ $(function(){
 		}else if(!pwval && pwckval){
 			$('.modal-body').text('비밀번호가 비어 있습니다.');
 			$('#staticBackdrop').modal();
-			$('#pw').focus();
+			$('#mpw').focus();
 			return false;
 		}
 		
@@ -148,7 +148,7 @@ $(function(){
 		}
 		}
 		
-		let tel = $('#tel').val();
+		let tel = $('#mtel').val();
 		let tel_ck = phonck(tel);
 		if(!tel_ck){
 			$('.modal-body').text('휴대폰 번호를 확인하세요');
@@ -156,7 +156,7 @@ $(function(){
 			return;
 		}
 		
-		let emailid = $('#mail').val();
+		let emailid = $('#email').val();
 		let emailidck = eidchk(emailid);
 		if(!emailidck){
 			$('.modal-body').text('메일 아이디를 확인하세요');
@@ -172,7 +172,7 @@ $(function(){
 			return;
 		}
 		
-		$('#frm').attr('action','/YummyMap/admin/rememberProc.mmy');
+		$('#frm').attr('action','/YummyMap/admin/memberEditProc.mmy');
 		$('#frm').submit();
 		
 		

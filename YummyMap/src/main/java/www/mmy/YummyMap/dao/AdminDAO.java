@@ -27,5 +27,14 @@ public class AdminDAO {
 		return sqlSession.selectList("adminSQL.memberList", map);
 	}
 	
+	//회원 정보 수정 페이지 전담 함수
+	public AdminVO getMemberInfo(AdminVO avo) {
+		return sqlSession.selectOne("adminSQL.memberEdit" , avo);
+	}
+	
+	//회정 정보 수정 전담 함수
+	public int memberEdit(AdminVO avo) {
+		return sqlSession.update("adminSQL.memberUpdate",avo);
+	}
 	
 }

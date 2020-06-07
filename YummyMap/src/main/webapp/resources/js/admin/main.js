@@ -7,8 +7,9 @@
 function search(){
 		let sel =	$('#opt').val();
 		let scname = $('#search-input').val();
-		if(sel == 'nos'){
-			alert('검색 조건을 먼저 선택하세요');
+		
+		if(sel == 'nos' && scname){
+			alert('조건을 선택하세요!!');
 			return;
 		}
 		if(sel != 'nos' && !scname){
@@ -31,12 +32,9 @@ $(function(){
 	let mno;
 	$('.obtn').click(function(){
 		let no = $(this).parents().parents().attr('id');
-		let sel =	$('#opt').val();
-		let scname = $('#search-input').val();
-		$('#searchs').val(scname);
-		$('#opts').val(sel);
+		search();
 		$('#no').val(no);
-		$('#frm').attr('action','/YummyMap/admin/remember.mmy');
+		$('#frm').attr('action','/YummyMap/admin/memberEdit.mmy');
 		$('#frm').submit();
 	});
 	
