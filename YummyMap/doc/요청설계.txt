@@ -1,0 +1,8 @@
+#관리자 로그인 뷰 
+
+요청내용 : /YummyMap/admin/login.mmy
+파라미터 : 무 
+컨트롤러 : www.mmy.YummyMap.controller.admin.Admin
+처리함수 : Admin.loginView()
+뷰		 : /WEB-INF/views/admin/adminLogin.jsp
+--------------------------------------------------------------------

@@ -1,0 +1,28 @@
+.cate {border: 1px solid rgba(0, 0, 0, 0.2) !important;}
+.item-h{font-weight: bold; color: rgba(0, 0, 0, 0.4);}
+.item-h:hover{color: rgb(0, 0, 0); font-size: 15pt; cursor: pointer;}
+.item2-h{font-weight: bold; color: rgba(0, 0, 0, 0.4);}
+.item2-h:hover{color: rgb(0, 0, 255); font-size: 15pt; cursor: pointer;}
+.item3-h{font-weight: bold; color: rgba(0, 0, 0, 0.4);}
+.item3-h:hover{color: rgb(255, 0, 0); font-size: 15pt; cursor: pointer;}
+.panbox{width: 400px; height: 400px;}
+.btnbox{width: 410px;}
+.btnw{width: 194px;;}
+.dnone{display: none;}
+#canvasContainer {
+	position: relative;
+    width: 400px;
+    top: 0px;
+    left: -51px;    
+}
+
+#canvas {
+	z-index: 1;
+}
+
+#prizePointer {
+	position: relative;
+	left: 225px;
+	top: 0px;
+	z-index: 999;
+}

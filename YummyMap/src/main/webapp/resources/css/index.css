@@ -1,0 +1,33 @@
+.tcolor{color: rgb(255, 128, 89) !important;}
+.logo{position: absolute; top: 40px; left: 218px; font-size: 25pt; font-weight: bold; margin-top: 20px;}
+.nav-item-1{position: absolute; top: 120px; left: 1040px; width: 150px;}
+.main-body{position: absolute; top: 220px; left: 230px;}
+.b-subtitle{position: absolute; top: 120px; left: 300px; width: 200px; height: 70px; font-size: 20pt; color: rgb(248, 187, 168);}
+.nav-btn{position: absolute; top: 10px; left: 960px; width: 220px;}
+.nav-body{width: 100%; height: 200px;}
+.nav-item{background-color: rgb(255, 128, 89); color: white;}
+.nav-item-size{font-size: 30pt;}
+
+.line2{ position: absolute; left: 520px; top: 290px; width: 800; height: 620px; }
+.nav-side{position: absolute; position: fixed; top: 250px; left: 200px; z-index: 3;width: 250px; height: 600px; } 
+.bnone{display: none;}
+.list_title{font-size: 20pt;}
+.orange-line{border: 2px solid rgb(255, 128, 89);}
+.res-item{width: 200px; height: 200px; margin-left: 30px;  border-radius: 3%;}
+#sub_btn{color: white; background-color: rgb(255, 128, 89) !important; }
+.list-item-title{font-size: 13pt; font-weight: bold;}
+.list-item-sub{font-size: 10pt;}
+.list-item{display: flex;}
+.list-item-info{width: 180px; }
+.fa-heart { color: rgb(255, 128, 89); cursor: pointer; font-size: 20pt;}
+input:focus {outline:none;}
+.imgdiv{ width: 50%; height: 50%; margin-left: 42px; margin-top: 15px; border: 4px solid rgb(255, 128, 89);}
+img{width: 100%; height: 100%; border-radius: 2%}
+.res-item-title{font-size: 15pt; font-weight: bold;}
+#star_grade a{ text-decoration: none; color: rgb(196, 179, 179); }
+#star_grade a.on{ color: rgb(255, 128, 89);}
+.sel-body{position: absolute; position: fixed; top: 200px; left: 0px; z-index: 3; width: 100%; }
+.p-rel{position: relative;}
+.d-ib{display: inline-block;}
+.search-box{top: 0px; left: 510px;}
+.search-btn{top: -40px; left: 990px;}

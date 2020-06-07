@@ -1,0 +1,123 @@
+body,
+input,
+textarea,
+select,
+table,
+button,
+code {
+    font-family: '나눔고딕', NanumGothic, -apple-system, BlinkMacSystemFont, Apple SD Gothic Neo, '맑은 고딕', Malgun Gothic, '돋움', dotum, sans-serif;
+    font-size: 14px;
+    line-height: 25px;
+}
+.tcolor {
+    color: rgb(255, 128, 89) !important;
+}
+
+.t2color {
+    color: rgba(255, 128, 89, 0.9) !important;
+}
+
+.logo {
+    position: absolute;
+    top: 40px;
+    left: 215px;
+    font-size: 25pt !important;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.nav-item-1 {
+    position: absolute;
+    top: 130px;
+    left: 1120px;
+    width: 150px;
+}
+
+.main-body {
+    position: absolute;
+    top: 220px;
+    left: 230px;
+}
+
+.b-subtitle {
+    position: absolute;
+    top: 120px;
+    left: 300px;
+    width: 200px;
+    height: 70px;
+    font-size: 20pt;
+    color: rgb(248, 187, 168);
+}
+
+.nav-btn {
+    position: absolute;
+    top: 10px;
+    left: 1007px;
+    width: 250px;
+}
+
+.nav-body {
+    width: 100%;
+    height: 200px;
+    border: 0px;
+}
+
+.nav-item {
+    background-color: white;
+    color: rgba(255, 128, 89, 0.9);
+    margin-left: 5px;
+    margin-top: 4px;
+}
+
+.nav-item-size {
+    font-size: 20pt;
+    color: rgba(255, 128, 89, 0.9);
+    margin-left: 10px;
+}
+.ctQZg {
+    align-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    display: flex;
+    -webkit-box-flex: 1;
+    flex: 1 0 0%;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    flex-direction: row;
+    flex-wrap: wrap;
+    -webkit-box-pack: end;
+    justify-content: flex-end;
+}
+
+._47KiJ,
+.ZcHy5 {
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    flex-direction: row;
+    padding-left: 24px;
+    white-space: nowrap;
+}
+
+._0ZPOP {
+    background-color: transparent;
+    border: 0;
+    cursor: pointer;
+    position: relative;
+}
+
+.XrOey:not(:only-child) {
+    margin-left: 13px;
+    margin-right: 15px;
+}
+
+svg {
+    fill: rgb(255, 128, 89);
+    height: 24px;
+    width: 24px;
+}
+
+dnone{display: none;}
+
+.main-body {position: absolute; width: 1050px; top: 210px; left: 430px;}
+.b-subtitle{position: absolute; top: 220px; left: 222px; width: 200px; height: 70px; font-size: 20pt; color: rgb(248, 187, 168);}
