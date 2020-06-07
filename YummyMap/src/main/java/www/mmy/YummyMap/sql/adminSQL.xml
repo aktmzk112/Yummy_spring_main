@@ -4,7 +4,7 @@
 					"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 					
 <mapper namespace="adminSQL">
-		<select id="loginck" resultType="int" parameterType="adminVo">
+		<select id="loginck" resultType="int" parameterType="adminVo" >
 			SELECT 
 				count(*) cnt
 			FROM
@@ -13,4 +13,26 @@
 				mid = #{mid}
 				AND mpw = #{mpw} 
 		</select>
+		
+		<sql id="memberList">
+			SELECT 
+			    rno ,mno , mid , mname , issue , joindate , joindate jointime 
+			FROM
+			(
+			    SELECT 
+			      ROWNUM rno , mno , mid , mname , issue , joindate 
+			    FROM
+			        (SELECT
+			          mno , mid , mname , issue , joindate
+			            
+			         FROM 
+			            member
+			         ORDER BY
+			            mno desc
+			         )
+			)
+			WHERE
+			    rno BETWEEN 1 AND 10
+		</sql>
+		
 </mapper>

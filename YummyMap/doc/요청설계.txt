@@ -6,3 +6,19 @@
 처리함수 : Admin.loginView()
 뷰		 : /WEB-INF/views/admin/adminLogin.jsp
 --------------------------------------------------------------------
+#관리자 처리 요청 
+
+요청내용 : /YummyMap/admin/loginProc.mmy
+파라미터 : id, pw 
+컨트롤러 : www.mmy.YummyMap.controller.admin.Admin
+처리함수 : Admin.loginProc()
+뷰		 : /YummuMap/admin/main.mmy
+--------------------------------------------------------------------
+#관리자 메인 페이지 요청 
+
+요청내용 : /YummyMap/admin/main.mmy
+파라미터 : 없음
+컨트롤러 : www.mmy.YummyMap.controller.admin.Admin
+처리함수 : Admin.mainView()
+뷰		 : /WEB-INF/views/admin/main.jsp
+--------------------------------------------------------------------
