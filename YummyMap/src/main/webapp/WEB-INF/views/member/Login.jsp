@@ -57,14 +57,14 @@
 <!-- body 시작 입니다-->
   <div class="main-body">
     <div class="m-box mt-4">
-      <form id="frm" action="/YummyMap/join/LoginProc.mmy" method="POST">
+      <form id="frm" action="/YummyMap/member/loginProcess.mmy" method="POST">
         <div class="form-group">
           <label for="id">I D</label>
-          <input type="text" class="form-control" id="id" name="id">
+          <input type="text" class="form-control" id="id" name="mid">
         </div>
         <div class="form-group">
           <label for="pw">P W</label>
-          <input type="password" class="form-control" id="pw" name="pw">
+          <input type="password" class="form-control" id="pw" name="mpw">
           <small id="msg1" class="text-danger dnone">입력하신 내용에 일치하는 계정이 없습니다.</small>
           <small id="msg2" class="text-danger dnone">입력이 완료되지 않았습니다.</small>
         </div>
@@ -109,6 +109,7 @@
       </div>
     </div>
   </div>
+ </div>
 </body>
 <script type="text/javascript">
 $(document).ready(function () {

@@ -37,6 +37,7 @@
 	  -->
 	 <typeAliases>
 		<typeAlias type="www.mmy.YummyMap.vo.AdminVO" alias="adminVo"/>
+		<typeAlias type="www.mmy.YummyMap.vo.MemberVO" alias="memberVo"/>
 	 </typeAliases>
 	 
 	 <!-- 
@@ -58,5 +59,6 @@
 	  
 	  <mappers>
 	  	<mapper resource="www/mmy/YummyMap/sql/adminSQL.xml" />
+	  	<mapper resource="www/mmy/YummyMap/sql/memberSQL.xml" />
 	  </mappers>
 </configuration>
