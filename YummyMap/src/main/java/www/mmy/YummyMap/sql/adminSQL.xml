@@ -14,7 +14,19 @@
 				AND mpw = #{mpw} 
 		</select>
 		
-		<sql id="memberList">
+		<select id="membercnt" resultType="int" parameterType="adminVo">
+			SELECT 
+				count(*) cnt
+			FROM
+				member
+			WHERE
+				isshow = 'Y'
+				AND GRADE = 'M'
+ 				<if test="mid != null and mid != ''"> AND mid = #{mid}</if>
+ 				<if test="mname != null and mname != ''">AND mname = #{mname}</if>
+		</select>
+		
+		<select id="memberList" resultType="adminVo" parameterType="hashmap" >
 			SELECT 
 			    rno ,mno , mid , mname , issue , joindate , joindate jointime 
 			FROM
@@ -24,15 +36,18 @@
 			    FROM
 			        (SELECT
 			          mno , mid , mname , issue , joindate
-			            
 			         FROM 
 			            member
+			         WHERE
+			         	isshow = 'Y'
+			         	<if test="avo.mid != null and avo.mid != ''">AND mid = #{avo.mid}</if>
+			         	<if test="avo.mname != null and avo.mname != ''">AND mname = #{avo.mname}</if>
 			         ORDER BY
 			            mno desc
 			         )
 			)
 			WHERE
-			    rno BETWEEN 1 AND 10
-		</sql>
+			    rno BETWEEN #{page.startCont} AND #{page.endCont}
+		</select>
 		
 </mapper>

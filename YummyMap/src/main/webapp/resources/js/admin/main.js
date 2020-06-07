@@ -15,9 +15,14 @@ function search(){
 			alert('검색어를 입력하세요');
 			return;
 		}
-		
-		$('#searchs').val(scname);
-		$('#opts').val(sel);
+		if(sel == 'idch'){
+			$('#mid').val(scname);
+			$('#opts').val(sel);
+		}else {
+			$('#mname').val(scname);
+			$('#opts').val(sel);
+		}
+
 		$('#frm').attr('action','/YummyMap/admin/main.mmy');
 		$('#frm').submit();
 	}
@@ -37,11 +42,8 @@ $(function(){
 	
 	$('.pbtn').click(function(){
 		let page = $(this).text();
-		let sel =	$('#opt').val();
-		let scname = $('#search-input').val();
-		$('#searchs').val(scname);
-		$('#opts').val(sel);
-		$('#nowpage').val(page);
+		search();
+		$('#nowPage').val(page);
 		$('#frm').attr('action','/YummyMap/admin/main.mmy');
 		$('#frm').submit();
 		
@@ -53,7 +55,7 @@ $(function(){
 		let scname = $('#search-input').val();
 		$('#searchs').val(scname);
 		$('#opts').val(sel);
-		$('#nowpage').val(page);
+		$('#nowPage').val(page);
 		$('#frm').attr('action','/YummyMap/admin/main.mmy');
 		$('#frm').submit();
 	});
@@ -64,7 +66,7 @@ $(function(){
 		let scname = $('#search-input').val();
 		$('#searchs').val(scname);
 		$('#opts').val(sel);
-		$('#nowpage').val(page);
+		$('#nowPage').val(page);
 		$('#frm').attr('action','/YummyMap/admin/main.mmy');
 		$('#frm').submit();
 	});
@@ -78,6 +80,17 @@ $(function(){
 		}
 	});
 	
+/*	$('#opt').change(function(){
+		let val = $(this).val();
+		alert(val);
+		
+		if(val == 'namech') {
+			$('#search-input').attr('name' ,'mname');
+		}else if(val == 'idch'){
+			$('#search-input').attr('name' ,'mid');
+			
+		}
+	});*/
 	$('.rbtn').click(function(){
 		mno = $(this).parents().parents().attr('id');
 		$('#no').val(no);

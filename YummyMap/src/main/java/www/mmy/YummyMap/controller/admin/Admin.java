@@ -1,5 +1,8 @@
 package www.mmy.YummyMap.controller.admin;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,9 +46,34 @@ public class Admin {
 	}
 	//메인 화면 *(회원관리 페이지) 뷰 요청
 	@RequestMapping("/main.mmy")
-	public ModelAndView mainView(ModelAndView mv , AdminVO avo ,PageUtil page) {
+	public ModelAndView mainView(ModelAndView mv , AdminVO avo ,PageUtil page ,String opts) {
 		String view = "admin/main";
 		
+		if(opts == null) {
+		}
+		else if(opts.equals("idch")) {
+			mv.addObject("SCH" , avo.getMid());
+			mv.addObject("OPT",opts);
+		}else if(opts.equals("namech")) {
+			mv.addObject("SCH" , avo.getMname());
+			mv.addObject("OPT",opts);
+		}
+		int cnt = adminDao.memberCnt(avo);
+		page.setNowPage(page.getNowPage());
+		page.setTotalCount(cnt);
+		page.setPageRow(5);
+		page.setPageGroup(3);
+		page.totalfun();
+		
+		HashMap hmap = new HashMap();
+		hmap.put("avo" , avo);
+		hmap.put("page" , page);
+		
+		ArrayList<AdminVO> list =  (ArrayList<AdminVO>) adminDao.getMemberList(hmap);
+		
+		
+		mv.addObject("LIST" , list);
+		mv.addObject("PAGE" , page);
 		mv.setViewName(view);
 		
 		return mv;

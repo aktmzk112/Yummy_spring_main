@@ -6,7 +6,7 @@ import java.text.SimpleDateFormat;
 
 public class AdminVO {
 	private int mno, rno;
-	private String mname , mid , mpw, mtel , memail , sDate;
+	private String mname , mid , mpw, mtel  ,issue , memail , sDate;
 	private Date joindate;
 	private Time jointime;
 	public int getMno() {
@@ -63,6 +63,14 @@ public class AdminVO {
 	}
 	public void setsDate(String sDate) {
 		this.sDate = sDate;
+	}
+	
+	
+	public String getIssue() {
+		return issue;
+	}
+	public void setIssue(String issue) {
+		this.issue = issue;
 	}
 	public Date getJoindate() {
 		return joindate;

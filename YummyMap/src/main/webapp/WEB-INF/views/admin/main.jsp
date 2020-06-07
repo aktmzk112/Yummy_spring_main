@@ -24,9 +24,10 @@
 
 <body>
 	<form method="post" action="" id="frm">
-		<input type="hidden" name="mno" id="no"> <input type="hidden"
-			name="nowpage" id="nowpage" value="${PAGE.nowPage }"> <input
-			type="hidden" name="searchs" id="searchs"> <input
+		<input type="hidden" name="mno" id="no" value="0"> 
+		<input type="hidden" name="nowPage" id="nowPage" value="${PAGE.nowPage }"> <input
+			type="hidden" name="mname" id="mname"> <input
+			type="hidden" name="mid" id="mid"> <input
 			type="hidden" name="opts" id="opts">
 	</form>
 	<div class="container mt-1 mb5">
@@ -70,7 +71,7 @@
 					<div class="row bar py-1"></div>
 					<c:forEach var="data" items="${LIST}">
 						<div class="d-flex mt-3 justify-content-around text-center"
-							id="${data.mno }">
+							id="${data.mno}">
 							<div class="col-2">${data.mno}</div>
 							<div class="col-2 mid">${data.mid }</div>
 							<div class="col-2">${data.mname }</div>
@@ -116,7 +117,7 @@
          <div class="mb-5">
             <nav aria-label="Page navigation example">
                <ul class="pagination">
-                  <c:if test="${PAGE.endPage > 5}">
+                  <c:if test="${PAGE.endPage > 3}">
                      <li class="page-item pre" id="${PAGE.prePage }"><a class="page-link"   aria-label="Previous"><span aria-hidden="true" >&laquo;</span>
                      </a></li>
                   </c:if>
