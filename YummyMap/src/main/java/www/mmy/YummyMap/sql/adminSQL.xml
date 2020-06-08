@@ -75,11 +75,18 @@
 			UPDATE 
 			    member
 			SET
-			    mname = #{mname} , mtel = #{mtel} , memail = #{memail}, issue = #{issue}
+			    mname = #{mname} , mtel = #{mtel} , memail = #{memail}
+			    <if test="mno != null and mno != ''">,  issue = #{issue} </if>
 			    <if test="mpw != null and mpw != ''">, mpw= #{mpw}</if> 
 			WHERE
-			    mno = ${mno}
-			    
+			<if test="mno != null and mno != ''">
+			    grade = 'M'
+			    AND mno = #{mno}
+			</if>
+			<if test="mid != null and mid != ''">
+				grade ='A'
+				AND mid = #{mid}
+			</if>    
 		</update>
 		
 </mapper>

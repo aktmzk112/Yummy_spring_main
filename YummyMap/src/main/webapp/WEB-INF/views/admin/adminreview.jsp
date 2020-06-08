@@ -85,7 +85,7 @@
 						</div>
 						<div class="mt-4 row ml-1">
 							<h5 class="in-bl col-3 mt-1  text-left ml-2">이메일 </h5>
-							<input type="text" class="col-3 form-control border-b margin-mail text-center" id="mail" name="memail" value="${MVO.email }">
+							<input type="text" class="col-3 form-control border-b margin-mail text-center" id="mail" name="email" value="${MVO.email }">
 							<span class="mt-2">@</span><input type="text" class="col-3 form-control border-b text-center" id="domain"
 								name="domain" value="${MVO.domain}">
 

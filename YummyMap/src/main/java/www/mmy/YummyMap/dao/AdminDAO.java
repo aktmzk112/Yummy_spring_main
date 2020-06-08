@@ -6,7 +6,7 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import www.mmy.YummyMap.vo.AdminVO;
+import www.mmy.YummyMap.vo.admin.AdminVO;
 
 public class AdminDAO {
 	@Autowired
@@ -32,7 +32,7 @@ public class AdminDAO {
 		return sqlSession.selectOne("adminSQL.memberEdit" , avo);
 	}
 	
-	//회정 정보 수정 전담 함수
+	//회정/관리자 정보 수정 전담 함수
 	public int memberEdit(AdminVO avo) {
 		return sqlSession.update("adminSQL.memberUpdate",avo);
 	}

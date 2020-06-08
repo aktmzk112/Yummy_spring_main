@@ -13,7 +13,8 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import www.mmy.YummyMap.dao.AdminDAO;
 import www.mmy.YummyMap.util.PageUtil;
-import www.mmy.YummyMap.vo.AdminVO;
+import www.mmy.YummyMap.vo.admin.AdminBoardVO;
+import www.mmy.YummyMap.vo.admin.AdminVO;
 
 @Controller
 @RequestMapping("/admin")
@@ -141,4 +142,29 @@ public class Admin {
 		
 		return mv;
 	}
+	
+	//관리자 정보 수정 전담 함수
+	@RequestMapping("/adminEditProc.mmy")
+	public ModelAndView adminEditProc(HttpSession session , AdminVO avo , ModelAndView mv) {
+		String view = "/YummyMap/admin/main.mmy";
+		
+		avo.setMid((String) session.getAttribute("SID")); 
+		
+		avo.setMemail(avo.getEmail() + '@' + avo.getDomain());
+			
+		int cnt = adminDao.memberEdit(avo);
+		
+		RedirectView rv = new RedirectView(view);
+		mv.setView(rv);
+		
+		return mv;
+	}
+	
+	//게시글 관리 페이지 
+	@RequestMapping("/boardList.mmy")
+	public ModelAndView boardList(AdminBoardVO abvo , ModelAndView mv , HttpSession session , PageUtil page) {
+		
+		return mv;
+	}
+	
 }

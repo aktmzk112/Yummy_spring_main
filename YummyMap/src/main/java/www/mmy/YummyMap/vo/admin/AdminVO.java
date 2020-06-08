@@ -1,4 +1,4 @@
-package www.mmy.YummyMap.vo;
+package www.mmy.YummyMap.vo.admin;
 
 import java.sql.Date;
 import java.sql.Time;

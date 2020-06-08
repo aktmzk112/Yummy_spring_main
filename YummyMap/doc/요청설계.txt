@@ -22,3 +22,60 @@
 처리함수 : Admin.mainView()
 뷰		 : /WEB-INF/views/admin/main.jsp
 --------------------------------------------------------------------
+
+#관리자 메인 페이지 요청 (네임검색)
+
+요청내용 : /YummyMap/admin/main.mmy
+파라미터 : name , nowPage
+컨트롤러 : www.mmy.YummyMap.controller.admin.Admin
+처리함수 : Admin.mainView()
+뷰		 : /WEB-INF/views/admin/main.jsp
+--------------------------------------------------------------------
+#관리자 메인 페이지 요청 (아이디 검색)
+
+요청내용 : /YummyMap/admin/main.mmy
+파라미터 : id , nowPage
+컨트롤러 : www.mmy.YummyMap.controller.admin.Admin
+처리함수 : Admin.mainView()
+뷰		 : /WEB-INF/views/admin/main.jsp
+--------------------------------------------------------------------
+#관리자 회원정보 수정페이지 요청
+
+요청내용 : /YummyMap/admin/memberEdit.mmy
+파라미터 : mno 
+컨트롤러 : www.mmy.YummyMap.controller.admin.Admin
+처리함수 : Admin.memberEdit()
+뷰		 : /WEB-INF/views/admin/remember.jsp
+--------------------------------------------------------------------
+#관리자 회원정보 수정 요청
+
+요청내용 : /YummyMap/admin/memberEditProc.mmy
+파라미터 : mname , mpw, mtel , memail ,issue
+컨트롤러 : www.mmy.YummyMap.controller.admin.Admin
+처리함수 : Admin.memberEditProc()
+뷰		 : /YummyMap/admin/main.mmy
+--------------------------------------------------------------------
+#관리자 정보 수정 페이지 요청
+
+요청내용 : /YummyMap/admin/adminEdit.mmy
+파라미터 : id
+컨트롤러 : www.mmy.YummyMap.controller.admin.Admin
+처리함수 : Admin.adminEdit()
+뷰		 : /WEB-INF/views/admin/adminreview.jsp
+--------------------------------------------------------------------
+#관리자 정보 수정 요청 
+
+요청내용 : /YummyMap/admin/adminEditProc.mmy
+파라미터 : id
+컨트롤러 : www.mmy.YummyMap.controller.admin.Admin
+처리함수 : Admin.adminEditProc()
+뷰		 : /YummyMap/admin/main.mmy
+--------------------------------------------------------------------
+#게시판 관리 페이지 요청
+
+요청내용 : /YummyMap/admin/boardList.mmy
+파라미터 : 
+컨트롤러 : www.mmy.YummyMap.controller.admin.Admin
+처리함수 : Admin.boardList()
+뷰		 : /WEB-INF/views/admin/board.jsp
+--------------------------------------------------------------------

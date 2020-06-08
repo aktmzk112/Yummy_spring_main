@@ -36,7 +36,7 @@
 	 			따라서 필요한 데이터 타입이 있다면 typeAliases 태그에 추가해서 사용하면 된다.
 	  -->
 	 <typeAliases>
-		<typeAlias type="www.mmy.YummyMap.vo.AdminVO" alias="adminVo"/>
+		<typeAlias type="www.mmy.YummyMap.vo.admin.AdminVO" alias="adminVo"/>
 		<typeAlias type="www.mmy.YummyMap.vo.MemberVO" alias="memberVo"/>
 	 </typeAliases>
 	 

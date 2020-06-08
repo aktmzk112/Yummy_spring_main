@@ -182,7 +182,7 @@ $(function(){
 			return;
 		}
 		
-		$('#frm').attr('action','/YummyMap/admin/admineditProc.mmy');
+		$('#frm').attr('action','/YummyMap/admin/adminEditProc.mmy');
 		$('#frm').submit();
 		
 		
