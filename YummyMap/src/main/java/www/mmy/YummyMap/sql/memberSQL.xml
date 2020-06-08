@@ -15,4 +15,12 @@
 				AND isshow = 'Y'
 				AND grade = 'M' 
 		</select>
+		<select id="getUserInfo" resultType="memberVo" parameterType="String">
+			SELECT
+				mname, mid, mpw, mtel, meMail, TO_CHAR(joindate, 'yyyy년MM월dd일 HH시mm분') joinDate
+			FROM
+				member
+			WHERE
+				mid = #{mid}
+		</select>
 </mapper>
