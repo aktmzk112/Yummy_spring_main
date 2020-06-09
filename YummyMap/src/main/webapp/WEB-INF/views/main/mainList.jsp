@@ -43,8 +43,8 @@
     </div>
     <div class="leftNav border-right bg-light">
         <div class="leftNavSearch d-flex">
-            <input type="text" name="search" id="search">
-            <p class=""><i class="fas fa-search"></i></p>
+            <input type="text" id="search" onkeydown="submitKeyword()">
+            <p class="bg-white"><i class="fas fa-search"></i></p>
         </div>
         <p class="leftNavTitle border-bottom">List</p>
     </div>
@@ -125,5 +125,20 @@ function showChartFrame(){
 function submitChart(){
     document.getElementById('chartForm').submit();
 }
+
+function submitKeyword(){
+	if(event.keyCode == 13) {
+		let keyword = document.getElementById("search").value;
+		if(!keyword)
+			return;
+	 	navigator.geolocation.getCurrentPosition(function(pos) {
+			let latitude= pos.coords.latitude;
+			let longitude= pos.coords.longitude;
+			location.href = "/YummyMap/main/getList.mmy?keyword="+keyword+"&x="+latitude+"&y="+longitude;
+		});
+	}
+
+}
+
 </script>
 </html>
