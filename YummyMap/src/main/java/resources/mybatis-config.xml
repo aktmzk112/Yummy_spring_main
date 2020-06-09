@@ -2,8 +2,10 @@
 <!DOCTYPE configuration
 			PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 					"http://mybatis.org/dtd/mybatis-3-config.dtd">
-					
+
+
 <configuration>
+		
 	<!--  
 		mybatis 활동 방식 설정
 		
@@ -24,7 +26,7 @@
 	 	<setting name="useGeneratedKeys" value="true" />
 	 	<setting name="defaultExecutorType" value="REUSE" />
 	 </settings>
-	 
+
 	 <!-- 
 	 		mybatis 에서 사용할 타입 정의
 	 			mybatis는 자바가 아니므로 원칙적으로 자바의 데이터 타입을 인식 할 수 없다.
@@ -37,9 +39,14 @@
 	  -->
 	 <typeAliases>
 		<typeAlias type="www.mmy.YummyMap.vo.admin.AdminVO" alias="adminVo"/>
+		<typeAlias type="www.mmy.YummyMap.vo.admin.AdminBoardVO" alias="aBoardVo"/>
 		<typeAlias type="www.mmy.YummyMap.vo.MemberVO" alias="memberVo"/>
 	 </typeAliases>
 	 
+ 	 <!-- 오라클에서 Long타입 가져오기 위한 핸들러 -->
+	<typeHandlers>
+        <typeHandler handler="www.mmy.YummyMap.handler.CLOBHandler" javaType="String" jdbcType="LONGVARCHAR"/>
+    </typeHandlers>	
 	 <!-- 
 	 		마이바티스에서 사용할 질의명령을 추가
 	 		
@@ -61,4 +68,7 @@
 	  	<mapper resource="www/mmy/YummyMap/sql/adminSQL.xml" />
 	  	<mapper resource="www/mmy/YummyMap/sql/memberSQL.xml" />
 	  </mappers>
+	  
+
+	  
 </configuration>

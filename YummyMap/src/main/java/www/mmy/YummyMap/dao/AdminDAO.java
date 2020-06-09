@@ -6,6 +6,7 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import www.mmy.YummyMap.vo.admin.AdminBoardVO;
 import www.mmy.YummyMap.vo.admin.AdminVO;
 
 public class AdminDAO {
@@ -35,6 +36,21 @@ public class AdminDAO {
 	//회정/관리자 정보 수정 전담 함수
 	public int memberEdit(AdminVO avo) {
 		return sqlSession.update("adminSQL.memberUpdate",avo);
+	}
+	
+	//게시글 카운트 함수 
+	public int boardCnt(AdminBoardVO abvo) {
+		return sqlSession.selectOne("adminSQL.boardCnt", abvo);
+	}
+	
+	//게시글 관리 페이지 함수
+	public List boardList(HashMap<String, Object> map) {
+		return sqlSession.selectList("adminSQL.boardList", map);
+	}
+	
+	//게시글 상세보기 페이지
+	public AdminBoardVO detailBoard(AdminBoardVO abvo) {
+		return sqlSession.selectOne("adminSQL.boardDetail",abvo);
 	}
 	
 }

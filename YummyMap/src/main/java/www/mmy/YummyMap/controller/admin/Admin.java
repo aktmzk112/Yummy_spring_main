@@ -162,9 +162,57 @@ public class Admin {
 	
 	//게시글 관리 페이지 
 	@RequestMapping("/boardList.mmy")
-	public ModelAndView boardList(AdminBoardVO abvo , ModelAndView mv , HttpSession session , PageUtil page) {
+	public ModelAndView boardList(String opts ,AdminBoardVO abvo , ModelAndView mv , HttpSession session , PageUtil page) {
 		
+		String view = "admin/board";
+		if(session.getAttribute("SID") == null) {
+			view = "/YummyMap/admin/login.mmy";
+			RedirectView rv = new RedirectView(view);
+			mv.setView(rv);
+			return mv;
+		}
+		
+
+		
+		page.setTotalCount(adminDao.boardCnt(abvo));
+		page.setPageRow(1);
+		page.setPageGroup(3);
+		page.totalfun();
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("abvo", abvo);
+		map.put("page", page);
+		
+		ArrayList<AdminBoardVO> list = (ArrayList<AdminBoardVO>) adminDao.boardList(map);
+
+		mv.addObject("LIST", list);
+		mv.addObject("PAGE", page);
+		try {
+			if(opts.equals("idch")) {
+				mv.addObject("SCH" , abvo.getMid());
+				mv.addObject("OPT" , opts);
+			}else if(opts.equals("titlch")){
+				mv.addObject("SCH" , abvo.getTitle());
+				mv.addObject("OPT" , opts);
+			}
+		} catch (Exception e) {	}
+		
+		mv.setViewName(view);
 		return mv;
+	}
+	
+	//게시글 상세보기 요청
+	@RequestMapping("/boardDetail.mmy")
+	public ModelAndView boardDetail(AdminBoardVO advo, ModelAndView mv) {
+		
+		String view = "admin/boardDetail";
+		advo = adminDao.detailBoard(advo);
+		
+		
+		mv.addObject("BVO",advo);
+		mv.setViewName(view);
+		return mv;
+		
 	}
 	
 }

@@ -24,10 +24,11 @@
 
 <body>
 	<form method="post" action="" id="frm">
-		<input type="hidden" name="nowpage" id="nowpage" value="${param.nowpage }">
-		<input type="hidden" name="searchs"	id="searchs" value="${param.searchs }">
+		<input type="hidden" name="nowPage" id="nowPage" value="${param.nowPage }">
+		<input type="hidden" name="mid"	id="mid" value="${param.mid }">
+		<input type="hidden" name="title"	id="title" value="${param.title }">
 		<input type="hidden" name="opts" id="opts" value="${param.opts }"> 
-		<input type="hidden" name="nos" id="txtno" value="${param.nos }">
+		<input type="hidden" name="txtno" id="txtno" value="${param.txtno }">
 	</form>
 	<div class="container mt-1 mb5">
 		<div class="bg-white nav-body">

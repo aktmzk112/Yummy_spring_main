@@ -74,8 +74,16 @@
 #게시판 관리 페이지 요청
 
 요청내용 : /YummyMap/admin/boardList.mmy
-파라미터 : 
+파라미터 : nowPage , 검색옵션 , mid & title
 컨트롤러 : www.mmy.YummyMap.controller.admin.Admin
 처리함수 : Admin.boardList()
 뷰		 : /WEB-INF/views/admin/board.jsp
+--------------------------------------------------------------------
+#게시글 디테일 페이지 요청
+
+요청내용 : /YummyMap/admin/boardDetail.mmy
+파라미터 : nowPage , 검색옵션 , mid & title , txtno
+컨트롤러 : www.mmy.YummyMap.controller.admin.Admin
+처리함수 : Admin.boardDetail()
+뷰		 : /WEB-INF/views/admin/boardDetail.jsp
 --------------------------------------------------------------------

@@ -4,18 +4,26 @@
  	이 JS는 관리자 게시글관리 페이지에 사용할 JavaScript 입니다
 */
 function search(){
-		let inid = $('#search-input').val();
-		let opt = $('#opt').val();
-		if(opt == 'nos'){
-			alert('검색 조건을 먼저 선택하세요');
+		let sel =	$('#opt').val();
+		let scname = $('#search-input').val();
+		
+		if(sel == 'nos' && scname){
+			alert('조건을 선택하세요!!');
 			return;
 		}
-		if(opt != 'nos' && !inid){
+		if(sel != 'nos' && !scname){
 			alert('검색어를 입력하세요');
 			return;
 		}
-		$('#searchs').val(inid);
-		$('#opts').val(opt);
+		
+		if(sel == 'idch'){
+			$('#mid').val(scname);
+			$('#opts').val(sel);
+		}else {
+			$('#title').val(scname);
+			$('#opts').val(sel);
+		}
+		
 		$('#frm').attr('action','/YummyMap/admin/boardList.mmy');
 		$('#frm').submit();
 		
@@ -27,11 +35,8 @@ $(function(){
 	
 	$('.pbtn').click(function(){
 		let page = $(this).text();
-		$('#nowpage').val(page);
-		let inid = $('#search-input').val();
-		let opt = $('#opt').val();
-		$('#searchs').val(inid);
-		$('#opts').val(opt);
+		$('#nowPage').val(page);
+		search();
 		$('#frm').attr('action','/YummyMap/admin/boardList.mmy');
 		$('#frm').submit();
 	});
@@ -42,7 +47,7 @@ $(function(){
 		let opt = $('#opt').val();
 		$('#searchs').val(inid);
 		$('#opts').val(opt);
-		$('#nowpage').val(aa);
+		$('#nowPage').val(aa);
 		$('#frm').attr('action','/YummyMap/admin/boardList.mmy');
 		$('#frm').submit();
 	});
@@ -51,16 +56,21 @@ $(function(){
 		let inid = $('#search-input').val();
 		let opt = $('#opt').val();
 		let aa = $(this).attr('id');
-		$('#nowpage').val(aa);
+		$('#nowPage').val(aa);
 		$('#searchs').val(inid);
 		$('#opts').val(opt);
 		$('#frm').attr('action','/YummyMap/admin/boardList.mmy');
 		$('#frm').submit();
 	});
 	
-	$('#sbtn').click(search);
+	$('#sbtn').click(function(){
+			$('#nowPage').val(1);
+			search();
+	});
+	
 	$('#search-input').keydown(function(key){
 		if(key.keyCode == 13){
+			$('#nowPage').val(1);
 			search();
 			return;
 		}
@@ -122,6 +132,7 @@ $(function(){
 	$('.title').click(function(){
 		
 		tno = $(this).parent().prevAll('.ckd').attr('id');
+		alert(tno);
 		let inid = $('#search-input').val();
 		let opt = $('#opt').val();
 		$('#searchs').val(inid);

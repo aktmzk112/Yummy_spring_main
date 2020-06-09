@@ -5,23 +5,22 @@
 					
 <mapper namespace="adminSQL">
 
-	   <sql id="Cnts">
+	   <sql id="memberCnt">
 			SELECT 
 				count(*) cnt
 			FROM
 				member
 		</sql>
 		
-		
 		<select id="loginck" resultType="int" parameterType="adminVo" >
-			<include refid="Cnts" />
+			<include refid="memberCnt" />
 			WHERE
 				mid = #{mid}
 				AND mpw = #{mpw} 
 		</select>
 		
 		<select id="membercnt" resultType="int" parameterType="adminVo">
-			<include refid="Cnts" />
+			<include refid="memberCnt" />
 			WHERE
 				isshow = 'Y'
 				AND GRADE = 'M'
@@ -88,5 +87,50 @@
 				AND mid = #{mid}
 			</if>    
 		</update>
-		
+
+	 <!-- 게시판 카운트  -->
+		<select id="boardCnt" resultType="int" parameterType="aBoardVo">
+			SELECT
+				count(*) cnt
+			FROM
+				txt
+			WHERE
+				isshow = 'Y'
+				<if test="mid != null and mid != ''">AND mid = #{mid}</if>
+				<if test="title != null and title != ''">AND title LIKE '%' || #{title} || '%'</if>
+				
+		</select>
+
+	 <!-- 게시판 관리 조회 페이지 sql  -->
+	 	<select id="boardList" resultType="aBoardVo" parameterType="hashmap">
+	 		   SELECT 
+			    rno ,txtno , title , mid ,  cdate cDate, cdate cTime
+			   FROM
+			    ( SELECT
+			        ROWNUM rno , txtno , title , mid ,  cdate
+			      FROM
+			    (
+				    SELECT 
+				        txtno , title , mid ,  cdate 
+				    FROM
+				        txt
+				    WHERE
+				        isshow = 'Y'
+				        <if test="abvo.mid != null and abvo.mid != ''">AND mid = #{abvo.mid}</if>
+				        <if test="abvo.title != nill and abvo.title != ''">AND title LIKE'%' || #{abvo.title} || '%'</if>
+				    ORDER BY
+				        txtno desc
+			    		) t )
+			    WHERE 
+			        rno BETWEEN #{page.startCont} and #{page.endCont}
+	 	</select>
+	 	
+	 	<select id="boardDetail" resultType="aBoardVo" parameterType="aBoardVo">
+	 		    SELECT
+			        title , mtxt
+			    FROM
+			        txt
+			    WHERE
+			        txtno = ${txtno}
+	 	</select>
 </mapper>

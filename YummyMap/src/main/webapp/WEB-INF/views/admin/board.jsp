@@ -23,11 +23,11 @@
 
 <body>
 	<form method="post" action="" id="frm">
-		<input type="hidden" name="mno" id="no" >
-		<input type="hidden" name="nowpage" id="nowpage" value="${PAGE.nowPage}">
-		<input type="hidden" name="searchs" id="searchs" >
+		<input type="hidden" name="nowPage" id="nowPage" value="${PAGE.nowPage}">
+		<input type="hidden" name="mid" id="mid" >
+		<input type="hidden" name="title" id="title" >
 		<input type="hidden" name="opts" id="opts">
-		<input type="hidden" name="nos" id="txtno">
+		<input type="hidden" name="txtno" id="txtno" value="0">
 	</form>
 	<div class="container mt-1 mb5">
 		<div class="bg-white nav-body">
@@ -76,7 +76,7 @@
 							</div>
 							<div class="col-4 title-box"><a class="title">${data.title }</a></div>
 							<div class="col-2">${data.mid }</div>
-							<div class="col-3">${data.sdate }</div>
+							<div class="col-3">${data.cDate} ${data.cTime}</div>
 							<div class="col-2">
 								<button class="rbtn  btn-danger" data-toggle="modal" data-target="#staticBackdrop">삭제</button>
 							</div>
