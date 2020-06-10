@@ -10,7 +10,7 @@ import www.mmy.YummyMap.vo.MemberVO;
 @Repository
 public class MemberDAO {
 	
-	SqlSessionTemplate sqlSession;
+	private SqlSessionTemplate sqlSession;
 	
 	public MemberDAO(SqlSessionTemplate sqlSession) {
 		this.sqlSession = sqlSession;

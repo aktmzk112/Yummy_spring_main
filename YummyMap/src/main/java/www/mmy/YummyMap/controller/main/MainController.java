@@ -2,36 +2,32 @@ package www.mmy.YummyMap.controller.main;
 
 
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 
-import www.mmy.YummyMap.api.KakaoMapRestApi;
+import www.mmy.YummyMap.Service.main.MainService;
+import www.mmy.YummyMap.vo.UpSoVO;
 
 @Controller
 public class MainController {
-	
+
+	private MainService mainService;
+	public MainController(MainService mainService) {
+		this.mainService = mainService;
+	}
 	@RequestMapping("/main.mmy")
 	public String forwardMainListView() {
-		
 		return "main/mainList";
 	}
 	
 	@RequestMapping("/main/getList.mmy")
 	public ModelAndView searchList(ModelAndView mv, String keyword, String x, String y) {
-		System.out.println(x);
-		System.out.println(y);
-		KakaoMapRestApi kakao = new KakaoMapRestApi();
-		String test = kakao.searchList(keyword, x, y);
-		JsonObject jsonObject = (JsonObject) new JsonParser().parse(test);
-		JsonArray jsonList = (JsonArray) jsonObject.get("documents");
-		for(int i=0; i<jsonList.size(); i++) {
-			System.out.println(jsonList.get(i));
-		}
+		List<UpSoVO> upSoVoList = mainService.getSearchList(keyword, x, y);
+		mv.addObject(upSoVoList);
 		return mv;
 	}
 

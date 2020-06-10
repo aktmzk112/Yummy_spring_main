@@ -1,25 +1,25 @@
 package www.mmy.YummyMap.vo;
 
 public class UpSoVO {
-	private double longitude, latitude;
-	private String upso_id, place_name, category_name, phone, road_address_name, place_url;
-	public double getLongitude() {
-		return longitude;
+	private double x, y;
+	private String id, place_name, category_name, phone, road_address_name, place_url;
+	public double getX() {
+		return x;
 	}
-	public void setLongitude(double longitude) {
-		this.longitude = longitude;
+	public void setX(double x) {
+		this.x = x;
 	}
-	public double getLatitude() {
-		return latitude;
+	public double getY() {
+		return y;
 	}
-	public void setLatitude(double latitude) {
-		this.latitude = latitude;
+	public void setY(double y) {
+		this.y = y;
 	}
-	public String getUpso_id() {
-		return upso_id;
+	public String getId() {
+		return id;
 	}
-	public void setUpso_id(String upso_id) {
-		this.upso_id = upso_id;
+	public void setId(String id) {
+		this.id = id;
 	}
 	public String getPlace_name() {
 		return place_name;
@@ -51,6 +51,11 @@ public class UpSoVO {
 	public void setPlace_url(String place_url) {
 		this.place_url = place_url;
 	}
-	
-	
+	@Override
+	public String toString() {
+		return "UpSoVO [x=" + x + ", y=" + y + ", id=" + id + ", place_name=" + place_name + ", category_name="
+				+ category_name + ", phone=" + phone + ", road_address_name=" + road_address_name + ", place_url="
+				+ place_url + "]";
+	}
+		
 }

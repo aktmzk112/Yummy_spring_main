@@ -4,5 +4,28 @@
 					"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 					
 <mapper namespace="mainSql">
-
+	<select id="upSoDetailInfo" resultType="upSoVo" parameterType="upSoVo">
+		SELECT
+			upso_id, place_name, category_name, phone, road_address_name, longitude, latitude, place_url
+		FROM
+			upso
+		WHERE
+			upso_id = #{upso_id}
+			AND isShow = 'Y'
+	</select>
+	<select id="showUpSo" resultType="int" parameterType="String">
+		SELECT
+			count(upso_id)
+		FROM
+			upso
+		WHERE
+			upso_id = #{upso_id}
+	</select>
+	<insert id="insertUpSo" parameterType="upSoVo">
+		INSERT INTO
+			upso
+		VALUES (
+			#{id},#{place_name},#{category_name},#{phone},#{road_address_name},#{x},#{y},#{place_url}, 'Y'		
+		)
+	</insert>
 </mapper>

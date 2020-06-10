@@ -4,9 +4,9 @@ import www.mmy.YummyMap.vo.UpSoVO;
 
 public interface UpSoService {
 	
-	public UpSoVO getUpSoDetailInfo();
+	public UpSoVO getUpSoDetailInfo(String upso_id);
 	
-	public boolean isShowUpSo(UpSoVO upSoVo);
+	public boolean isShowUpSo(String upso_id);
 	
 	public int insertUpSo(UpSoVO upSoVo);
 }

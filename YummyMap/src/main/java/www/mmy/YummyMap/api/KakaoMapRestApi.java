@@ -9,6 +9,13 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+
+import www.mmy.YummyMap.vo.UpSoVO;
 
 public class KakaoMapRestApi {
 	private String basePath = "https://dapi.kakao.com/v2/local/search/keyword.json?category_group_code=FD6";
@@ -69,7 +76,7 @@ public class KakaoMapRestApi {
 		}
 		return pathUrl;
 	}
-	
+
 	
 	/*
 	public static void main(String[] args) {
