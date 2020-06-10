@@ -10,7 +10,7 @@ import www.mmy.YummyMap.vo.MemberVO;
 @Service
 public class UserServiceImpl implements UserService {
 	
-	MemberDAO memberDao;
+	private MemberDAO memberDao;
 	
 	public UserServiceImpl(MemberDAO memberDao) {
 		this.memberDao = memberDao;

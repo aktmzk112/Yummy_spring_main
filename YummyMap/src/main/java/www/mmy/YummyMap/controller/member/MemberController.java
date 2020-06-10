@@ -31,9 +31,9 @@ public class MemberController {
 	public ModelAndView loginProcess(MemberVO memberVo, ModelAndView mv, RedirectView rv, HttpSession session) {
 		int resultCnt = memberService.loginCheck(memberVo, session);
 		if(resultCnt == 1) {
-			rv.setUrl(ProjectUrl.MAIN_LIST_VIEW);
+			rv.setUrl(ProjectUrl.MAIN_LIST_VIEW.getUrl());
 		} else {
-			rv.setUrl(ProjectUrl.LOGIN_VIEW);
+			rv.setUrl(ProjectUrl.LOGIN_VIEW.getUrl());
 		}
 		mv.setView(rv);
 		return mv;
@@ -41,7 +41,7 @@ public class MemberController {
 	@RequestMapping("/logoutProcess.mmy")
 	public ModelAndView logoutProcess(ModelAndView mv, RedirectView rv, HttpSession session) {
 		memberService.userService.logoutProcess(session);
-		rv.setUrl(ProjectUrl.LOGIN_VIEW);
+		rv.setUrl(ProjectUrl.LOGIN_VIEW.getUrl());
 		mv.setView(rv);
 		return mv;
 	}    

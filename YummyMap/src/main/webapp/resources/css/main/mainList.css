@@ -64,7 +64,8 @@ ul{
 }
 .leftNavSearch p{
     width: 10%;
-    height: 100%;
+    height: 33px;
+    margin:0;
     padding-top: 5px;
 }
 .leftNavSearch input{

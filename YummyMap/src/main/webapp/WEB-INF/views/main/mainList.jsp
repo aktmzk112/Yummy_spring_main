@@ -44,7 +44,7 @@
     <div class="leftNav border-right bg-light">
         <div class="leftNavSearch d-flex">
             <input type="text" id="search" onkeydown="submitKeyword()">
-            <p class="bg-white"><i class="fas fa-search"></i></p>
+            <p class="bg-white m-0"><i class="fas fa-search"></i></p>
         </div>
         <p class="leftNavTitle border-bottom">List</p>
     </div>
@@ -134,7 +134,9 @@ function submitKeyword(){
 	 	navigator.geolocation.getCurrentPosition(function(pos) {
 			let latitude= pos.coords.latitude;
 			let longitude= pos.coords.longitude;
-			location.href = "/YummyMap/main/getList.mmy?keyword="+keyword+"&x="+latitude+"&y="+longitude;
+			console.log(latitude);
+			console.log(longitude);
+			location.href = "/YummyMap/main/getList.mmy?keyword="+keyword+"&x="+longitude+"&y="+latitude;
 		});
 	}
 
