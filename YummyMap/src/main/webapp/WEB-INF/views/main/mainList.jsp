@@ -132,8 +132,8 @@ function submitKeyword(){
 		if(!keyword)
 			return;
 	 	navigator.geolocation.getCurrentPosition(function(pos) {
-			let latitude= pos.coords.latitude;
 			let longitude= pos.coords.longitude;
+			let latitude= pos.coords.latitude;
 			console.log(latitude);
 			console.log(longitude);
 			location.href = "/YummyMap/main/getList.mmy?keyword="+keyword+"&x="+longitude+"&y="+latitude;
