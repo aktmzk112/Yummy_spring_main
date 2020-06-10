@@ -87,6 +87,15 @@
 				AND mid = #{mid}
 			</if>    
 		</update>
+		
+		<update id="memberDel" parameterType="adminVo">
+			UPDATE
+			    member
+			SET
+			    isshow = 'N'
+			WHERE
+			    mno = ${mno}
+		</update>
 
 	 <!-- 게시판 카운트  -->
 		<select id="boardCnt" resultType="int" parameterType="aBoardVo">
@@ -124,7 +133,7 @@
 			    WHERE 
 			        rno BETWEEN #{page.startCont} and #{page.endCont}
 	 	</select>
-	 	
+	 	<!-- 게시판 디테일 페이지  -->
 	 	<select id="boardDetail" resultType="aBoardVo" parameterType="aBoardVo">
 	 		    SELECT
 			        title , mtxt
@@ -133,4 +142,15 @@
 			    WHERE
 			        txtno = ${txtno}
 	 	</select>
+	 	
+	 	<!-- 게시판 삭제 요청 -->
+	 	<update id="boardDel" parameterType="java.util.List">
+	 		UPDATE
+	 			txt
+	 		SET
+	 			isshow = 'N'
+	 		WHERE
+	 			txtno IN<foreach collection="list" item="item" open="(" close=")" separator=", ">#{item}</foreach>
+	 	</update>
+	 	
 </mapper>

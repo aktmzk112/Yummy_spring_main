@@ -55,6 +55,14 @@
 처리함수 : Admin.memberEditProc()
 뷰		 : /YummyMap/admin/main.mmy
 --------------------------------------------------------------------
+#관리자 회원삭제 요청
+
+요청내용 : /YummyMap/admin/memberDelProc.mmy
+파라미터 : mno
+컨트롤러 : www.mmy.YummyMap.controller.admin.Admin
+처리함수 : Admin.memberDelProc()
+뷰		 : /YummyMap/admin/main.mmy
+--------------------------------------------------------------------
 #관리자 정보 수정 페이지 요청
 
 요청내용 : /YummyMap/admin/adminEdit.mmy
@@ -86,4 +94,12 @@
 컨트롤러 : www.mmy.YummyMap.controller.admin.Admin
 처리함수 : Admin.boardDetail()
 뷰		 : /WEB-INF/views/admin/boardDetail.jsp
+--------------------------------------------------------------------
+#게시글 단일 삭제 요청
+
+요청내용 : /YummyMap/admin/boardDel.mmy
+파라미터 : txtno
+컨트롤러 : www.mmy.YummyMap.controller.admin.Admin
+처리함수 : Admin.boardDel()
+뷰		 : /YummyMap/admin/board.mmy
 --------------------------------------------------------------------

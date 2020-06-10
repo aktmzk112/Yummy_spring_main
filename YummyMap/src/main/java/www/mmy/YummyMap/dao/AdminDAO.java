@@ -1,5 +1,6 @@
 package www.mmy.YummyMap.dao;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -33,10 +34,16 @@ public class AdminDAO {
 		return sqlSession.selectOne("adminSQL.memberEdit" , avo);
 	}
 	
-	//회정/관리자 정보 수정 전담 함수
+	//회원/관리자 정보 수정 전담 함수
 	public int memberEdit(AdminVO avo) {
 		return sqlSession.update("adminSQL.memberUpdate",avo);
 	}
+	
+	//회원 삭제 전담 함수
+	public int memberDel(AdminVO avo) {
+		return sqlSession.update("adminSQL.memberDel" , avo);
+	}
+	
 	
 	//게시글 카운트 함수 
 	public int boardCnt(AdminBoardVO abvo) {
@@ -52,5 +59,13 @@ public class AdminDAO {
 	public AdminBoardVO detailBoard(AdminBoardVO abvo) {
 		return sqlSession.selectOne("adminSQL.boardDetail",abvo);
 	}
+	
+	//게시글 단일 삭제 요청 
+	public int boardDel(ArrayList list) {
+		return sqlSession.update("adminSQL.boardDel" , list); 
+	}
+//	public int boardckDel(int txtno) {
+//		return sqlSession.update("adminSQL.boardDel" , txtno); 
+//	}
 	
 }

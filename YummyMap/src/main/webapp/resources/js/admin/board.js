@@ -89,7 +89,7 @@ $(function(){
 		$("input:checkbox[name='no']:checked").each(function(){
 			txtnos.push($(this).val());	
 		});
-		
+		alert(txtnos);
 		if(txtnos.length == 0){
 			alert('선택을 먼저 부탁드립니다');
 			return;
@@ -100,7 +100,7 @@ $(function(){
 		$('#searchs').val(inid);
 		$('#opts').val(opt);
 		$('#txtno').val(txtnos); 
-		$('#frm').attr('action','/YummyMap/admin/checkDel.mmy');
+		$('#frm').attr('action','/YummyMap/admin/boardDel.mmy');
 		$('#frm').submit();
 		
 		
@@ -125,7 +125,7 @@ $(function(){
 		$('#searchs').val(inid);
 		$('#opts').val(opt);
 		$('#txtno').val(tno); 
-		$('#frm').attr('action','/YummyMap/admin/checkDel.mmy');
+		$('#frm').attr('action','/YummyMap/admin/boardDel.mmy');
 		$('#frm').submit();
 	});
 	

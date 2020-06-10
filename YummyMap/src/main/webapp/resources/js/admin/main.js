@@ -98,7 +98,7 @@ $(function(){
 	
 	$('#rmbtn').click(function(){
 		$('#no').val(mno);
-		$('#frm').attr('action', '/YummyMap/admin/delmemberProc.mmy');
+		$('#frm').attr('action', '/YummyMap/admin/memberDelProc.mmy	');
 		$('#frm').submit();
 	});
 	$('#sid').hover(function(){

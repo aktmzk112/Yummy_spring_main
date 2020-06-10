@@ -25,7 +25,6 @@ public class Admin {
 	//관리자 로그인 뷰 전담 함수
 	@RequestMapping("/login.mmy")
 	public String loginView() {
-		System.out.println("#######");
 		return "admin/adminLogin";
 	}
 	
@@ -34,7 +33,6 @@ public class Admin {
 	@RequestMapping("/loginProc.mmy")
 	public ModelAndView loginck(AdminVO avo , ModelAndView mv , HttpSession session) {
 		int cnt = adminDao.loginck(avo);
-		System.out.println(cnt + " cnt ##################################");
 		RedirectView rv =null;
 		if(cnt == 1) {
 			 session.setAttribute("SID", avo.getMid());
@@ -76,13 +74,11 @@ public class Admin {
 		page.totalfun();
 		
 		
-		System.out.println(avo.getMid() + "id #########################");
 		HashMap hmap = new HashMap();
 		hmap.put("avo" , avo);
 		hmap.put("page" , page);
 		
 		ArrayList<AdminVO> list =  (ArrayList<AdminVO>) adminDao.getMemberList(hmap);
-		System.out.println("list size ###### " + list.size());
 		for(int i=0; i<list.size(); i++) {
 			list.get(i).setIssue();
 		}
@@ -125,6 +121,21 @@ public class Admin {
 		
 		RedirectView rv = new RedirectView(view);
 		mv.setView(rv);
+		return mv;
+	}
+	
+	//회원 삭제 전담 함수
+	@RequestMapping("memberDelProc.mmy")
+	public ModelAndView memberDelProc(AdminVO avo , ModelAndView mv) {
+		String view = "/YummyMap/admin/main.mmy";
+		
+		int cnt = adminDao.memberDel(avo);
+		if(cnt == 0) {
+			System.out.println("정상삭제 실패");
+		}
+		RedirectView rv = new RedirectView(view);
+		mv.setView(rv);
+		
 		return mv;
 	}
 	
@@ -175,7 +186,7 @@ public class Admin {
 
 		
 		page.setTotalCount(adminDao.boardCnt(abvo));
-		page.setPageRow(1);
+		page.setPageRow(2);
 		page.setPageGroup(3);
 		page.totalfun();
 		
@@ -213,6 +224,31 @@ public class Admin {
 		mv.setViewName(view);
 		return mv;
 		
+	}
+	
+	//게시글 삭제 요청 
+	@RequestMapping("/boardDel.mmy")
+	public ModelAndView boardDel(int[] txtno , ModelAndView mv) {
+		String view = "/YummyMap/admin/boardList.mmy";
+		
+		RedirectView rv = new RedirectView(view);
+		
+		ArrayList<Integer> list = new ArrayList<Integer>();
+		
+		for(int i=0; i<txtno.length; i++) {
+			list.add(txtno[i]);
+		}
+
+		int cnt = adminDao.boardDel(list);
+		mv.setView(rv);
+		
+		return mv;
+	}
+	
+	@RequestMapping("/shopadd.mmy")
+	public String shopadd() {
+		
+		return "admin/shopadd";
 	}
 	
 }
