@@ -24,6 +24,7 @@
             <c:if test="${SID == null}">
             <li class="pt-1"><a class="topNavItem-font" href="/YummyMap/member/loginView.mmy">Login</a></li>
             </c:if>
+            <span id="addshop">식당등록</span>
             <c:if test="${SID != null}">
             <li class="pt-1"><a class="topNavItem-font" href="/YummyMap/member/logoutProcess.mmy">Logout</a></li>
             </c:if>
@@ -142,5 +143,9 @@ function submitKeyword(){
 
 }
 
+document.getElementById('addshop').onclick = function(){
+	open('/YummyMap/admin/shopadd.mmy','상점 등록' ,'width=520 ,height=500, resizable=no');
+	
+}
 </script>
 </html>

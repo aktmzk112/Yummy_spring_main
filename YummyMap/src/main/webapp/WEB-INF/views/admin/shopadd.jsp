@@ -1,11 +1,10 @@
 <!-- 
 @author 유태희
-@since 2020.05.23
- 	이 페이지는 관리자 수정 페이지 입니다
+@since 2020.06.11
+ 	이페이지는 상점 추가 등록 하기 위한 페이지
  -->
 
-<%@ page language="java" contentType="text/html; charset=UTF-8"
- pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
@@ -23,49 +22,35 @@
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 	<!-- 	<script type="text/javascript" src="/YummyMap/js/admin/shop.js"></script> -->
 	<title>상점 등록 페이지</title>
-
 </head>
 
 <body>
-	<div class="container mt-1 mb-5">
-
+	<div class="topNav border-bottom">
+	        <div class="topNavLogo">
+	            <a href="">로고!!!</a>
+	</div>
+	<div class=" mb-5" style="margin-top:120px;">
 			<div class="col-8  ml-5  mb-5">
 				<div style="width: 600px;" class="container">
 					<form class="mt-5" action="#" method="post" id="frm">
-						<h5 class="ml-5">식당 이름 : <input class="p-1" id="resName" name="resName" placeholder="식당이름 입력"></h5>
-						<h5 class="text-left mt-3">주소 등록 : </h5>
+						<h5 class="">식당 이름 : <input class="p-1" id="resName" name="resName" placeholder="식당이름 입력"></h5>
+						<h5 class="text-left mt-3" style="">주소 등록 : </h5>
 						<div class="mt-1">
-							<input class="p-1" style="margin-left: 150px; width: 110px;" type="text" id="sample6_postcode"
+							<input class="p-1" style="margin-left: 100px; width: 110px;" type="text" id="sample6_postcode"
 								placeholder="우편번호">
 							<input class="p-1 mt-1" type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
-							<input class="p-1 mt-1" type="text" style="margin-left: 152px; width: 225px;" id="sample6_address"
+							<input class="p-1 mt-1" type="text" style="margin-left: 100px; width: 225px;" id="sample6_address"
 								placeholder="주소"><br>
-							<input class="p-1 mt-1" style="margin-left: 150px; width: 130px;" type="text" id="sample6_detailAddress"
+							<input class="p-1 mt-1" style="margin-left: 100px; width: 130px;" type="text" id="sample6_detailAddress"
 								placeholder="상세주소">
 							<input class="p-1 mt-1" type="text" style="width: 90px;" id="sample6_extraAddress" placeholder="참고항목">
 						</div>
 					</form>
 				</div>
 			</div>
-		</div>
-	</div>
-
-	<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog"
-		aria-labelledby="staticBackdropLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="staticBackdropLabel">알림창</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">확인</button>
-				</div>
+			<div class="mt-5 ml-5 pl-5">
+				<button type="button" class="btn btn-yummy ml-5 px-5" id="okbtn">찾기</button>
+				<button type="button" class="btn btn-outline-danger px-5 ml-2" id="cbtn">취소</button>
 			</div>
 		</div>
 	</div>
