@@ -49,7 +49,7 @@
         <p class="leftNavTitle border-bottom">List</p>
     </div>
     <div class="itemBody">
-        <div class="itemBody-categoryBox border-top border-bottom bg-light">
+        <div class="itemBody-categoryBox border-top border-bottom bg-light" >
             <div class="pt-2">
                 <div class="d-flex category">
                     <div class="pr-4">통합검색</div>
@@ -141,8 +141,13 @@ function submitKeyword(){
 			location.href = "/YummyMap/main/getList.mmy?keyword="+keyword+"&x="+longitude+"&y="+latitude;
 		});
 	}
-
 }
+function wasUsedQuery(){
+	let lastKeyword = '${keyword}';
+	if(lastKeyword)
+		document.getElementById('search').value = lastKeyword;
+}
+wasUsedQuery();
 
 </script>
 </html>

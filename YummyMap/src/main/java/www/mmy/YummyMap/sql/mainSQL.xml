@@ -6,7 +6,7 @@
 <mapper namespace="mainSql">
 	<select id="upSoDetailInfo" resultType="upSoVo" parameterType="upSoVo">
 		SELECT
-			upso_id, place_name, category_name, phone, road_address_name, longitude x, latitude y, place_url
+			upso_id, place_name, category_name, phone, road_address_name, longitude x, latitude y, place_url, query_keyword
 		FROM
 			upso
 		WHERE
@@ -38,7 +38,7 @@
 			SQRT( POWER((v_x - LATITUDE) * r_x, 2)
 			        + POWER((v_y - LONGITUDE) * r_y, 2)
 			        ) &lt;= v_z
-			AND   INSTR(category_name, #{keyword}) > 0 
+			AND   INSTR(query_keyword, #{keyword}) > 0 
 			AND LATITUDE BETWEEN v_x - v_z / r_x AND v_x + v_z / r_x
 			AND LONGITUDE BETWEEN v_y - v_z / r_y AND v_y + v_z / r_y
 			AND  isShow = 'Y'
@@ -64,7 +64,7 @@
 			<if test="road_address_name == null or road_address_name == ''">
 			#{address_name},
 			</if>
-			#{x},#{y},#{place_url}, 'Y'		
+			#{x},#{y},#{place_url}, 'Y', #{query_keyword}		
 		)
 	</insert>
 </mapper>

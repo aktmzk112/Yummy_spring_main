@@ -25,12 +25,12 @@ public class KakaoMapRestApi {
 	 * parameter	: keyword:검색키워드, x:longitude, y:latitude
 	 * return 		: json타입의 문자열
 	 */
-	public String searchList(String keyword, String x, String y) {
+	public String searchList(String keyword, String x, String y, int page) {
 		HttpURLConnection conn = null;
 		BufferedReader rd = null;
 		StringBuilder sb = null;
 		try {
-			URL url = setUrl(keyword, x, y);
+			URL url = setUrl(keyword, x, y, page);
 			conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("GET");
 			conn.setRequestProperty("Authorization", "KakaoAK "+ authorKey);
@@ -57,7 +57,7 @@ public class KakaoMapRestApi {
 		return sb.toString();
 	}
 	
-	private URL setUrl(String keyword, String x, String y) {
+	private URL setUrl(String keyword, String x, String y, int page) {
 		URL pathUrl = null;
 		StringBuffer path = new StringBuffer();
 		try {
@@ -70,6 +70,8 @@ public class KakaoMapRestApi {
 			path.append("&y=");
 			path.append(y);
 			path.append("&radius=1000");
+			path.append("&page=");
+			path.append(page);
 			pathUrl = new URL(path.toString());
 		} catch (Exception e) {
 			e.printStackTrace();

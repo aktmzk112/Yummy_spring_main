@@ -3,7 +3,7 @@ package www.mmy.YummyMap.vo;
 public class UpSoVO {
 	private int cont_sum, star_avg;
 	private double x, y;
-	private String id, place_name, category_name, phone, address_name, road_address_name, place_url;
+	private String id, place_name, category_name, phone, address_name, road_address_name, place_url, query_keyword;
 	public int getCont_sum() {
 		return cont_sum;
 	}
@@ -70,13 +70,17 @@ public class UpSoVO {
 	public void setPlace_url(String place_url) {
 		this.place_url = place_url;
 	}
+	public String getQuery_keyword() {
+		return query_keyword;
+	}
+	public void setQuery_keyword(String query_keyword) {
+		this.query_keyword = query_keyword;
+	}
 	@Override
 	public String toString() {
 		return "UpSoVO [cont_sum=" + cont_sum + ", star_avg=" + star_avg + ", x=" + x + ", y=" + y + ", id=" + id
 				+ ", place_name=" + place_name + ", category_name=" + category_name + ", phone=" + phone
 				+ ", address_name=" + address_name + ", road_address_name=" + road_address_name + ", place_url="
-				+ place_url + "]";
+				+ place_url + ", query_keyword=" + query_keyword + "]";
 	}
-	
-		
 }
