@@ -93,7 +93,10 @@ ul{
     height: 50px;
     top: 150px;
     left: 1300px;
-    background-color: rgb(94, 184, 90);
+/*     background-color: rgb(94, 184, 90); */
+    background-color: rgb(240, 237, 237);
+	border: 1.5px solid rgb(223,223,223);
+	color: black !important;
 }
 .boardBanner{
     position: fixed;
@@ -101,7 +104,9 @@ ul{
     height: 50px;
     top: 210px;
     left: 1300px;
-    background-color: rgb(94, 184, 90);
+/*     background-color: rgb(94, 184, 90); */
+    background-color: rgb(240, 237, 237);
+	border: 1.5px solid rgb(223,223,223);
 }
 .gameBanner i, .gameBanner p, .boardBanner i, .boardBanner p{
     color: white;

@@ -31,14 +31,14 @@
     </div>
     <div class="gameBanner border">
         <a class="d-flex gameBannerItem" href="">
-            <i class="fas fa-gamepad pt-1 pr-1"></i>
-            <p>픽픽메뉴</p>
+            <i class="fas fa-gamepad pt-1 pr-1" style="color: black !important;"></i>
+            <p style="color: black !important;">픽픽메뉴</p>
         </a>
     </div>
     <div class="boardBanner border">
         <a class="d-flex gameBannerItem" href="">
-            <i class="far fa-clipboard pt-1 pr-1"></i>
-            <p>커뮤니티</p>
+            <i class="far fa-clipboard pt-1 pr-1" style="color: black !important;"></i>
+            <p style="color: black !important;">커뮤니티</p>
         </a>
     </div>
     <div class="leftNav border-right bg-light">
