@@ -48,6 +48,11 @@
 			<div class="col-3 pt-5 pr-4 text-right bar-ri">
 				<div class="text-left mt-3">
 					<a href="./main.mmy">
+						<h5>메인 화면</h5>
+					</a>
+				</div>
+				<div class="text-left mt-4">
+					<a href="./member.mmy">
 						<h5>회원 관리</h5>
 					</a>
 				</div>

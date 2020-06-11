@@ -14,6 +14,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import www.mmy.YummyMap.dao.AdminDAO;
 import www.mmy.YummyMap.util.PageUtil;
 import www.mmy.YummyMap.vo.admin.AdminBoardVO;
+import www.mmy.YummyMap.vo.admin.AdminCntVO;
 import www.mmy.YummyMap.vo.admin.AdminVO;
 
 @Controller
@@ -43,10 +44,29 @@ public class Admin {
 		mv.setView(rv);
 		return mv;
 	}
-	//메인 화면 *(회원관리 페이지) 뷰 요청
+	
+	//관리자 메인 페이지 
 	@RequestMapping("/main.mmy")
-	public ModelAndView mainView(ModelAndView mv , AdminVO avo ,PageUtil page ,String opts ,HttpSession session) {
+	public ModelAndView mainView(ModelAndView mv , HttpSession session) {
+		String sid = (String) session.getAttribute("SID");
 		String view = "admin/main";
+		if (sid == null || sid.length() == 0) {
+			view = "/YummyMap/admin/login.mmy";
+			RedirectView rv = new RedirectView(view);
+			mv.setView(rv);
+			return mv;
+		}
+		
+		AdminCntVO acvo = adminDao.maindata();
+		
+		mv.addObject("CNT", acvo);
+		mv.setViewName(view);		
+		return mv;
+	}
+	//회원 관리 페이지 화면 *(회원관리 페이지) 뷰 요청
+	@RequestMapping("/member.mmy")
+	public ModelAndView memberView(ModelAndView mv , AdminVO avo ,PageUtil page ,String opts ,HttpSession session) {
+		String view = "admin/member";
 		if(session.getAttribute("SID") == null) {
 			view = "/YummyMap/admin/login.mmy";
 			RedirectView rv = new RedirectView(view);
@@ -116,7 +136,7 @@ public class Admin {
 		int cnt = adminDao.memberEdit(avo);
 		
 		if(cnt == 1) {
-			view = "/YummyMap/admin/main.mmy?nowPage="+nowPage;
+			view = "/YummyMap/admin/member.mmy?nowPage="+nowPage;
 		}
 		
 		RedirectView rv = new RedirectView(view);
@@ -127,7 +147,7 @@ public class Admin {
 	//회원 삭제 전담 함수
 	@RequestMapping("memberDelProc.mmy")
 	public ModelAndView memberDelProc(AdminVO avo , ModelAndView mv) {
-		String view = "/YummyMap/admin/main.mmy";
+		String view = "/YummyMap/admin/member.mmy";
 		
 		int cnt = adminDao.memberDel(avo);
 		if(cnt == 0) {
@@ -157,7 +177,7 @@ public class Admin {
 	//관리자 정보 수정 전담 함수
 	@RequestMapping("/adminEditProc.mmy")
 	public ModelAndView adminEditProc(HttpSession session , AdminVO avo , ModelAndView mv) {
-		String view = "/YummyMap/admin/main.mmy";
+		String view = "/YummyMap/admin/member.mmy";
 		
 		avo.setMid((String) session.getAttribute("SID")); 
 		

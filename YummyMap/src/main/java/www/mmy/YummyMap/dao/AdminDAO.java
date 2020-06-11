@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import www.mmy.YummyMap.vo.admin.AdminBoardVO;
+import www.mmy.YummyMap.vo.admin.AdminCntVO;
 import www.mmy.YummyMap.vo.admin.AdminVO;
 
 public class AdminDAO {
@@ -17,6 +18,11 @@ public class AdminDAO {
 	//관리자 로그인 전담 함수
 	public int loginck(AdminVO avo) {
 		return sqlSession.selectOne("adminSQL.loginck",avo);
+	}
+	
+	//메인 페이지 차트 함수
+	public AdminCntVO maindata() {
+		return sqlSession.selectOne("adminSQL.mainCnt");
 	}
 	
 	//회원 카운트 전담 함수

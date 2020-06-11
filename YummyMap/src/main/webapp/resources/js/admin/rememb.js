@@ -89,7 +89,7 @@ $(function(){
 //	여기서 부턴 버튼 클릭 이벤트 처리
 	 $('#cbtn').click(function(){
 		let nowpage = $('#nowPage').val()
-		$(location).attr('href','/YummyMap/admin/main.mmy?nowpage='+nowpage); 
+		$(location).attr('href','/YummyMap/admin/member.mmy?nowpage='+nowpage); 
 	 });
 	
 	 $('#okbtn').click(function(){
