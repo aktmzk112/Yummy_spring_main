@@ -2,12 +2,25 @@ package www.mmy.YummyMap.vo;
 
 public class MemberVO {
 	private int mno;
+	private double x, y;
 	private String mname, mid, mpw, mtel, meMail, joinDate;
 	public int getMno() {
 		return mno;
 	}
 	public void setMno(int mno) {
 		this.mno = mno;
+	}
+	public double getX() {
+		return x;
+	}
+	public void setX(double x) {
+		this.x = x;
+	}
+	public double getY() {
+		return y;
+	}
+	public void setY(double y) {
+		this.y = y;
 	}
 	public String getMname() {
 		return mname;
@@ -47,8 +60,8 @@ public class MemberVO {
 	}
 	@Override
 	public String toString() {
-		return "MemberVO [mno=" + mno + ", mname=" + mname + ", mid=" + mid + ", mtel=" + mtel + ", meMail=" + meMail
-				+ ", joinDate=" + joinDate + "]";
+		return "MemberVO [mno=" + mno + ", x=" + x + ", y=" + y + ", mname=" + mname + ", mid=" + mid + ", mpw=" + mpw
+				+ ", mtel=" + mtel + ", meMail=" + meMail + ", joinDate=" + joinDate + "]";
 	}
 	
 	

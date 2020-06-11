@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
@@ -24,7 +24,6 @@
             <c:if test="${SID == null}">
             <li class="pt-1"><a class="topNavItem-font" href="/YummyMap/member/loginView.mmy">Login</a></li>
             </c:if>
-            <span id="addshop">식당등록</span>
             <c:if test="${SID != null}">
             <li class="pt-1"><a class="topNavItem-font" href="/YummyMap/member/logoutProcess.mmy">Logout</a></li>
             </c:if>
@@ -99,12 +98,13 @@
                 </div>
             </div>
         </div>
+        <c:forEach var="upSoVoList"  items="${upSoVoList}">
         <div class="itemBody-item border shadow-lg mt-4 ">
             <div class="itemBody-img">
-                <img src="/YummyMap/img/main/img111.jpg" alt="">
+                <img src="/YummyMap/img/main/noimage.jpg" alt="">
             </div>
             <div class="itemBody-info">
-                <p class="itemBody-info-name">천미미</p>
+                <p class="itemBody-info-name">${upSoVoList.place_name}</p>
                 <div class="d-flex">
                     <p class="itemBody-info-star" id="star_grade">
                         <i class="fas fa-star"></i>
@@ -113,10 +113,11 @@
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>
                     </p>
-                    <p class="itemBody-info-review pt-1">리뷰3</p>
+                    <p class="itemBody-info-review pt-1">리뷰${upSoVoList.cont_sum}</p>
                 </div>
             </div>
         </div>
+        </c:forEach>
     </div>
 </body>
 <script type="text/javascript">
@@ -143,9 +144,5 @@ function submitKeyword(){
 
 }
 
-document.getElementById('addshop').onclick = function(){
-	open('/YummyMap/admin/shopadd.mmy','상점 등록' ,'width=520 ,height=500, resizable=no');
-	
-}
 </script>
 </html>

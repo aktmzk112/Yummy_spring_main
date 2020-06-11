@@ -13,15 +13,19 @@ import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
 import www.mmy.YummyMap.api.KakaoMapRestApi;
+import www.mmy.YummyMap.dao.MainDAO;
+import www.mmy.YummyMap.vo.SearchInfoVO;
 import www.mmy.YummyMap.vo.UpSoVO;
 
 @Service
 public class MainService {
 
-	private UpSoService upSoService; 
+	private UpSoService upSoService;
+	private MainDAO mainDao;
 	
-	public MainService(UpSoService upSoService) {
+	public MainService(UpSoService upSoService, MainDAO mainDao) {
 		this.upSoService = upSoService;
+		this.mainDao = mainDao;
 	}
 	
 	public List<UpSoVO> getSearchList(String keyword, String x, String y) {
@@ -40,7 +44,13 @@ public class MainService {
 			}
 			upSoService.insertUpSo(upSoVo);
 		}
-		return upSolist;
+		//로그인한 유저의 x 경도, y 위도 값을 전달합니다.
+		SearchInfoVO searchInfoVo = new SearchInfoVO();
+		searchInfoVo.setX(Double.parseDouble(x));
+		searchInfoVo.setY(Double.parseDouble(y));
+		searchInfoVo.setKeyword(keyword);
+		List<UpSoVO> upSolistReturnVal = mainDao.getUpSoListWithChart(searchInfoVo);
+		return upSolistReturnVal;
 	}
 
 }

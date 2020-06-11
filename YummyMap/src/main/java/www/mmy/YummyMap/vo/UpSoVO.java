@@ -1,8 +1,21 @@
 package www.mmy.YummyMap.vo;
 
 public class UpSoVO {
+	private int cont_sum, star_avg;
 	private double x, y;
-	private String id, place_name, category_name, phone, road_address_name, place_url;
+	private String id, place_name, category_name, phone, address_name, road_address_name, place_url;
+	public int getCont_sum() {
+		return cont_sum;
+	}
+	public void setCont_sum(int cont_sum) {
+		this.cont_sum = cont_sum;
+	}
+	public int getStar_avg() {
+		return star_avg;
+	}
+	public void setStar_avg(int star_avg) {
+		this.star_avg = star_avg;
+	}
 	public double getX() {
 		return x;
 	}
@@ -39,6 +52,12 @@ public class UpSoVO {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
+	public String getAddress_name() {
+		return address_name;
+	}
+	public void setAddress_name(String address_name) {
+		this.address_name = address_name;
+	}
 	public String getRoad_address_name() {
 		return road_address_name;
 	}
@@ -53,9 +72,11 @@ public class UpSoVO {
 	}
 	@Override
 	public String toString() {
-		return "UpSoVO [x=" + x + ", y=" + y + ", id=" + id + ", place_name=" + place_name + ", category_name="
-				+ category_name + ", phone=" + phone + ", road_address_name=" + road_address_name + ", place_url="
+		return "UpSoVO [cont_sum=" + cont_sum + ", star_avg=" + star_avg + ", x=" + x + ", y=" + y + ", id=" + id
+				+ ", place_name=" + place_name + ", category_name=" + category_name + ", phone=" + phone
+				+ ", address_name=" + address_name + ", road_address_name=" + road_address_name + ", place_url="
 				+ place_url + "]";
 	}
+	
 		
 }

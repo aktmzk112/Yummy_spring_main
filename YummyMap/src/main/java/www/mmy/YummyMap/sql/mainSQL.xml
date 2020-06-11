@@ -6,12 +6,44 @@
 <mapper namespace="mainSql">
 	<select id="upSoDetailInfo" resultType="upSoVo" parameterType="upSoVo">
 		SELECT
-			upso_id, place_name, category_name, phone, road_address_name, longitude, latitude, place_url
+			upso_id, place_name, category_name, phone, road_address_name, longitude x, latitude y, place_url
 		FROM
 			upso
 		WHERE
 			upso_id = #{upso_id}
 			AND isShow = 'Y'
+	</select>
+		<select id="upSoListWithChart" resultType="upSoVo" parameterType="searchInfoVo">
+		SELECT 
+			upso_id, place_name, category_name, phone, road_address_name, longitude x, latitude y, place_url, 
+			NVL(cont_sum, 0) cont_sum,  NVL(star_avg, 0) star_avg,
+			SQRT( POWER(( 37.4917910 - LATITUDE) * 110979.309, 2)
+			      + POWER((127.4875970 - LONGITUDE) *  88907.949, 2)
+			      ) z
+	  	FROM upso
+	    	 , (SELECT     #{y} v_x    -- 기준좌표-위도(카카오기준 y)
+	             ,    #{x} v_y    -- 기준좌표-경도(카카오기준 x ) 
+	             , 110979.309     r_x    -- 위도-거리 환산계수
+	             ,  88907.949     r_y    -- 경도-거리 환산계수
+	             ,    1000.000     v_z    -- 검색반경
+	          FROM dual
+	        ),
+	         ( SELECT  res_id, 
+	                   COUNT(rev_no) AS cont_sum,
+	                   AVG(star_num) AS star_avg
+	           FROM upso_review
+	           WHERE isShow='Y' 
+	           GROUP BY  res_id ) sub
+	 	WHERE 
+			SQRT( POWER((v_x - LATITUDE) * r_x, 2)
+			        + POWER((v_y - LONGITUDE) * r_y, 2)
+			        ) &lt;= v_z
+			AND   INSTR(category_name, #{keyword}) > 0 
+			AND LATITUDE BETWEEN v_x - v_z / r_x AND v_x + v_z / r_x
+			AND LONGITUDE BETWEEN v_y - v_z / r_y AND v_y + v_z / r_y
+			AND  isShow = 'Y'
+				AND upso_id = res_id(+)
+	 	ORDER BY z
 	</select>
 	<select id="showUpSo" resultType="int" parameterType="String">
 		SELECT
@@ -25,7 +57,14 @@
 		INSERT INTO
 			upso
 		VALUES (
-			#{id},#{place_name},#{category_name},#{phone},#{road_address_name},#{x},#{y},#{place_url}, 'Y'		
+			#{id},#{place_name},#{category_name},#{phone},
+			<if test="road_address_name != null and road_address_name !=''">
+			#{road_address_name},			
+			</if>
+			<if test="road_address_name == null or road_address_name == ''">
+			#{address_name},
+			</if>
+			#{x},#{y},#{place_url}, 'Y'		
 		)
 	</insert>
 </mapper>

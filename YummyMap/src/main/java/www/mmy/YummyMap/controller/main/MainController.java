@@ -8,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-
 import www.mmy.YummyMap.Service.main.MainService;
 import www.mmy.YummyMap.vo.UpSoVO;
 
@@ -27,9 +26,9 @@ public class MainController {
 	@RequestMapping("/main/getList.mmy")
 	public ModelAndView searchList(ModelAndView mv, String keyword, String x, String y) {
 		List<UpSoVO> upSoVoList = mainService.getSearchList(keyword, x, y);
-		mv.addObject(upSoVoList);
+		mv.setViewName("main/mainList");
+		mv.addObject("upSoVoList",upSoVoList);
+		mv.addObject("keyword",keyword);
 		return mv;
 	}
-
-
 }
