@@ -10,4 +10,5 @@
 
 	<!-- 관리자 DB 처리 dao 빈처리 -->
 	<bean id="adminDao" class="www.mmy.YummyMap.dao.AdminDAO" />
+	<bean id="chartDao" class="www.mmy.YummyMap.dao.ChartDAO" />
 </beans>

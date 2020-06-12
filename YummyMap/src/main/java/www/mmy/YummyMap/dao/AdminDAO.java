@@ -8,8 +8,9 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import www.mmy.YummyMap.vo.admin.AdminBoardVO;
-import www.mmy.YummyMap.vo.admin.AdminCntVO;
+import www.mmy.YummyMap.vo.admin.ChartCntVO;
 import www.mmy.YummyMap.vo.admin.AdminVO;
+import www.mmy.YummyMap.vo.admin.ResCntVO;
 
 public class AdminDAO {
 	@Autowired
@@ -20,10 +21,6 @@ public class AdminDAO {
 		return sqlSession.selectOne("adminSQL.loginck",avo);
 	}
 	
-	//메인 페이지 차트 함수
-	public AdminCntVO maindata() {
-		return sqlSession.selectOne("adminSQL.mainCnt");
-	}
 	
 	//회원 카운트 전담 함수
 	public int memberCnt(AdminVO avo) {
@@ -70,8 +67,6 @@ public class AdminDAO {
 	public int boardDel(ArrayList list) {
 		return sqlSession.update("adminSQL.boardDel" , list); 
 	}
-//	public int boardckDel(int txtno) {
-//		return sqlSession.update("adminSQL.boardDel" , txtno); 
-//	}
+	
 	
 }

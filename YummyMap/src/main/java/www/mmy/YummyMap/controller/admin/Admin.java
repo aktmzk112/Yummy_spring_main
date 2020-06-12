@@ -11,17 +11,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import www.mmy.YummyMap.Service.chart.ChartServiceImpl;
 import www.mmy.YummyMap.dao.AdminDAO;
 import www.mmy.YummyMap.util.PageUtil;
 import www.mmy.YummyMap.vo.admin.AdminBoardVO;
-import www.mmy.YummyMap.vo.admin.AdminCntVO;
+import www.mmy.YummyMap.vo.admin.ChartCntVO;
 import www.mmy.YummyMap.vo.admin.AdminVO;
+import www.mmy.YummyMap.vo.admin.ResCntVO;
 
 @Controller
 @RequestMapping("/admin")
 public class Admin {
 	@Autowired
 	AdminDAO adminDao;
+	
+	ChartServiceImpl chartServiceImpl;
+	public Admin(ChartServiceImpl chartServiceImpl) {
+		this.chartServiceImpl = chartServiceImpl;
+	}
 	
 	//관리자 로그인 뷰 전담 함수
 	@RequestMapping("/login.mmy")
@@ -57,8 +64,11 @@ public class Admin {
 			return mv;
 		}
 		
-		AdminCntVO acvo = adminDao.maindata();
+		ArrayList<ResCntVO> list = (ArrayList<ResCntVO>) chartServiceImpl.resChart();
 		
+		ChartCntVO acvo = chartServiceImpl.infoChart();
+		
+		mv.addObject("LIST", list);
 		mv.addObject("CNT", acvo);
 		mv.setViewName(view);		
 		return mv;
@@ -264,6 +274,16 @@ public class Admin {
 		
 		return mv;
 	}
+	//관리자 로그아웃 처리 함수
+	@RequestMapping("/logoutProc.mmy")
+	public ModelAndView logout(HttpSession session, ModelAndView mv) {
+		session.removeAttribute("SID");
+		String view = "/YummyMap/admin/login.mmy";
+		RedirectView rv = new RedirectView(view);
+		mv.setView(rv);
+		return mv;
+	}
+	
 	
 	@RequestMapping("/shopadd.mmy")
 	public String shopadd() {

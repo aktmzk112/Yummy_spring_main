@@ -1,7 +1,7 @@
 package www.mmy.YummyMap.vo.admin;
 
-public class AdminCntVO {
-	private int txtcnt , rescnt , isuemem , memcnt;
+public class ChartCntVO {
+	private int txtcnt  , isuemem , memcnt;
 
 	public int getTxtcnt() {
 		return txtcnt;
@@ -9,14 +9,6 @@ public class AdminCntVO {
 
 	public void setTxtcnt(int txtcnt) {
 		this.txtcnt = txtcnt;
-	}
-
-	public int getRescnt() {
-		return rescnt;
-	}
-
-	public void setRescnt(int rescnt) {
-		this.rescnt = rescnt;
 	}
 
 	public int getIsuemem() {

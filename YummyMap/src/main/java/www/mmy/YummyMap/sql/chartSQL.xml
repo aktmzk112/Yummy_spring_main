@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+			PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+					"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+					
+<mapper namespace="chartSQL">
+
+		 <!-- 음식점 카테고리 차트 쿼리 -->
+	 	<select id="category" resultType="resCntVo">
+			SELECT 
+			        *
+			FROM
+			    (SELECT count(*) cnt , category FROM res , category WHERE res.catno = category.catno GROUP BY category.category)
+			ORDER BY
+    			cnt desc
+	 	</select>
+	 	
+	 	<!-- 관리자 메인페이지 차트 쿼리 -->
+	 	<select id="mainCnt" resultType="chartCntVo" parameterType="chartCntVo">
+		 	SELECT
+			    txtcnt , memcnt, isuemem
+			FROM
+			    (SELECT count(*) txtcnt FROM txt WHERE isshow = 'Y'),
+			    (SELECT count(*) memcnt FROM member WHERE isshow ='Y' and grade = 'M'), 
+			    (SELECT count(*) isuemem FROM member WHERE issue ='X' and grade = 'M') 
+	 	</select> 
+
+</mapper>

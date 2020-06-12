@@ -29,8 +29,6 @@
 </style>
 
 <body>
-	<form method="post" action="" id="frm">
-	</form>
 	<div class="container mt-1 mb5">
 		<div class="bg-white nav-body">
 			<div class=" mt-2 nav-btn">
@@ -114,15 +112,9 @@
     function drawChart() {
       var data = google.visualization.arrayToDataTable([
         ['Task', 'Hours per Day'],
-        ['한식',  11],
-        ['일식',  2],
-        ['중식',  2],
-        ['분식',  2],
-        ['이탈리식',  2],
-        ['잡식',  2],
-        ['편식',  2],
-        ['집식',  2],
-        ['우식',  2],
+        <c:forEach items="${LIST}" var="cate">
+        	['${cate.category}',  ${cate.cnt}],
+        </c:forEach>
       ]);
 
       var options = {

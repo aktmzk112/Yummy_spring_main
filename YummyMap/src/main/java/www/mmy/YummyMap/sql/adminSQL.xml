@@ -152,15 +152,8 @@
 	 		WHERE
 	 			txtno IN<foreach collection="list" item="item" open="(" close=")" separator=", ">#{item}</foreach>
 	 	</update>
-	 	<!-- 관리자 메인페이지 차트 쿼리 -->
-	 	<select id="mainCnt" resultType="adminCntVo" parameterType="adminCntVo">
-		 	SELECT
-			    txtcnt , rescnt , memcnt, isuemem
-			FROM
-			    (SELECT count(*) txtcnt FROM txt WHERE isshow = 'Y'),
-			    (SELECT count(*) rescnt FROM res WHERE isshow ='Y'),
-			    (SELECT count(*) memcnt FROM member WHERE isshow ='Y' and grade = 'M'), 
-			    (SELECT count(*) isuemem FROM member WHERE issue ='X' and grade = 'M') 
-	 	</select> 
+
+	 	
+
 	 	
 </mapper>
