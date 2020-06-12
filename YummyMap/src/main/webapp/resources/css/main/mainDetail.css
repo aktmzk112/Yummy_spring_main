@@ -1,0 +1,149 @@
+@charset "UTF-8";
+
+body,input,textarea,select,html,a,p,div {
+    font-family: '나눔고딕', NanumGothic, -apple-system, BlinkMacSystemFont, Apple SD Gothic Neo, '맑은 고딕', Malgun Gothic, '돋움', dotum, sans-serif;
+}
+a, a:hover, a:link, a:visited{
+    text-decoration: none !important;
+}
+.dnone{
+    display: none;
+}
+
+/*itemBody*/
+.itemBody{
+    padding-top: 100px;
+    max-width: 900px !important;
+    height: 100%;
+}
+.Box{
+    width: 810px;
+    margin-top: 28px;
+}
+.imgBox{
+    width: 405px;
+    height: 350px;
+}
+img{
+    width: 100%;
+    height: 100%;
+}
+.infoBox{
+    width: 405px;
+    padding-top: 40px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+.resName{
+    color: rgb(0, 0, 0);
+    font-size: 15pt;
+    font-weight: 500;
+    margin: 0;
+}
+.resSub{
+    color: rgb(15, 0, 224);
+    font-size: 10pt;
+    margin: 0;
+}
+.sub i{
+    padding-top: 3px;
+    font-size: 11pt;
+    color: rgb(255, 187, 0);
+}
+.sub{
+    padding-bottom: 10px;
+}
+.resLoc{
+    margin-top: 40px;
+}
+.resLoc p {
+    font-size: 10pt;
+}
+.resMenu{
+    margin-top: 40px;
+}
+.resMenu p{
+    font-size: 10pt;
+}
+
+.resLoc i, .resMenu i {
+    color: rgba(0, 0, 0, 0.3);
+}
+.pickHeart {
+    position: relative;
+    top: -47px;
+    left: 322px;
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    border-radius: 100%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+}
+.pickHeart i{
+    font-size: 16pt;
+    padding-top: 9px;
+    padding-left: 7px;
+}
+.unPick{
+    color: rgb(248, 100, 100);
+}
+.pick{
+    color: rgb(248, 100, 100);
+}
+.reviewBox{
+    margin-top: 100px;
+}
+.reviewBox-title{
+    font-size: 15pt;
+    color: rgba(0, 0, 0, 0.5);
+    font-weight: 500;
+}
+
+.starBox i{
+    font-size: 12pt;
+}
+
+#star_grade i{ 
+    text-decoration: none; 
+    color: rgba(0, 0, 0, 0.15) 
+}
+#star_grade i.on{ 
+    color: rgb(255, 187, 0);
+}
+
+.writeBtn:hover{
+    background-color: rgb(255, 128, 89) !important;
+    color: white !important;
+}
+.writeBtn{
+    font-size: 10pt !important;
+}
+.reviewBtn{
+    cursor: pointer;
+    position: relative;
+    top: -47px;
+    left: 747px;
+    width: 40px;
+    height: 40px;
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    border-radius: 100%;
+}
+.reviewBtn i{
+    padding-top: 7px;
+    padding-left: 6px;
+    font-size: 17pt;
+    color: rgb(15, 0, 224);
+}
+
+.reviewId{
+    font-size: 11pt;
+}
+.reviewStarBox i {
+    
+    font-size: 11pt;
+    color: rgb(255, 187, 0);
+}
+.reviewStarBox div{
+    font-size: 9pt;
+    color: rgba(0, 0, 0, 0.6);
+}

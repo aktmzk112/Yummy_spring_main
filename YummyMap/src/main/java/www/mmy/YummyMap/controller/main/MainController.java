@@ -20,13 +20,13 @@ public class MainController {
 	}
 	@RequestMapping("/main.mmy")
 	public String forwardMainListView() {
-		return "main/mainList";
+		return "main/main";
 	}
 	
 	@RequestMapping("/main/getList.mmy")
 	public ModelAndView searchList(ModelAndView mv, String keyword, String x, String y) {
 		List<UpSoVO> upSoVoList = mainService.getSearchList(keyword, x, y);
-		mv.setViewName("main/mainList");
+		mv.setViewName("main/main");
 		mv.addObject("upSoVoList",upSoVoList);
 		mv.addObject("keyword",keyword);
 		return mv;

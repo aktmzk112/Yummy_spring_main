@@ -5,8 +5,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YummyMap</title>
-    <link rel="stylesheet" href="/YummyMap/css/main/mainList.css" />
+    <title>야미맵 리스트</title>
+    <link rel="stylesheet" href="/YummyMap/css/main/nav.css" />
+    <link rel="stylesheet" href="/YummyMap/css/main/mainList.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
     <link rel="stylesheet" href="/YummyMap/css/bootstrap.min.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -14,120 +15,65 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 </head>
 <body>
-    <div class="topNav border-bottom">
-        <div class="topNavLogo">
-            <a href="">YummyMap</a>
+    <div class="topNav border-bottom pl-4 pt-1 shadow-sm" id="topNav">
+        <div class="d-flex m-0">
+            <div class="topNavLogo">
+                <a href="">YUMMY MAP</a>
+            </div>
+            <ul class="topNavItem d-flex justify-content-end pr-4 pt-1">
+                <li><a class="topNavItem-icon" href=""><i class="far fa-heart"></i></a></li>
+                <li><a class="topNavItem-icon" href=""><i class="fas fa-user"></i></a></li>
+                <c:if test="${SID == null}">
+                <li><a class="topNavItem-icon" href="/YummyMap/member/loginView.mmy"><i class="fas fa-toggle-off"></i></a></li>
+                </c:if>
+                <c:if test="${SID != null}">
+                <li><a class="topNavItem-icon" href="/YummyMap/member/logoutProcess.mmy"><i class="fas fa-toggle-on"></i></a></li>
+                </c:if>
+            </ul>
         </div>
-        <ul class="topNavItem d-flex">
-            <li><a class="topNavItem-icon" href=""><i class="far fa-heart "></i></a></li>
-            <li><a class="topNavItem-icon" href=""><i class="fas fa-user"></i></a></li>
-            <c:if test="${SID == null}">
-            <li class="pt-1"><a class="topNavItem-font" href="/YummyMap/member/loginView.mmy">Login</a></li>
-            </c:if>
-            <c:if test="${SID != null}">
-            <li class="pt-1"><a class="topNavItem-font" href="/YummyMap/member/logoutProcess.mmy">Logout</a></li>
-            </c:if>
-        </ul>
-    </div>
-    <div class="gameBanner">
-        <a class="d-flex gameBannerItem" href="">
-            <i class="fas fa-gamepad pt-1 pr-1" style="color: black !important;"></i>
-            <p style="color: black !important;">픽픽메뉴</p>
-        </a>
-    </div>
-    <div class="boardBanner">
-        <a class="d-flex gameBannerItem" href="">
-            <i class="far fa-clipboard pt-1 pr-1" style="color: black !important;"></i>
-            <p style="color: black !important;">커뮤니티</p>
-        </a>
-    </div>
-    <div class="leftNav border-right bg-light">
-        <div class="leftNavSearch d-flex">
-            <input type="text" id="search" onkeydown="submitKeyword()">
-            <p class="bg-white m-0"><i class="fas fa-search"></i></p>
-        </div>
-        <p class="leftNavTitle border-bottom">List</p>
-    </div>
-    <div class="itemBody">
-        <div class="itemBody-categoryBox border-top border-bottom bg-light" >
-            <div class="pt-2">
-                <div class="d-flex category">
-                    <div class="pr-4">통합검색</div>
-                    <div class="pr-4 pl-2">식당</div>
-                    <div class="pr-4 pl-2">메뉴</div>
-                    <div class="pr-4 pl-2">
-                        <select class="selBox bg-light" name="" id="">
-                            <option value="">카테고리</option>
-                            <option value="한식">한식</option>
-                            <option value="중식">중식</option>
-                            <option value="중식">일식</option>
-                        </select>
-                    </div>
-                    <div class="pr-4 pl-2 d-flex chartBtn" onclick="showChartFrame()">
-                        <div>통계</div>
-                        <div class="arBox">
-                            <i class="fas fa-angle-down ar"></i>
-                        </div>
-                    </div>
-                </div>
-                <div class="chartFrame border mb-0 dnone" id="chartFrame">
-                    <div class="d-flex">
-                        <div class="mt-4 pl-3 mb-4 pr-4 border-right">
-                            <form action="" method="get" id="chartForm">
-                            <div class="la">
-                                <input type="radio" class="radioTag" name="chart" id="reviewTop" value="review" checked>
-                                <label for="reviewTop">리뷰순</label>
-                            </div>
-                            <div class="mt-1 la">
-                                <input type="radio" class="radioTag" name="chart" id="avgTop" value="avg">
-                                <label for="avgTop">평점순</label>
-                            </div>
-                        </div>
-                        <div class="mt-4 pl-2 ">
-                            <select name="category" id="chartModalInput">
-                                <option value="all">모두</option>
-                                <option value="kor">한식</option>
-                                <option value="chi">중식</option>
-                            </select>
-                            </form>
-                            <div class="chartModalBtnBox">
-                                <input id="chartModalBtn" type="button" onclick="submitChart()" value="검색">
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <div class="d-flex justify-content-center">
+            <div class="searchBox d-flex">
+                <div class="searchBox-font"><i class="fas fa-search"></i></div>
+                <input type="text" id="search" onkeydown="submitKeyword()">
+                <div class="searchBox-text">검색</div>
             </div>
         </div>
-        <c:forEach var="upSoVoList"  items="${upSoVoList}">
-        <div class="itemBody-item border shadow-lg mt-4 ">
-            <div class="itemBody-img">
-                <img src="/YummyMap/img/main/noimage.jpg" alt="">
+    </div>
+    <div class="border-bottom titleBody bg-light">
+        <div class="d-flex justify-content-center">
+            <div class="title">강남역 맛집 베스트 10곳</div>
+        </div>
+        <div class="d-flex justify-content-center">
+            <div class="sub-title">"강남역 약속 모임 여기서 딱정하자!"</div>
+        </div>
+    </div>
+    <div class="itemBody container">
+        <div class="item border-bottom d-flex">
+            <div class="imgBox">
+                <img src="../img/img111.jpg" alt="">
             </div>
-            <div class="itemBody-info">
-                <p class="itemBody-info-name">${upSoVoList.place_name}</p>
+            <div class="pl-4">
                 <div class="d-flex">
-                    <p class="itemBody-info-star" id="star_grade">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </p>
-                    <p class="itemBody-info-review pt-1">리뷰${upSoVoList.cont_sum}</p>
+                    <div class="d-flex item-info">
+                        <div>1.</div>
+                        <div>천미미</div>
+                        <div>&nbsp4.6</div>
+                    </div>
+                    <div class="heartBox">
+                        <div class="pickHeart">                        
+                            <i class="far fa-heart unPick"></i>
+                            <!-- <i class="fas fa-heart pick"></i> -->
+                        </div>
+                    </div>
                 </div>
+                <div class="info-addr">주소</div>
+                <div class="info-userID">유저ID</div>
+                <div class="info-txt">너무맛있어너무맛있어요너무맛있어요너무맛있어요너무맛있어요너무맛있어요너무맛있어요너무맛있어요너무맛있어요너무맛있어요요</div>
             </div>
         </div>
-        </c:forEach>
     </div>
 </body>
 <script type="text/javascript">
-function showChartFrame(){
-    document.getElementById('chartFrame').classList.toggle('dnone');
-}
-function submitChart(){
-    document.getElementById('chartForm').submit();
-}
-
 function submitKeyword(){
 	if(event.keyCode == 13) {
 		let keyword = document.getElementById("search").value;
@@ -142,12 +88,5 @@ function submitKeyword(){
 		});
 	}
 }
-function wasUsedQuery(){
-	let lastKeyword = '${keyword}';
-	if(lastKeyword)
-		document.getElementById('search').value = lastKeyword;
-}
-wasUsedQuery();
-
 </script>
 </html>
