@@ -144,7 +144,7 @@ let mailcode=false;
 	  }
 	  let mail = mailId + domain;
 	  $.ajax({
-		 url : '/YummyMap/join/mailCk.mmy',
+		 url : '/YummyMap/member/mailCk.mmy',
 		 type: 'post',
 		 dataType: 'json',
 		 data: {
@@ -153,12 +153,12 @@ let mailcode=false;
 		 success : function(data){
 			 
 			 mailOk = data.emailCk;
+			 $('#mailckBox').removeClass('d-none');
 
 		 },error : function(){
 			alert("통신 오류") 
 		 }
 	  });
-	 $('#mailckBox').removeClass('d-none');
   });
   //이메일 인증 코드값 확인 처리
   $('#eokbtn').click(function(){

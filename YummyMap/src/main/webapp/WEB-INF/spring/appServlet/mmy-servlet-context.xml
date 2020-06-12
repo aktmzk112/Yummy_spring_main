@@ -21,6 +21,12 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
+	<beans:bean id="YummyMail" class="www.mmy.YummyMap.util.MailUtil">
+		<beans:property name="host" value="smtp.naver.com" />
+		<beans:property name="pass" value="yth1356YTH!" />
+		<beans:property name="user" value="aktmzk117@naver.com"/>
+	</beans:bean> 	
+	
 	<beans:import resource="daoContext.xml" />
 	
 	<context:component-scan base-package="www.mmy.YummyMap" />
