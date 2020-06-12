@@ -114,13 +114,15 @@
     function drawChart() {
       var data = google.visualization.arrayToDataTable([
         ['Task', 'Hours per Day'],
-        ['한식',  1],
+        ['한식',  11],
         ['일식',  2],
         ['중식',  2],
         ['분식',  2],
         ['이탈리식',  2],
         ['잡식',  2],
         ['편식',  2],
+        ['집식',  2],
+        ['우식',  2],
       ]);
 
       var options = {

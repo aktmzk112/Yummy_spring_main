@@ -29,13 +29,13 @@
             </c:if>
         </ul>
     </div>
-    <div class="gameBanner border">
+    <div class="gameBanner">
         <a class="d-flex gameBannerItem" href="">
             <i class="fas fa-gamepad pt-1 pr-1" style="color: black !important;"></i>
             <p style="color: black !important;">픽픽메뉴</p>
         </a>
     </div>
-    <div class="boardBanner border">
+    <div class="boardBanner">
         <a class="d-flex gameBannerItem" href="">
             <i class="far fa-clipboard pt-1 pr-1" style="color: black !important;"></i>
             <p style="color: black !important;">커뮤니티</p>
