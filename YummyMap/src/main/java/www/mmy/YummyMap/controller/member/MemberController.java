@@ -1,5 +1,6 @@
 package www.mmy.YummyMap.controller.member;
 
+import java.util.HashMap;
 import java.util.Random;
 
 import javax.servlet.http.HttpSession;
@@ -60,12 +61,11 @@ public class MemberController {
 	}
 	
 	@RequestMapping("/mailCk.mmy")
-	
-	public @ResponseBody String mailCk(String email) {
+	@ResponseBody 
+	public HashMap<String,String> mailCk(String email) {
 		
 		String from = email;
 		
-		System.out.println(from + " 발송지 ############################################");
 		//인증번호 생성
 		Random ran = new Random();
 		StringBuffer tmp = new StringBuffer();
@@ -84,9 +84,9 @@ public class MemberController {
 		mtxt.append("<h3>감사합니다.</h3> ");
 		
 		yummyMail.getSend(from, title, mtxt.toString());
-		
-		String emailCk = inck;
-		
-		return emailCk;
+		HashMap<String, String> map = new HashMap<String, String>();
+//		String emailCk = inck;
+		map.put("emailCk", inck);
+		return map;
 	}
 }

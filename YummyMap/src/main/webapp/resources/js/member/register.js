@@ -163,6 +163,7 @@ let mailcode=false;
   //이메일 인증 코드값 확인 처리
   $('#eokbtn').click(function(){
 	 let mailo = $('#malick').val();
+	 alert(mailOk);
 	 if(mailo == mailOk){
 		 $('#mailmsg').removeClass('text-danger');
 		 $('#mailmsg').css('color','blue');
