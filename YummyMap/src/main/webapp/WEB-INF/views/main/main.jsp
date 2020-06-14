@@ -34,7 +34,7 @@
         <div class="d-flex justify-content-center">
             <div class="searchBoxHD d-flex">
                 <div class="searchBox-fontHD"><i class="fas fa-search"></i></div>
-                <input type="text" id="search" onkeydown="submitKeyword()">
+                <input type="text"  onkeydown="submitKeyword()">
                 <div class="searchBox-textHD">검색</div>
             </div>
         </div>
@@ -63,7 +63,7 @@
         <div class="d-flex justify-content-center pt-3">
             <div class="searchBox d-flex">
                 <div class="searchBox-font"><i class="fas fa-search"></i></div>
-                <input type="text" id="search" onkeydown="submitKeyword()">
+                <input type="text"  onkeydown="submitKeyword()">
                 <div class="searchBox-text ml-1">검색</div>
             </div>
         </div>
@@ -122,25 +122,13 @@
     </div>
 </body>
 <script type="text/javascript">
-function showChartFrame(){
-    document.getElementById('chartFrame').classList.toggle('dnone');
-}
-function submitChart(){
-    document.getElementById('chartForm').submit();
-}
 
 function submitKeyword(){
 	if(event.keyCode == 13) {
-		let keyword = document.getElementById("search").value;
+		let keyword = event.target.value;
 		if(!keyword)
 			return;
-	 	navigator.geolocation.getCurrentPosition(function(pos) {
-			let longitude= pos.coords.longitude;
-			let latitude= pos.coords.latitude;
-			console.log(latitude);
-			console.log(longitude);
-			location.href = "/YummyMap/main/getList.mmy?keyword="+keyword+"&x="+longitude+"&y="+latitude;
-		});
+		location.href = "/YummyMap/main/getList.mmy?keyword="+keyword;
 	}
 }
 

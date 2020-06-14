@@ -13,7 +13,36 @@
 			upso_id = #{upso_id}
 			AND isShow = 'Y'
 	</select>
-		<select id="upSoListWithChart" resultType="upSoVo" parameterType="searchInfoVo">
+	<select id="getUpSoList_keyword" resultType="upSoVo" parameterType="searchInfoVo">
+		SELECT
+			upso.upso_id, place_name, category_name, phone, road_address_name, longitude x, latitude y, place_url, 
+			NVL(cont_sum, 0) cont_sum,  NVL(star_avg, 0) star_avg
+		FROM
+			upso, ( SELECT  
+						res_id, 
+	                	COUNT(rev_no) AS cont_sum,
+	                    AVG(star_num) AS star_avg
+	           		FROM 
+	           			upso_review
+	           		WHERE 
+	           			isShow='Y' 
+	           		GROUP BY  
+	           			res_id 
+	           		),
+	           		( SELECT
+	           			upso_id 
+	           		  FROM
+	           		  	keyword
+	           		  WHERE
+	           		  	query_keyword = #{keyword}
+	           		) sub
+		WHERE
+			upso.isShow = 'Y'
+			AND upso.upso_id = sub.upso_id
+			AND upso.upso_id = res_id(+)
+	</select>
+
+	<select id="upSoList_geolocation" resultType="upSoVo" parameterType="searchInfoVo">
 		SELECT 
 			upso_id, place_name, category_name, phone, road_address_name, longitude x, latitude y, place_url, 
 			NVL(cont_sum, 0) cont_sum,  NVL(star_avg, 0) star_avg,
@@ -42,9 +71,10 @@
 			AND LATITUDE BETWEEN v_x - v_z / r_x AND v_x + v_z / r_x
 			AND LONGITUDE BETWEEN v_y - v_z / r_y AND v_y + v_z / r_y
 			AND  isShow = 'Y'
-				AND upso_id = res_id(+)
+			AND upso_id = res_id(+)
 	 	ORDER BY z
 	</select>
+	
 	<select id="showUpSo" resultType="int" parameterType="String">
 		SELECT
 			count(upso_id)
@@ -53,6 +83,16 @@
 		WHERE
 			upso_id = #{upso_id}
 	</select>
+	
+	<select id="showKeyword" resultType="int" parameterType="String">
+		SELECT
+			count(keyword_id)
+		FROM
+			keyword
+		WHERE
+			query_keyword = #{keyword}
+	</select>
+	
 	<insert id="insertUpSo" parameterType="upSoVo">
 		INSERT INTO
 			upso
@@ -64,7 +104,15 @@
 			<if test="road_address_name == null or road_address_name == ''">
 			#{address_name},
 			</if>
-			#{x},#{y},#{place_url}, 'Y', #{query_keyword}		
+			#{x},#{y},#{place_url}, 'Y'		
+		)
+	</insert>
+	
+	<insert id="insertKeyword" parameterType="upSoVo">
+		INSERT INTO
+			keyword
+		VALUES (
+			(SELECT NVL(MAX(keyword_id)+1,1) FROM keyword ), #{query_keyword}, #{id}
 		)
 	</insert>
 </mapper>

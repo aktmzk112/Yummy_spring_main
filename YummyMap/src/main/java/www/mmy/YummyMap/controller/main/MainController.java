@@ -3,12 +3,14 @@ package www.mmy.YummyMap.controller.main;
 
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import www.mmy.YummyMap.Service.main.MainService;
+import www.mmy.YummyMap.vo.SearchInfoVO;
 import www.mmy.YummyMap.vo.UpSoVO;
 
 @Controller
@@ -24,11 +26,13 @@ public class MainController {
 	}
 	
 	@RequestMapping("/main/getList.mmy")
-	public ModelAndView searchList(ModelAndView mv, String keyword, String x, String y) {
-		List<UpSoVO> upSoVoList = mainService.getSearchList(keyword, x, y);
-		mv.setViewName("main/main");
+	public ModelAndView searchList(ModelAndView mv, SearchInfoVO searchInfoVo) {
+		Map<String, Object> resultMap = mainService.getSearchList(searchInfoVo);
+		List<UpSoVO> upSoVoList = (List<UpSoVO>) resultMap.get("upSoListReturnValue");
+		searchInfoVo = (SearchInfoVO) resultMap.get("searchInfoVo");
+		mv.setViewName("main/mainSearchList");
 		mv.addObject("upSoVoList",upSoVoList);
-		mv.addObject("keyword",keyword);
+		mv.addObject("searchInfoVo",searchInfoVo);
 		return mv;
 	}
 }

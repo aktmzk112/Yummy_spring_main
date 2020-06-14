@@ -1,10 +1,16 @@
 package www.mmy.YummyMap.Service.main;
-
+/**
+ * 업소 서비스를 구현한 클래스입니다.
+ * 
+ * @author	김종형
+ * @see		www.mmy.YummyMap.Service.main.UpSoService
+ */
 
 import org.springframework.stereotype.Service;
 
 import www.mmy.YummyMap.dao.MainDAO;
 import www.mmy.YummyMap.vo.UpSoVO;
+
 
 @Service
 public class UpSoServiceImpl implements UpSoService {
@@ -31,5 +37,11 @@ public class UpSoServiceImpl implements UpSoService {
 		int resultCnt = mainDao.insertUpSo(upSoVo);
 		return resultCnt;
 	}
+	@Override
+	public int insertKeyword(UpSoVO upSoVo) {
+		int resultCnt = mainDao.insertKeyword(upSoVo);
+		return resultCnt;
+	}
 
 }
+

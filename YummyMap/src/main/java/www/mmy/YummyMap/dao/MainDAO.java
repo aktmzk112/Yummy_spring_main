@@ -21,15 +21,25 @@ public class MainDAO {
 	public int isShowUpSo(String upso_id) {
 		return sqlSession.selectOne("mainSql.showUpSo", upso_id);
 	}
+	public int isShowKeyword(String keyword) {
+		return sqlSession.selectOne("mainSql.showKeyword", keyword);
+	}
 
 	public int insertUpSo(UpSoVO upSoVo) {
 		return sqlSession.insert("mainSql.insertUpSo", upSoVo);
+	}
+	public int insertKeyword(UpSoVO upSoVo) {
+		return sqlSession.insert("mainSql.insertKeyword", upSoVo);
 	}
 	
 	public UpSoVO getUpSoDetailInfo(String upso_id) {
 		return sqlSession.selectOne("mainSql.upSoDetailInfo", upso_id);
 	}
-	public List<UpSoVO> getUpSoListWithChart(SearchInfoVO searchInfoVo){
-		return sqlSession.selectList("mainSql.upSoListWithChart",searchInfoVo);
+	public List<UpSoVO> getUpSoList_keyword(SearchInfoVO searchInfoVo){
+		return sqlSession.selectList("mainSql.getUpSoList_keyword",searchInfoVo);
 	}
+	public List<UpSoVO> getUpSoList_geolocation(SearchInfoVO searchInfoVo){
+		return sqlSession.selectList("mainSql.upSoList_geolocation",searchInfoVo);
+	}
+
 }
