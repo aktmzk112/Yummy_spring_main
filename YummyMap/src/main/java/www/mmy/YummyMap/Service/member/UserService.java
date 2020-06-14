@@ -13,4 +13,6 @@ public interface UserService {
 	public void loginProcess(HttpSession session, MemberVO memberVo);
 	
 	public MemberVO getUserInfo(HttpSession session);
+	
+	
 }

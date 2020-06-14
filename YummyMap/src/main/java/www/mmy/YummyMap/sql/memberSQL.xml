@@ -23,4 +23,41 @@
 			WHERE
 				mid = #{mid}
 		</select>
+		
+		<sql id="joinMailCnt">
+			SELECT 
+				count(*) cnt
+			FROM
+				joinmail
+		</sql>
+		<select id="joinMailSh" resultType="int" parameterType="joinMailVo">
+			<include refid="joinMailCnt"></include>
+			WHERE
+				mail = #{mail}
+		</select>
+		
+		<insert id="addjoinMail" parameterType="joinMailVo">
+			INSERT INTO
+			    joinmail( mailno, mail, cftnum)
+			VALUES(
+			    getjMailno.nextval, #{mail} , #{cftnum}
+			)
+		</insert>
+		
+		<update id="upjoinMail" parameterType="joinMailVo">
+			UPDATE
+			    joinmail
+			SET
+			    cftnum = #{cftnum}
+			WHERE
+			    mail = #{mail}
+		</update>
+		
+		<select id="joinMailOk" resultType="int" parameterType="joinMailVo">
+			<include refid="joinMailCnt"></include>
+			WHERE
+				mail = #{mail}
+				AND cftnum = #{cftnum}
+		</select>
+		
 </mapper>

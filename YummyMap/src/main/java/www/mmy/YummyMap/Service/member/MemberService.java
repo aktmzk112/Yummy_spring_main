@@ -5,6 +5,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Service;
 
 import www.mmy.YummyMap.dao.MemberDAO;
+import www.mmy.YummyMap.vo.JoinMailVO;
 import www.mmy.YummyMap.vo.MemberVO;
 
 @Service
@@ -29,4 +30,23 @@ public class MemberService {
 			return resultCnt;
 		}
 	}
+	
+	public int jmailCnt(JoinMailVO jmailVo) {
+		int cnt = memberDao.getjMailCnt(jmailVo);
+		return cnt;
+	}
+	
+	public void addjoinMail(JoinMailVO jmailVo) {
+		memberDao.addjoinMail(jmailVo);
+	}
+	
+	public void upjoinMail(JoinMailVO jmailVo) {
+		memberDao.upjoinMail(jmailVo);
+	}
+	
+	public int joinMaillOk(JoinMailVO jmailVo) {
+		int cnt = memberDao.joinMailOk(jmailVo);
+		return cnt;
+	}
+	
 }

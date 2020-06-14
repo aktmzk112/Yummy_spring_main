@@ -7,20 +7,20 @@
  
 function join(){
 
-		let sid = $('#id').val();
-		let spw = $('#pw').val();
-		if(!sid){
+		let id = $('#id').val();
+		let pw = $('#pw').val();
+		if(!id){
 			alert('아이디를 입력하세요');
 			$('#id').focus();
 			return;
-		}else if(!spw){
+		}else if(!pw){
 			alert('비밀번호를 입력하세요');
 			$('#pw').focus();
 			return;
 		}
 		
-		let idck = idchk(sid);
-		let pwck = pwchk(spw);
+		let idck = idchk(id);
+		let pwck = pwchk(pw);
 		if(idck == false || pwck == false){
 			alert('아이디 또는 비밀번호가 올바르지 않습니다');
 			$('#id').focus();
@@ -28,9 +28,20 @@ function join(){
 		}
 		
 		
+	       var rsa = new RSAKey();
+	       rsa.setPublic($('#RSAModulus').val(),$('#RSAExponent').val());
+	        
+	       $("#mid").val(rsa.encrypt(id));
+	       $("#mpw").val(rsa.encrypt(pw));
+	       
+	       alert(rsa.encrypt(id));
+	       alert(rsa.encrypt(pw));
+	       $('#id').val("");
+	       $('#pw').val("");
+		
 		$('#frm').submit();
 
-		alert(cnt);
+//		alert(cnt);
 /*		$.ajax({
 			url: '/YummyMap/admin/login.ck',
 			type: 'post',

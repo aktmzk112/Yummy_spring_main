@@ -152,8 +152,9 @@ let mailcode=false;
 		 },
 		 success : function(data){
 			 
-			 mailOk = data.emailCk;
-			 $('#mailckBox').removeClass('d-none');
+	        if(data.emailCk == 'ok'){
+	        	$('#mailckBox').removeClass('d-none');
+	        }
 
 		 },error : function(){
 			alert("통신 오류") 
@@ -162,16 +163,35 @@ let mailcode=false;
   });
   //이메일 인증 코드값 확인 처리
   $('#eokbtn').click(function(){
+	  
+	  let mailId = $('#email1').val();
+	  let domain = $('#email2').val();
+	  
+	 let email = mailId + domain;
 	 let mailo = $('#malick').val();
-	 alert(mailOk);
-	 if(mailo == mailOk){
-		 $('#mailmsg').removeClass('text-danger');
-		 $('#mailmsg').css('color','blue');
-		 $('#mailmsg').html('메일 인증이 완료 되었습니다');
-		 $('#mailckBox').addClass('d-none');
-		 mailcode = true;
-	 }else{
-		 $('#mailmsg').html('인증 번호가 틀립니다 다시 인증해주세요');
-	 }
+	 
+	 $.ajax({
+		url: '/YummyMap/member/mailOk.mmy',
+		type: 'post',
+		dataType: 'json',
+		data: {
+			'mail' :email,
+			'cftnum' : mailo
+		},
+		success : function(data){
+			if(data.status == 'ok'){
+				 $('#mailmsg').removeClass('text-danger');
+				 $('#mailmsg').css('color','blue');
+				 $('#mailmsg').html('메일 인증이 완료 되었습니다');
+				 $('#mailckBox').addClass('d-none');
+				 mailcode = true;
+			}else{
+				 $('#mailmsg').html('인증 번호가 틀립니다 다시 인증해주세요');
+			}
+			
+		},error : function(){
+			alert('통신 에러');
+		}
+	 });
   });
 });

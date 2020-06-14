@@ -9,6 +9,11 @@
 <link rel="stylesheet" href="/YummyMap/css/bootstrap.min.css">
 
 <script src="/YummyMap/js/jquery-3.5.0.min.js"></script>
+<script type="text/javascript" src="/YummyMap/js/RSA/jsencrypt.min.js"></script>
+<script type="text/javascript" src="/YummyMap/js/RSA/rsa.js"></script>
+<script type="text/javascript" src="/YummyMap/js/RSA/jsbn.js"></script>
+<script type="text/javascript" src="/YummyMap/js/RSA/prng4.js"></script>
+<script type="text/javascript" src="/YummyMap/js/RSA/rng.js"></script>
 <script src="/YummyMap/js/member/register.js"></script>
 
 </head>
@@ -62,7 +67,6 @@
   <div class="main-body mb-5">
     <div class="m-box mt-4">
       <form id="frm" action="/YummyMap/join/joinProc.mmy" method="POST">
-      	<input type="hidden" id="emailCk" name="emailCk"> 
         <div class="form-group">
           <label for="id" class="idlabel mr-2 d-inline-block">아이디</label>
           <button type="button" id="idcheck" class="btn btn-secondary btn-sm d-inline-block mb-1">아이디 체크</button>

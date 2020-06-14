@@ -1,10 +1,9 @@
 package www.mmy.YummyMap.dao;
 
 import org.mybatis.spring.SqlSessionTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
+import www.mmy.YummyMap.vo.JoinMailVO;
 import www.mmy.YummyMap.vo.MemberVO;
 
 @Repository
@@ -23,5 +22,22 @@ public class MemberDAO {
 	public MemberVO getUserInfo(String mid) {
 		return sqlSession.selectOne("memberSql.getUserInfo", mid);
 	}
+	
+	public int getjMailCnt(JoinMailVO jmailVo) {
+		return sqlSession.selectOne("memberSql.joinMailSh", jmailVo);
+	}
+	
+	public int addjoinMail(JoinMailVO jmailVo) {
+		return sqlSession.insert("memberSql.addjoinMail", jmailVo);
+	}
+	
+	public int upjoinMail(JoinMailVO jmailVo) {
+		return sqlSession.update("memberSql.upjoinMail", jmailVo);
+	}
+	
+	public int joinMailOk(JoinMailVO jmailVo) {
+		return sqlSession.selectOne("memberSql.joinMailOk" , jmailVo);
+	}
+	
 		
 }

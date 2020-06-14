@@ -1,8 +1,10 @@
 package www.mmy.YummyMap.controller.admin;
 
+import java.security.PrivateKey;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,11 +14,12 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import www.mmy.YummyMap.Service.chart.ChartServiceImpl;
+import www.mmy.YummyMap.Service.rsa.RsaServiceImpl;
 import www.mmy.YummyMap.dao.AdminDAO;
 import www.mmy.YummyMap.util.PageUtil;
 import www.mmy.YummyMap.vo.admin.AdminBoardVO;
-import www.mmy.YummyMap.vo.admin.ChartCntVO;
 import www.mmy.YummyMap.vo.admin.AdminVO;
+import www.mmy.YummyMap.vo.admin.ChartCntVO;
 import www.mmy.YummyMap.vo.admin.ResCntVO;
 
 @Controller
@@ -26,13 +29,19 @@ public class Admin {
 	AdminDAO adminDao;
 	
 	ChartServiceImpl chartServiceImpl;
-	public Admin(ChartServiceImpl chartServiceImpl) {
+	RsaServiceImpl rsaServiceImpl;
+
+	public Admin(ChartServiceImpl chartServiceImpl,RsaServiceImpl rsaServiceImpl) {
 		this.chartServiceImpl = chartServiceImpl;
+		this.rsaServiceImpl = rsaServiceImpl;
 	}
 	
 	//관리자 로그인 뷰 전담 함수
 	@RequestMapping("/login.mmy")
-	public String loginView() {
+	public String loginView(HttpServletRequest request) {
+		
+		rsaServiceImpl.initRsa(request);
+
 		return "admin/adminLogin";
 	}
 	
@@ -40,6 +49,21 @@ public class Admin {
 	//관리자 로그인 전담 함수
 	@RequestMapping("/loginProc.mmy")
 	public ModelAndView loginck(AdminVO avo , ModelAndView mv , HttpSession session) {
+		
+		PrivateKey privateKey = (PrivateKey) session.getAttribute(rsaServiceImpl.getRSA_WEB_KEY());
+		
+		System.out.println(avo.getMid());
+		
+        // 복호화
+        try {
+			avo.setMid(rsaServiceImpl.decryptRsa(privateKey, avo.getMid()));
+			avo.setMpw(rsaServiceImpl.decryptRsa(privateKey, avo.getMpw())); 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+        
+        session.removeAttribute(rsaServiceImpl.getRSA_WEB_KEY());
+
 		int cnt = adminDao.loginck(avo);
 		RedirectView rv =null;
 		if(cnt == 1) {
@@ -55,6 +79,8 @@ public class Admin {
 	//관리자 메인 페이지 
 	@RequestMapping("/main.mmy")
 	public ModelAndView mainView(ModelAndView mv , HttpSession session) {
+
+
 		String sid = (String) session.getAttribute("SID");
 		String view = "admin/main";
 		if (sid == null || sid.length() == 0) {

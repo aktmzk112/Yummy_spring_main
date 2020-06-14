@@ -41,6 +41,7 @@
 		<typeAlias type="www.mmy.YummyMap.vo.admin.AdminVO" alias="adminVo"/>
 		<typeAlias type="www.mmy.YummyMap.vo.admin.AdminBoardVO" alias="aBoardVo"/>
 		<typeAlias type="www.mmy.YummyMap.vo.MemberVO" alias="memberVo"/>
+		<typeAlias type="www.mmy.YummyMap.vo.JoinMailVO" alias="joinMailVo"/>
 		<typeAlias type="www.mmy.YummyMap.vo.UpSoVO" alias="upSoVo"/>
 		<typeAlias type="www.mmy.YummyMap.vo.SearchInfoVO" alias="searchInfoVo"/>
 		<typeAlias type="www.mmy.YummyMap.vo.admin.ChartCntVO" alias="chartCntVo"/>
