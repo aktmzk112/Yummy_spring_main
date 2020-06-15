@@ -50,14 +50,17 @@ public class Admin {
 	@RequestMapping("/loginProc.mmy")
 	public ModelAndView loginck(AdminVO avo , ModelAndView mv , HttpSession session) {
 		
-		PrivateKey privateKey = (PrivateKey) session.getAttribute(rsaServiceImpl.getRSA_WEB_KEY());
+//		PrivateKey privateKey = (PrivateKey) session.getAttribute(rsaServiceImpl.getRSA_WEB_KEY());
+//		Object privateKeyObj = (Object) rsaServiceImpl.getRSA_WEB_KEY();
+		Object privateKey = (Object) rsaServiceImpl.getRSA_WEB_KEY();
+//		PrivateKey privateKey = (PrivateKey) privateKeyObj;
 		
 		System.out.println(avo.getMid());
 		
         // 복호화
         try {
-			avo.setMid(rsaServiceImpl.decryptRsa(privateKey, avo.getMid()));
-			avo.setMpw(rsaServiceImpl.decryptRsa(privateKey, avo.getMpw())); 
+			avo.setMid(rsaServiceImpl.decryptRsa(rsaServiceImpl.getPrivateKey(), avo.getMid()));
+			avo.setMpw(rsaServiceImpl.decryptRsa(rsaServiceImpl.getPrivateKey(), avo.getMpw())); 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

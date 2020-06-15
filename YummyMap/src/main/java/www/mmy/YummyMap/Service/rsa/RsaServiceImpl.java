@@ -1,3 +1,9 @@
+/**
+ * @author 유태희
+ * @sinec 2020.06.13
+ * 	이클래스는 RsaService 를 구현 하는 RSA 암/복호화 클래스 입니다
+ * 
+ */
 package www.mmy.YummyMap.Service.rsa;
 
 import java.security.Key;
@@ -21,6 +27,7 @@ public class RsaServiceImpl implements RsaService {
 	private String RSA_WEB_KEY = "WEB_key"; //개인키
 	private String RSA_INSTANCE = "RSA"; 
 	private Key PUBLIC_KEY; 
+	private PrivateKey PrivateKey;
 	
 	public String getRSA_WEB_KEY() {
 		return RSA_WEB_KEY;
@@ -31,6 +38,9 @@ public class RsaServiceImpl implements RsaService {
 	}
 	
 	
+	public PrivateKey getPrivateKey() {
+		return PrivateKey;
+	}
 
 	//키생성 
 	@Override
@@ -47,8 +57,9 @@ public class RsaServiceImpl implements RsaService {
 			KeyFactory keyFactory = KeyFactory.getInstance(RSA_INSTANCE);
 			PublicKey publicKey = keyPair.getPublic();
 			PrivateKey privateKey = keyPair.getPrivate();
+			this.PrivateKey = privateKey;
 			this.PUBLIC_KEY = publicKey;
-			session.setAttribute(RSA_WEB_KEY, privateKey); //세션에 rsa 개인키를 세션에 저장
+//			session.setAttribute(RSA_WEB_KEY, privateKey); //세션에 rsa 개인키를 세션에 저장
 			
 			RSAPublicKeySpec publicSpec = (RSAPublicKeySpec) keyFactory.getKeySpec(publicKey, RSAPublicKeySpec.class);
             String publicKeyModulus = publicSpec.getModulus().toString(16);
