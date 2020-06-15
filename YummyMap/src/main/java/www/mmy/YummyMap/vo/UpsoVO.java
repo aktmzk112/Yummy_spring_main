@@ -1,9 +1,10 @@
 package www.mmy.YummyMap.vo;
 
-public class UpSoVO {
+public class UpsoVO {
 	private int cont_sum, star_avg;
 	private double x, y;
 	private String id, place_name, category_name, phone, address_name, road_address_name, place_url, query_keyword;
+	
 	public int getCont_sum() {
 		return cont_sum;
 	}

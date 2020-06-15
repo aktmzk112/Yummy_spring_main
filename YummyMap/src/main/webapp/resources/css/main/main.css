@@ -219,6 +219,6 @@ ul{
     cursor: pointer;
 }
 .pager:hover {
-    font-size: 15pt;
+    color: #F86624;
     
 }

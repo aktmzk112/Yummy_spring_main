@@ -40,82 +40,85 @@
         </div>
     </div>
     <div class="itemBody container">
-        <div class="Box">
-            <div class="d-flex">
-                <div class="imgBox">
-                    <img src="/YummyMap/img/main/noimage.jpg" >
-                </div>
-                <div class="infoBox">
-                    <p class="resName">천미미</p>
-                    <div class="sub d-flex border-bottom">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star-half"></i>
-                        <p class="resSub">n개 리뷰</p>
-                    </div>
-                    <div class="pickHeart">                        
-                        <i class="far fa-heart unPick"></i>
-                        <!-- <i class="fas fa-heart pick"></i> -->
-                    </div>
-                    <div class="resLoc">
-                        <i class="fas fa-map-marked-alt"></i>
-                        <p>서울 구로구 ...</p>
-                    </div>
-                    <div class="resMenu">
-                        <i class="fas fa-utensils"></i>
-                        <div class="d-flex">
-                            <p>메뉴1</p>
-                            <p>메뉴2</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="reviewBox">
-                <p class="reviewBox-title border-bottom m-0">리뷰</p>
-                <div class="reviewBtn" onclick="showInputBox()">
-                    <i class="fas fa-pen"></i>
-                </div>
-                <div class="writeBox dnone">
-                    <div class="d-flex starBox" id="star_grade">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <div class="input-group mt-1 mb-0">
-                        <input type="text" class="form-control" >
-                        <div class="input-group-append">
-                          <button class="btn border writeBtn" type="button" id="button-addon2">작성</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="mb-5">
-                <div class="border-bottom pt-4">
-                    <div class="reviewId">아이디</div>
-                    <div class="d-flex reviewStarBox">
-                        <i class="fas fa-star"></i>
-                        <div class="pl-1">2020/05/01</div>
-                    </div>
-                    <div class="pt-4 pb-4">내용...</div>
-                </div>
-            </div>
-        </div>
+		<div class="border-bottom mt-5">
+			<div class="d-flex">
+		        <div class="upso-name mr-2">${upsoVo.place_name}</div>
+	            <div class="upso-count pt-3">${upsoVo.cont_sum}개 리뷰</div>
+			</div>
+	        <div class="d-flex">
+	        	<div class="d-flex upso-avgBox pt-2">
+		            <i class="fas fa-star upso-star"></i>
+		            <i class="fas fa-star-half upso-star"></i>
+					<div class="upso-avg">${upsoVo.star_avg}</div>		
+	        	</div>
+	        	<div>
+			        <div class="pickHeart mb-1">                        
+			            <i class="far fa-heart unPick"></i>
+			            <!-- <i class="fas fa-heart pick"></i> -->
+			        </div>
+	        	</div>
+	        </div>
+		</div>
+		<div class="d-flex">
+			<div class="upso-subinfo-box pt-4">
+		        <div>
+		            <i class="fas fa-map-marked-alt rgba4"></i>
+		            <div class="upso-subinfo-font">${upsoVo.road_address_name}</div>
+		        </div>
+		        <div class="mt-2">
+		        	<i class="fas fa-phone rgba4"></i>
+		        	<div class="upso-subinfo-font">${upsoVo.phone}</div>
+		        </div>
+		        <div class="mt-2">
+		            <i class="fas fa-utensils rgba4"></i>
+		            <div class="upso-subinfo-font">${upsoVo.category_name}</div>
+		        </div>
+			</div>
+			<div class="upso-mapBox"></div>
+		</div>
+
+
+	    <div class="reviewBox">
+	        <p class="reviewBox-title border-bottom m-0">리뷰</p>
+	        <div class="reviewBtn" onclick="showInputBox()">
+	            <i class="fas fa-pen"></i>
+	        </div>
+	        <div class="writeBox dnone">
+	            <div class="d-flex starBox" id="star_grade">
+	                <i class="fas fa-star"></i>
+	                <i class="fas fa-star"></i>
+	                <i class="fas fa-star"></i>
+	                <i class="fas fa-star"></i>
+	                <i class="fas fa-star"></i>
+	            </div>
+	            <div class="input-group mt-1 mb-0">
+	                <input type="text" class="form-control" >
+	                <div class="input-group-append">
+	                  <button class="btn border writeBtn" type="button" id="button-addon2">작성</button>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	    <div class="mb-5">
+	        <div class="review-item border-bottom pt-4">
+	            <div class="reviewId">아이디</div>
+	            <div class="d-flex reviewStarBox">
+	                <i class="fas fa-star"></i>
+	                <div class="pl-1">2020/05/01</div>
+	            </div>
+	            <div class="review-txt pt-4 pb-4">내용...</div>
+	        </div>
+	    </div>
     </div>
 </body>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d8654c7466588faa58bc40d0b9bef6ce&libraries=services"></script>
 <script type="text/javascript">
 function submitKeyword(){
 	if(event.keyCode == 13) {
 		let keyword = document.getElementById("search").value;
 		if(!keyword)
 			return;
-	 	navigator.geolocation.getCurrentPosition(function(pos) {
-			let longitude= pos.coords.longitude;
-			let latitude= pos.coords.latitude;
-			console.log(latitude);
-			console.log(longitude);
-			location.href = "/YummyMap/main/getList.mmy?keyword="+keyword+"&x="+longitude+"&y="+latitude;
-		});
+		location.href = "/YummyMap/main/getList.mmy?keyword="+keyword;
 	}
 }
 $('#star_grade i').click(function(){
@@ -127,5 +130,25 @@ $('#star_grade i').click(function(){
 function showInputBox() {
     $('.writeBox').show();
 }
+
+// 카카오map
+var mapContainer = document.getElementById('upso-mapBox'), // 지도를 표시할 div 
+mapOption = { 
+    center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+    level: 3 // 지도의 확대 레벨
+};
+
+var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+s
+//마커가 표시될 위치입니다 
+var markerPosition  = new kakao.maps.LatLng(33.450701, 126.570667); 
+
+//마커를 생성합니다
+var marker = new kakao.maps.Marker({
+position: markerPosition
+});
+
+//마커가 지도 위에 표시되도록 설정합니다
+marker.setMap(map);
 </script>
 </html>

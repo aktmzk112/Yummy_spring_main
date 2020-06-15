@@ -9,6 +9,13 @@ a, a:hover, a:link, a:visited{
 .dnone{
     display: none;
 }
+img{
+	width: 100%;
+	height: 100%;
+}
+.rgba4{
+	color: rgba(0,0,0,0.4) !important;
+}
 
 /*itemBody*/
 .itemBody{
@@ -16,80 +23,59 @@ a, a:hover, a:link, a:visited{
     max-width: 900px !important;
     height: 100%;
 }
-.Box{
-    width: 810px;
-    margin-top: 28px;
+.upso-name{
+	font-size: 20pt;
+	font-weight: 500;
+    letter-spacing: 3px;
 }
-.imgBox{
-    width: 405px;
-    height: 350px;
+.upso-avgBox{
+	width: 810px;
 }
-img{
-    width: 100%;
-    height: 100%;
+.upso-avg{
+	color: #F86624;
+	font-size: 12pt;
+	font-weight: 500;
+    letter-spacing: 1px;
 }
-.infoBox{
-    width: 405px;
-    padding-top: 40px;
-    padding-left: 15px;
-    padding-right: 15px;
-}
-.resName{
-    color: rgb(0, 0, 0);
-    font-size: 15pt;
-    font-weight: 500;
-    margin: 0;
-}
-.resSub{
-    color: rgb(15, 0, 224);
-    font-size: 10pt;
-    margin: 0;
-}
-.sub i{
-    padding-top: 3px;
-    font-size: 11pt;
+.upso-star{
     color: rgb(255, 187, 0);
 }
-.sub{
-    padding-bottom: 10px;
+.upso-count{
+	color: #F86624;
+	font-size: 10pt;
 }
-.resLoc{
-    margin-top: 40px;
-}
-.resLoc p {
-    font-size: 10pt;
-}
-.resMenu{
-    margin-top: 40px;
-}
-.resMenu p{
-    font-size: 10pt;
-}
-
-.resLoc i, .resMenu i {
-    color: rgba(0, 0, 0, 0.3);
-}
-.pickHeart {
-    position: relative;
-    top: -47px;
-    left: 322px;
-    border: 2px solid rgba(0, 0, 0, 0.1);
-    border-radius: 100%;
+.pickHeart{
+    cursor: pointer;
     width: 40px;
     height: 40px;
-    cursor: pointer;
-}
-.pickHeart i{
-    font-size: 16pt;
-    padding-top: 9px;
-    padding-left: 7px;
-}
-.unPick{
-    color: rgb(248, 100, 100);
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    border-radius: 100%;
+    padding-top: 8px;
+    text-align: center;
 }
 .pick{
-    color: rgb(248, 100, 100);
+	color: #F86624;
+	font-size: 16pt	
 }
+.unPick{
+	color: #F86624;
+	font-size: 16pt;
+}
+.upso-subinfo-box{
+	width: 450px;
+	height: 250px;
+    letter-spacing: 1px;	
+}
+
+.upso-mapBox{
+	width: 450px;
+	height: 250px;	
+}
+.upso-subinfo-font{
+	font-weight: 500;
+	font-size: 11pt;
+}
+/*review*/
 .reviewBox{
     margin-top: 100px;
 }
@@ -112,7 +98,7 @@ img{
 }
 
 .writeBtn:hover{
-    background-color: rgb(255, 128, 89) !important;
+    background-color: #F86624 !important;
     color: white !important;
 }
 .writeBtn{
@@ -122,7 +108,7 @@ img{
     cursor: pointer;
     position: relative;
     top: -47px;
-    left: 747px;
+    left: 820px;
     width: 40px;
     height: 40px;
     border: 2px solid rgba(0, 0, 0, 0.1);
@@ -137,6 +123,7 @@ img{
 
 .reviewId{
     font-size: 11pt;
+    font-weight: 500;
 }
 .reviewStarBox i {
     
@@ -146,4 +133,7 @@ img{
 .reviewStarBox div{
     font-size: 9pt;
     color: rgba(0, 0, 0, 0.6);
+}
+.review-txt{
+	letter-spacing: 1px;
 }

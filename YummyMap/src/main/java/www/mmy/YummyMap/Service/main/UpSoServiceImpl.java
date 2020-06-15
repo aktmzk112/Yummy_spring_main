@@ -9,7 +9,7 @@ package www.mmy.YummyMap.Service.main;
 import org.springframework.stereotype.Service;
 
 import www.mmy.YummyMap.dao.MainDAO;
-import www.mmy.YummyMap.vo.UpSoVO;
+import www.mmy.YummyMap.vo.UpsoVO;
 
 
 @Service
@@ -20,8 +20,8 @@ public class UpSoServiceImpl implements UpSoService {
 		this.mainDao = mainDao;
 	}
 	@Override
-	public UpSoVO getUpSoDetailInfo(String upso_id) {
-		UpSoVO upSoVo = mainDao.getUpSoDetailInfo(upso_id);
+	public UpsoVO getUpSoDetailInfo(String upso_id) {
+		UpsoVO upSoVo = mainDao.getUpSoDetailInfo(upso_id);
 		return upSoVo;
 	}
 
@@ -33,12 +33,12 @@ public class UpSoServiceImpl implements UpSoService {
 	}
 
 	@Override
-	public int insertUpSo(UpSoVO upSoVo) {
+	public int insertUpSo(UpsoVO upSoVo) {
 		int resultCnt = mainDao.insertUpSo(upSoVo);
 		return resultCnt;
 	}
 	@Override
-	public int insertKeyword(UpSoVO upSoVo) {
+	public int insertKeyword(UpsoVO upSoVo) {
 		int resultCnt = mainDao.insertKeyword(upSoVo);
 		return resultCnt;
 	}

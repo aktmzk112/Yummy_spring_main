@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>야미맵 리스트</title>
     <link rel="stylesheet" href="/YummyMap/css/main/nav.css" />
-    <link rel="stylesheet" href="/YummyMap/css/main/mainList.css">
+    <link rel="stylesheet" href="/YummyMap/css/main/mainSearchList.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
     <link rel="stylesheet" href="/YummyMap/css/bootstrap.min.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -39,39 +39,62 @@
             </div>
         </div>
     </div>
-    <div class="border-bottom titleBody bg-light">
-        <div class="d-flex justify-content-center">
-            <div class="title"></div>
-        </div>
-        <div class="d-flex justify-content-center">
-            <div class="sub-title"></div>
-        </div>
-    </div>
-    <div class="itemBody container">
+    <div class="itemBody container mb-5">
+   	    <c:if test="${searchInfoVo.query_keyword.length() == 0 || searchInfoVo.query_keyword == null}">
+    	<div class="title mt-4">${searchInfoVo.query_location} 인기 검색 순위</div>
+    	<div class="border-bottom border-top mt-2 mb-2 p-2 d-flex">
+    		<div class="filter-item border p-2 mr-2">한식</div>
+    		<div class="filter-item border p-2 mr-2">중식</div>
+    		<div class="filter-item border p-2 mr-2">일식</div>
+    		<div class="filter-item border p-2 mr-2">양식</div>
+    	</div>
+    	</c:if>
+   	    <c:if test="${searchInfoVo.query_keyword.length() != 0 || searchInfoVo.query_keyword != null}">
+    	<div class="title mt-4">${searchInfoVo.query_location} ${searchInfoVo.query_keyword} 인기 검색 순위</div>   	    
+   	    </c:if>    	
     	<c:forEach var="upSoVoList" items="${upSoVoList}" varStatus="status">
-        <div class="item border-bottom d-flex">
+    	<c:if test="${status.count % 2 != 0}">
+ 	    <div class="item border d-inline-block mr-4 ml-3 mt-4" onclick="getDetail('${upSoVoList.id}')">
+ 	    	<div class="p-2">
+	        	<div class="info-name m-0">${upSoVoList.place_name}</div>
+	        	<div class="info-addr m-0">${upSoVoList.road_address_name}</div> 	    	
+ 	    	</div>
             <div class="imgBox">
                 <img src="/YummyMap/img/main/noimage.jpg" alt="">
             </div>
-            <div class="pl-4">
-                <div class="d-flex">
-                    <div class="d-flex item-info">
-                        <div>${status.count}</div>
-                        <div>${upSoVoList.place_name}</div>
-                        <div>&nbsp${upSoVoList.star_avg}</div>
-                    </div>
-                    <div class="heartBox">
-                        <div class="pickHeart">                        
-                            <i class="far fa-heart unPick"></i>
-                            <!-- <i class="fas fa-heart pick"></i> -->
-                        </div>
-                    </div>
-                </div>
-                <div class="info-addr">${upSoVoList.road_address_name}</div>
-                <div class="info-userID">유저ID</div>
-                <div class="info-txt">너무맛있어너무맛있어요너무맛있어요너무맛있어요너무맛있어요너무맛있어요너무맛있어요너무맛있어요너무맛있어요너무맛있어요요</div>
+            <div class="info-sub pl-2 pt-1">
+            	<div class="d-flex">
+            		<div class="mr-2">평점</div>
+            		<div class="info-avg">${upSoVoList.star_avg}</div>
+            	</div>
+            	<div class="d-flex">
+    				<div class="mr-2">리뷰</div>        	
+	                <div class="info-sum">${upSoVoList.cont_sum}</div>
+            	</div>
             </div>
         </div>
+    	</c:if>
+    	<c:if test="${status.count % 2 == 0}">
+        <div class="item border d-inline-block mt-4" onclick="getDetail('${upSoVoList.id}')">
+ 	    	<div class="p-2">
+	        	<div class="info-name m-0">${upSoVoList.place_name}</div>
+	        	<div class="info-addr m-0">${upSoVoList.road_address_name}</div> 	    	
+ 	    	</div>
+            <div class="imgBox">
+                <img src="/YummyMap/img/main/noimage.jpg" alt="">
+            </div>
+            <div class="info-sub pl-2 pt-1">
+            	<div class="d-flex">
+            		<div class="mr-2">평점</div>
+            		<div class="info-avg">${upSoVoList.star_avg}</div>
+            	</div>
+            	<div class="d-flex">
+    				<div class="mr-2">리뷰</div>        	
+	                <div class="info-sum">${upSoVoList.cont_sum}</div>
+            	</div>
+            </div>
+        </div>
+    	</c:if>
     	</c:forEach>
     </div>
 </body>
@@ -83,6 +106,9 @@ function submitKeyword(){
 			return;
 		location.href = "/YummyMap/main/getList.mmy?keyword="+keyword;
 	}
+}
+function getDetail(data){
+	location.href = "/YummyMap/main/getDetail.mmy?id="+data;
 }
 </script>
 </html>
