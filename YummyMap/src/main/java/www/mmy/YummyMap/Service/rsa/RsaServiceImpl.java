@@ -58,6 +58,7 @@ public class RsaServiceImpl implements RsaService {
 			PublicKey publicKey = keyPair.getPublic();
 			PrivateKey privateKey = keyPair.getPrivate();
 			this.PrivateKey = privateKey;
+			System.out.println("PrivateKey ###" + this.PrivateKey);
 			this.PUBLIC_KEY = publicKey;
 //			session.setAttribute(RSA_WEB_KEY, privateKey); //세션에 rsa 개인키를 세션에 저장
 			
