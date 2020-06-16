@@ -43,4 +43,13 @@ public class MainController {
 		mv.addObject("upsoVo",upsoVo);
 		return mv;
 	}
+	
+	@RequestMapping("/main/groupByCategory.mmy")
+	public ModelAndView groupByCategory(ModelAndView mv, SearchInfoVO searchInfoVo) {
+		List<UpsoVO> upSoVoList = mainService.getUpsoListGroupByCategory(searchInfoVo);
+		mv.addObject("upSoVoList", upSoVoList);
+		mv.addObject("searchInfoVo", searchInfoVo);
+		mv.setViewName("main/mainSearchList");
+		return mv;
+	}
 }

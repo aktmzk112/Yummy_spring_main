@@ -105,6 +105,36 @@
 			query_keyword = #{keyword}
 	</select>
 	
+	<select id="upsoListGroupByCategory" resultType="upsoVo" parameterType="searchInfoVo">
+		SELECT
+			upso.upso_id id, place_name, category_name, phone, road_address_name, longitude x, latitude y, place_url, 
+			NVL(cont_sum, 0) cont_sum,  NVL(star_avg, 0) star_avg
+		FROM
+			upso, ( SELECT  
+						res_id, 
+	                	COUNT(rev_no) AS cont_sum,
+	                    AVG(star_num) AS star_avg
+	           		FROM 
+	           			upso_review
+	           		WHERE 
+	           			isShow='Y' 
+	           		GROUP BY  
+	           			res_id 
+	           		),
+	           		( SELECT
+	           			upso_id 
+	           		  FROM
+	           		  	keyword
+	           		  WHERE
+	           		  	query_keyword = #{keyword}
+	           		) sub
+		WHERE
+			upso.isShow = 'Y'
+			AND upso.upso_id = sub.upso_id
+			AND upso.upso_id = res_id(+)
+			AND category_name LIKE '%${category_name}%'
+	</select>
+	
 	<insert id="insertUpSo" parameterType="upsoVo">
 		INSERT INTO
 			upso

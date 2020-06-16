@@ -10,6 +10,7 @@ public class SearchInfoVO {
 	String keyword; // 현재 검색어
 	String query_location; // 검색어에 장소키워드가 포함되었는지 여부
 	String query_keyword; // 검색어에 카테고리 혹은 음식 키워드가 포함되었는지 여부
+	String category_name;
 	public double getX() {
 		return x;
 	}
@@ -40,10 +41,18 @@ public class SearchInfoVO {
 	public void setQuery_keyword(String query_keyword) {
 		this.query_keyword = query_keyword;
 	}
+	
+	public String getCategory_name() {
+		return category_name;
+	}
+	public void setCategory_name(String category_name) {
+		this.category_name = category_name;
+	}
 	@Override
 	public String toString() {
 		return "SearchInfoVO [x=" + x + ", y=" + y + ", keyword=" + keyword + ", query_location=" + query_location
-				+ ", query_keyword=" + query_keyword + "]";
+				+ ", query_keyword=" + query_keyword + ", category_name=" + category_name + "]";
 	}
+
 
 }

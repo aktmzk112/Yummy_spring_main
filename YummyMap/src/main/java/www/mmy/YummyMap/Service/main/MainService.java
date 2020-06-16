@@ -50,16 +50,17 @@ public class MainService {
 		JsonElement keyword = meta.getAsJsonObject("same_name").get("keyword");
 		String query_location = selected_region.toString().replaceAll("\"", "");
 		String query_keyword = keyword.toString().replaceAll("\"", "");
-
-		JsonObject jsonObject_subway = kakaoMapService.searchSubway(query_keyword);
-		JsonObject meta_subway = jsonObject_subway.getAsJsonObject("meta");
-		JsonElement total_count = meta_subway.get("total_count");
-		int count = Integer.parseInt(total_count.toString());
-		if(count != 0) {
-			searchInfoVo.setQuery_location(query_keyword);
-		} else {
-			searchInfoVo.setQuery_keyword(query_keyword);			
-			searchInfoVo.setQuery_location(query_location);
+		System.out.println("query_keyword ::: " + query_keyword);
+		System.out.println("query_location ::: " + query_location);
+		System.out.println("query_location length ::: " + query_location.length());
+		if(query_location.length() == 0) {
+			JsonObject jsonObject_subway = kakaoMapService.searchSubway(query_keyword);
+			JsonObject meta_subway = jsonObject_subway.getAsJsonObject("meta");
+			JsonElement total_count = meta_subway.get("total_count");
+			int count = Integer.parseInt(total_count.toString());
+			if(count != 0) {
+				searchInfoVo.setQuery_location(query_keyword);
+			}
 		}
 		if(keywordCount == 0) {
 			// kakaoMap에 해당 키워드로의 요청이 한번도 없는 경우
@@ -103,4 +104,8 @@ public class MainService {
 		return upsoVo;
 	}
 
+	public List<UpsoVO> getUpsoListGroupByCategory(SearchInfoVO searchInfoVo){
+		List<UpsoVO> upsoList = mainDao.getUpSoList_groupByCategory(searchInfoVo);
+		return upsoList;
+	}
 }

@@ -43,14 +43,25 @@
    	    <c:if test="${searchInfoVo.query_keyword.length() == 0 || searchInfoVo.query_keyword == null}">
     	<div class="title mt-4">${searchInfoVo.query_location} 인기 검색 순위</div>
     	<div class="border-bottom border-top mt-2 mb-2 p-2 d-flex">
-    		<div class="filter-item border p-2 mr-2">한식</div>
-    		<div class="filter-item border p-2 mr-2">중식</div>
-    		<div class="filter-item border p-2 mr-2">일식</div>
-    		<div class="filter-item border p-2 mr-2">양식</div>
+    		<div class="filter-item border p-2 mr-2" onclick="groupByCategory('한식')">한식</div>
+    		<div class="filter-item border p-2 mr-2" onclick="groupByCategory('양식')">양식</div>
+    		<div class="filter-item border p-2 mr-2" onclick="groupByCategory('중식')">중식</div>
+    		<div class="filter-item border p-2 mr-2" onclick="groupByCategory('일식')">일식</div>
+    		<div class="filter-item border p-2 mr-2" onclick="groupByCategory('뷔페')">뷔페</div>
+    		<div class="filter-item border p-2 mr-2" onclick="groupByCategory('분식')">분식</div>
+    		<div class="filter-item border p-2 mr-2" onclick="groupByCategory('아시아음식')">아시아음식</div>
+    		<div class="filter-item border p-2 mr-2" onclick="groupByCategory('패밀리레스토랑')">패밀리레스토랑</div>
+    		<div class="filter-item border p-2 mr-2" onclick="groupByCategory('술집')">술집</div>
+    		<div class="filter-item border p-2 mr-2" onclick="groupByCategory('퓨전요리')">퓨전요리</div>
+    		<div class="filter-item border p-2 mr-2" onclick="groupByCategory('간식')">간식</div>
+    		<div class="filter-item border p-2 mr-2" onclick="groupByCategory('도시락')">도시락</div>
     	</div>
     	</c:if>
-   	    <c:if test="${searchInfoVo.query_keyword.length() != 0 || searchInfoVo.query_keyword != null}">
+   	    <c:if test="${searchInfoVo.query_keyword.length() > 0}">
     	<div class="title mt-4">${searchInfoVo.query_location} ${searchInfoVo.query_keyword} 인기 검색 순위</div>   	    
+   	    </c:if>    	
+   	    <c:if test="${searchInfoVo.category_name != null}">
+    	<div class="title mt-5">${searchInfoVo.category_name} 카테고리</div>   	    
    	    </c:if>    	
     	<c:forEach var="upSoVoList" items="${upSoVoList}" varStatus="status">
     	<c:if test="${status.count % 2 != 0}">
@@ -97,6 +108,14 @@
     	</c:if>
     	</c:forEach>
     </div>
+    <div class="dnone">
+    	<form method="POST" action="/YummyMap/main/groupByCategory.mmy" id="categoryDataForm">
+	    	<input type="hidden" name="keyword" value="${searchInfoVo.keyword}">
+	    	<input type="hidden" name="query_keyword" value="${searchInfoVo.query_keyword}">
+	    	<input type="hidden" name="query_location" value="${searchInfoVo.query_location}">
+	    	<input type="hidden" name="category_name" id="categoryDataForm_category">
+    	</form>
+    </div>
 </body>
 <script type="text/javascript">
 function submitKeyword(){
@@ -109,6 +128,10 @@ function submitKeyword(){
 }
 function getDetail(data){
 	location.href = "/YummyMap/main/getDetail.mmy?id="+data;
+}
+function groupByCategory(data) {
+	document.getElementById('categoryDataForm_category').value = data;
+	document.getElementById('categoryDataForm').submit();
 }
 </script>
 </html>

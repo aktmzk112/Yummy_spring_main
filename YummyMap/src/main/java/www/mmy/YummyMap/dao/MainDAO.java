@@ -38,8 +38,11 @@ public class MainDAO {
 	public List<UpsoVO> getUpSoList_keyword(SearchInfoVO searchInfoVo){
 		return sqlSession.selectList("mainSql.getUpSoList_keyword",searchInfoVo);
 	}
+	public List<UpsoVO> getUpSoList_groupByCategory(SearchInfoVO searchInfoVo){
+		return sqlSession.selectList("mainSql.upsoListGroupByCategory",searchInfoVo);
+	}
 	public List<UpsoVO> getUpSoList_geolocation(SearchInfoVO searchInfoVo){
 		return sqlSession.selectList("mainSql.upSoList_geolocation",searchInfoVo);
 	}
-
+	
 }
