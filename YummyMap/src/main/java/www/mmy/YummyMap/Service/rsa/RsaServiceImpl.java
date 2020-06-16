@@ -14,6 +14,7 @@ import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.spec.RSAPublicKeySpec;
 import java.util.Base64;
+import java.util.HashMap;
 
 import javax.crypto.Cipher;
 import javax.servlet.http.HttpServletRequest;
@@ -27,7 +28,7 @@ public class RsaServiceImpl implements RsaService {
 	private String RSA_WEB_KEY = "WEB_key"; //개인키
 	private String RSA_INSTANCE = "RSA"; 
 	private Key PUBLIC_KEY; 
-	private PrivateKey PrivateKey;
+	private HashMap<String, PrivateKey> map = new HashMap<String, PrivateKey>();
 	
 	public String getRSA_WEB_KEY() {
 		return RSA_WEB_KEY;
@@ -37,9 +38,8 @@ public class RsaServiceImpl implements RsaService {
 		return RSA_INSTANCE;
 	}
 	
-	
-	public PrivateKey getPrivateKey() {
-		return PrivateKey;
+	public HashMap<String, PrivateKey> getMap() {
+		return map;
 	}
 
 	//키생성 
@@ -57,17 +57,17 @@ public class RsaServiceImpl implements RsaService {
 			KeyFactory keyFactory = KeyFactory.getInstance(RSA_INSTANCE);
 			PublicKey publicKey = keyPair.getPublic();
 			PrivateKey privateKey = keyPair.getPrivate();
-			this.PrivateKey = privateKey;
-			System.out.println("PrivateKey ###" + this.PrivateKey);
 			this.PUBLIC_KEY = publicKey;
 //			session.setAttribute(RSA_WEB_KEY, privateKey); //세션에 rsa 개인키를 세션에 저장
 			
 			RSAPublicKeySpec publicSpec = (RSAPublicKeySpec) keyFactory.getKeySpec(publicKey, RSAPublicKeySpec.class);
             String publicKeyModulus = publicSpec.getModulus().toString(16);
             String publicKeyExponent = publicSpec.getPublicExponent().toString(16);
+            map.put(publicKeyModulus , privateKey);
  
             request.setAttribute("RSAModulus", publicKeyModulus); // rsa modulus 를 request 에 추가
             request.setAttribute("RSAExponent", publicKeyExponent); // rsa exponent 를 request 에 추가
+            
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

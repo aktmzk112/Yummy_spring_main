@@ -172,8 +172,26 @@ $(function(){
 			return;
 		}
 		
-		$('#frm').attr('action','/YummyMap/admin/memberEditProc.mmy');
-		$('#frm').submit();
+	    var rsa = new RSAKey();
+	    rsa.setPublic($('#RSAModulus').val(),$('#RSAExponent').val());
+	   let sname =  $('#mname').val(); 
+	   if(pwval){
+		   $('#mpw').val(rsa.encrypt(pwval));
+	   }
+	   
+	   $('#mname').val(rsa.encrypt(sname));
+	   $('#mtel').val(rsa.encrypt(tel));
+	   $('#email').val(rsa.encrypt(emailid));
+	   $('#domain').val(rsa.encrypt(domain));
+	   
+//	   alert( $('#mname').val());
+//	   alert( $('#mpw').val());
+//	   alert( $('#email').val());
+//	   alert( $('#mtel').val());
+//	   alert( $('#domain').val());
+
+	   $('#frm').attr('action','/YummyMap/admin/memberEditProc.mmy');
+	   $('#frm').submit();
 		
 		
 	});

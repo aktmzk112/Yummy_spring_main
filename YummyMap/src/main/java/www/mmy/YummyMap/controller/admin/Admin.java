@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -48,22 +49,28 @@ public class Admin {
 	
 	//관리자 로그인 전담 함수
 	@RequestMapping("/loginProc.mmy")
-	public ModelAndView loginck(AdminVO avo , ModelAndView mv , HttpSession session) {
+	public ModelAndView loginck(AdminVO avo , ModelAndView mv , HttpSession session , String RSAModulus) {
 		
+		
+		System.out.println(RSAModulus + " RSA MO DDDD");
 //		PrivateKey privateKey = (PrivateKey) session.getAttribute(rsaServiceImpl.getRSA_WEB_KEY());
+		PrivateKey privateKey = rsaServiceImpl.getMap().get(RSAModulus);
 //		Object privateKeyObj = (Object) rsaServiceImpl.getRSA_WEB_KEY();
-		Object privateKey = (Object) rsaServiceImpl.getRSA_WEB_KEY();
-//		PrivateKey privateKey = (PrivateKey) privateKeyObj;
 		
 		System.out.println(avo.getMid());
 		
         // 복호화
         try {
-			avo.setMid(rsaServiceImpl.decryptRsa(rsaServiceImpl.getPrivateKey(), avo.getMid()));
-			avo.setMpw(rsaServiceImpl.decryptRsa(rsaServiceImpl.getPrivateKey(), avo.getMpw())); 
+			avo.setMid(rsaServiceImpl.decryptRsa(privateKey, avo.getMid()));
+			avo.setMpw(rsaServiceImpl.decryptRsa(privateKey, avo.getMpw())); 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+        
+        rsaServiceImpl.getMap().remove(RSAModulus);
+        
+        System.out.println(" id " + avo.getMid());
+        System.out.println(" pw " + avo.getMpw());
         
         session.removeAttribute(rsaServiceImpl.getRSA_WEB_KEY());
 
@@ -151,8 +158,10 @@ public class Admin {
 	
 	//회원정보 수정 페이지
 	@RequestMapping("/memberEdit.mmy")
-	public ModelAndView memberEdit(AdminVO avo , ModelAndView mv) {
+	public ModelAndView memberEdit(AdminVO avo , ModelAndView mv , HttpServletRequest request) {
 		String view = "admin/remember";
+		
+		rsaServiceImpl.initRsa(request);
 		
 		avo = adminDao.getMemberInfo(avo);
 		avo.setIssue();
@@ -163,9 +172,28 @@ public class Admin {
 	
 	//회원 정보 수정 전담 함수
 	@RequestMapping("/memberEditProc.mmy")
-	public ModelAndView memberEditProc(AdminVO avo , int nowPage , ModelAndView mv) {
+	public ModelAndView memberEditProc(AdminVO avo , int nowPage , ModelAndView mv , String RSAModulus) {
 		String view = "";
+		
+		System.out.println("RSAModulus " + RSAModulus);
+		PrivateKey privateKey = rsaServiceImpl.getMap().get(RSAModulus);
+		
+		try {
+			avo.setMname(rsaServiceImpl.decryptRsa(privateKey, avo.getMname()));
+			if(avo.getMpw() == null || avo.getMpw().equals("")) {} else {
+				avo.setMpw(rsaServiceImpl.decryptRsa(privateKey, avo.getMpw()));
+			}
+			avo.setMtel(rsaServiceImpl.decryptRsa(privateKey, avo.getMtel()));
+			avo.setEmail(rsaServiceImpl.decryptRsa(privateKey, avo.getEmail()));
+			avo.setDomain(rsaServiceImpl.decryptRsa(privateKey, avo.getDomain()));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		avo.setMemail(avo.getEmail() +"@"+avo.getDomain());
+		
+		
 		
 		if(avo.getIssue() == null) {
 			avo.setIssue("N");

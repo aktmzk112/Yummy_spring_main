@@ -19,6 +19,10 @@
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/YummyMap/js/RSA/rsa.js"></script>
+	<script type="text/javascript" src="/YummyMap/js/RSA/jsbn.js"></script>
+	<script type="text/javascript" src="/YummyMap/js/RSA/prng4.js"></script>
+	<script type="text/javascript" src="/YummyMap/js/RSA/rng.js"></script>
 	<script type="text/javascript" src="/YummyMap/js/admin/rememb.js"></script>
 	<title>회원정보 수정 페이지</title>
 </head>
@@ -67,6 +71,8 @@
 					</div>
 
 					<form action="" method="POST" id="frm">
+						<input type="hidden" id="RSAModulus" name="RSAModulus" value="${RSAModulus}"/>
+       					<input type="hidden" id="RSAExponent" value="${RSAExponent}"/> 
 						<input type="hidden" name="mno" value="${MVO.mno}">
 						<input type="hidden" name="nowPage" id="nowPage" value="${param.nowPage}">
 						<div class="mt-4 row ml-1">

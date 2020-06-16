@@ -46,7 +46,7 @@
 
 		<div class="container mb-4 " style="max-width: 450px;">
 		 <form method="post" action="/YummyMap/admin/loginProc.mmy" id="frm">
-	        <input type="hidden" id="RSAModulus" value="${RSAModulus}"/>
+	        <input type="hidden" id="RSAModulus" name="RSAModulus" value="${RSAModulus}"/>
        		<input type="hidden" id="RSAExponent" value="${RSAExponent}"/> 
        		<input type="hidden" id="mid" name="mid" /> 
        		<input type="hidden" id="mpw" name="mpw" /> 
