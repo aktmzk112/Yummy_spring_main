@@ -77,8 +77,15 @@ function pwchk(pw) {
 	let pwok = patt.test(pw);
 	return pwok;
 }
-
+function doNotReload(event){
+	if( (event.ctrlKey == true && (event.keyCode == 78 || event.keyCode == 82)) || (event.keyCode == 116)){
+		$('#frm').attr('action','/YummyMap/admin/login.mmy');
+		$('#frm').submit();
+	}
+}
 $(function(){
+	
+	$(document).keydown(doNotReload);
 	
 	$('#join').click(join);
 	
@@ -104,6 +111,4 @@ $(function(){
 	$('#sendbtn').click(function(){
 		$('#frm2').submit();
 	});
-		
-	
 });

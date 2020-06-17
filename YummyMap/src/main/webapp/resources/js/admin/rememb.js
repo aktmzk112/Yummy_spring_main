@@ -3,7 +3,20 @@
 @since 2020.05.23
  	이 JS는 관리자 회원수정 페이지에 사용할 JavaScript 입니다
 */
+
+//function doNotReload(event){
+//
+//}
+
 $(function(){
+	
+	$(document).keydown(function(event){
+		if( event.keyCode == 78 || event.keyCode == 82 || event.keyCode == 116){
+			alert($('#RSAModulus').val());
+			$('#frm').attr('action','/YummyMap/admin/memberEdit.mmy');
+			$('#frm').submit();
+		}
+	});
 	
 	$('#mpw').keyup(function(){
 		let pw = $('#mpw').val();

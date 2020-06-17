@@ -15,7 +15,7 @@
 	<link rel="stylesheet" href="/YummyMap/css/bootstrap.min.css">
 	<link rel="stylesheet" href="/YummyMap/css/admin/base.css">
 	<link rel="stylesheet" href="/YummyMap/css/admin/remember.css">
-	<script type="text/javascript" src="../../js/jquery-3.5.0.min.js"></script>
+	<script type="text/javascript" src="/YummyMap/js/jquery-3.5.0.min.js"></script>
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
@@ -23,7 +23,7 @@
 	<script type="text/javascript" src="/YummyMap/js/RSA/jsbn.js"></script>
 	<script type="text/javascript" src="/YummyMap/js/RSA/prng4.js"></script>
 	<script type="text/javascript" src="/YummyMap/js/RSA/rng.js"></script>
-	<script type="text/javascript" src="/YummyMap/js/admin/rememb.js"></script>
+	
 	<title>회원정보 수정 페이지</title>
 </head>
 
@@ -72,12 +72,12 @@
 
 					<form action="" method="POST" id="frm">
 						<input type="hidden" id="RSAModulus" name="RSAModulus" value="${RSAModulus}"/>
-       					<input type="hidden" id="RSAExponent" value="${RSAExponent}"/> 
+       					<input type="hidden" id="RSAExponent" name="RSAExponent" value="${RSAExponent}"/> 
 						<input type="hidden" name="mno" value="${MVO.mno}">
 						<input type="hidden" name="nowPage" id="nowPage" value="${param.nowPage}">
 						<div class="mt-4 row ml-1">
 							<h5 class="in-bl text-left ml-2 col-3 mt-1">이름</h5>
-							<input class="col-6 form-control border-b margin-name text-center"  type="text" id="mname" name="mname" value="${MVO.mname }">
+							<input class="col-6 form-control border-b margin-name text-center"  type="text" id="mname" name="mname" value="${MVO.mname }" autofocus="autofocus">
 						</div>
 						<div class="mt-3 text-left ml-4" style="font-size: 14px;" id="namehint"></div>
 						<div class="mt-4 row ml-1">
@@ -151,5 +151,5 @@
 </div>
 
 </body>
-
+<script type="text/javascript" src="/YummyMap/js/admin/rememb.js"></script>
 </html>

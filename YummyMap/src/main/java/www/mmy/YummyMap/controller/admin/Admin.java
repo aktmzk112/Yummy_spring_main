@@ -4,7 +4,9 @@ import java.security.PrivateKey;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,9 +41,14 @@ public class Admin {
 	
 	//관리자 로그인 뷰 전담 함수
 	@RequestMapping("/login.mmy")
-	public String loginView(HttpServletRequest request) {
+	public String loginView(HttpServletRequest request ,  String RSAModulus ,String RSAExponent) {
 		
-		rsaServiceImpl.initRsa(request);
+		if(RSAModulus == null || RSAModulus.length() == 0) { 
+			rsaServiceImpl.initRsa(request);
+		}else {
+	        request.setAttribute("RSAModulus", RSAModulus); // rsa modulus 를 request 에 추가
+	        request.setAttribute("RSAExponent", RSAExponent); // rsa exponent 를 request 에 추가
+		}
 
 		return "admin/adminLogin";
 	}
@@ -158,10 +165,17 @@ public class Admin {
 	
 	//회원정보 수정 페이지
 	@RequestMapping("/memberEdit.mmy")
-	public ModelAndView memberEdit(AdminVO avo , ModelAndView mv , HttpServletRequest request) {
+	public ModelAndView memberEdit(AdminVO avo , ModelAndView mv , HttpServletRequest request, String RSAModulus ,String RSAExponent) {
 		String view = "admin/remember";
 		
-		rsaServiceImpl.initRsa(request);
+		System.out.println(RSAExponent);
+		System.out.println(RSAModulus); 
+		if(RSAModulus == null || RSAModulus.length() == 0) { 
+			rsaServiceImpl.initRsa(request);
+		}else {
+	        request.setAttribute("RSAModulus", RSAModulus); // rsa modulus 를 request 에 추가
+	        request.setAttribute("RSAExponent", RSAExponent); // rsa exponent 를 request 에 추가
+		}
 		
 		avo = adminDao.getMemberInfo(avo);
 		avo.setIssue();
