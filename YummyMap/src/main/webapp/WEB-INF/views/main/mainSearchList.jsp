@@ -35,7 +35,7 @@
             <div class="searchBox d-flex">
                 <div class="searchBox-font"><i class="fas fa-search"></i></div>
                 <input type="text" id="search" onkeydown="submitKeyword()">
-                <div class="searchBox-text">검색</div>
+                <div class="searchBox-text" onclick="submitKeyword_click()">검색</div>
             </div>
         </div>
     </div>
@@ -65,13 +65,13 @@
    	    </c:if>    	
     	<c:forEach var="upSoVoList" items="${upSoVoList}" varStatus="status">
     	<c:if test="${status.count % 2 != 0}">
- 	    <div class="item border d-inline-block mr-4 ml-3 mt-4" onclick="getDetail('${upSoVoList.id}')">
+ 	    <div class="item border d-inline-block mr-4 ml-3 mt-4" >
  	    	<div class="p-2">
 	        	<div class="info-name m-0">${upSoVoList.place_name}</div>
 	        	<div class="info-addr m-0">${upSoVoList.road_address_name}</div> 	    	
  	    	</div>
-            <div class="imgBox">
-                <img src="/YummyMap/img/main/noimage.jpg" alt="">
+            <div class="imgBox" onclick="getDetail('${upSoVoList.id}')">
+                <img src="${upSoVoList.image_url}" alt="" />
             </div>
             <div class="info-sub pl-2 pt-1">
             	<div class="d-flex">
@@ -86,13 +86,13 @@
         </div>
     	</c:if>
     	<c:if test="${status.count % 2 == 0}">
-        <div class="item border d-inline-block mt-4" onclick="getDetail('${upSoVoList.id}')">
+        <div class="item border d-inline-block mt-4" >
  	    	<div class="p-2">
 	        	<div class="info-name m-0">${upSoVoList.place_name}</div>
 	        	<div class="info-addr m-0">${upSoVoList.road_address_name}</div> 	    	
  	    	</div>
-            <div class="imgBox">
-                <img src="/YummyMap/img/main/noimage.jpg" alt="">
+            <div class="imgBox" onclick="getDetail('${upSoVoList.id}')">
+                <img src="${upSoVoList.image_url}" alt="" />
             </div>
             <div class="info-sub pl-2 pt-1">
             	<div class="d-flex">
@@ -125,6 +125,10 @@ function submitKeyword(){
 			return;
 		location.href = "/YummyMap/main/getList.mmy?keyword="+keyword;
 	}
+}
+function submitKeyword_click(){
+	let keyword = document.getElementById('search').value;
+	location.href = "/YummyMap/main/getList.mmy?keyword="+keyword;
 }
 function getDetail(data){
 	location.href = "/YummyMap/main/getDetail.mmy?id="+data;

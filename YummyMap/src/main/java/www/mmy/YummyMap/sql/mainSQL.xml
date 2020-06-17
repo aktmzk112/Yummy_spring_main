@@ -6,7 +6,7 @@
 <mapper namespace="mainSql">
 	<select id="upSoDetailInfo" resultType="upsoVo" parameterType="String">
 		SELECT
-			upso_id id, place_name, category_name, phone, road_address_name, longitude x, latitude y, place_url,
+			upso_id id, place_name, category_name, phone, road_address_name, longitude x, latitude y, place_url, image_url,
 			NVL(cont_sum, 0) cont_sum,  NVL(star_avg, 0) star_avg
 		FROM
 			upso,( SELECT  
@@ -27,7 +27,7 @@
 	</select>
 	<select id="getUpSoList_keyword" resultType="upsoVo" parameterType="searchInfoVo">
 		SELECT
-			upso.upso_id id, place_name, category_name, phone, road_address_name, longitude x, latitude y, place_url, 
+			upso.upso_id id, place_name, category_name, phone, road_address_name, longitude x, latitude y, place_url, image_url,
 			NVL(cont_sum, 0) cont_sum,  NVL(star_avg, 0) star_avg
 		FROM
 			upso, ( SELECT  
@@ -46,7 +46,7 @@
 	           		  FROM
 	           		  	keyword
 	           		  WHERE
-	           		  	query_keyword = #{keyword}
+	           		  	keyword = #{keyword}
 	           		) sub
 		WHERE
 			upso.isShow = 'Y'
@@ -56,7 +56,7 @@
 
 	<select id="upSoList_geolocation" resultType="upsoVo" parameterType="searchInfoVo">
 		SELECT 
-			upso_id id, place_name, category_name, phone, road_address_name, longitude x, latitude y, place_url, 
+			upso_id id, place_name, category_name, phone, road_address_name, longitude x, latitude y, place_url, image_url,
 			NVL(cont_sum, 0) cont_sum,  NVL(star_avg, 0) star_avg,
 			SQRT( POWER(( 37.4917910 - LATITUDE) * 110979.309, 2)
 			      + POWER((127.4875970 - LONGITUDE) *  88907.949, 2)
@@ -96,18 +96,19 @@
 			upso_id = #{upso_id}
 	</select>
 	
-	<select id="showKeyword" resultType="int" parameterType="String">
+	<select id="showKeyword" resultType="searchInfoVo" parameterType="String">
 		SELECT
-			count(keyword_id)
+			keyword_id, keyword, query_keyword, query_location
 		FROM
 			keyword
 		WHERE
-			query_keyword = #{keyword}
+			keyword = #{keyword}
+			AND rownum = 1
 	</select>
 	
 	<select id="upsoListGroupByCategory" resultType="upsoVo" parameterType="searchInfoVo">
 		SELECT
-			upso.upso_id id, place_name, category_name, phone, road_address_name, longitude x, latitude y, place_url, 
+			upso.upso_id id, place_name, category_name, phone, road_address_name, longitude x, latitude y, place_url, image_url, 
 			NVL(cont_sum, 0) cont_sum,  NVL(star_avg, 0) star_avg
 		FROM
 			upso, ( SELECT  
@@ -126,7 +127,7 @@
 	           		  FROM
 	           		  	keyword
 	           		  WHERE
-	           		  	query_keyword = #{keyword}
+	           		  	keyword = #{keyword}
 	           		) sub
 		WHERE
 			upso.isShow = 'Y'
@@ -146,15 +147,18 @@
 			<if test="road_address_name == null or road_address_name == ''">
 			#{address_name},
 			</if>
-			#{x},#{y},#{place_url}, 'Y'		
+			#{x},#{y},#{place_url},#{image_url}, 'Y'		
 		)
 	</insert>
 	
-	<insert id="insertKeyword" parameterType="upsoVo">
+	<insert id="insertKeyword" parameterType="searchInfoVo">
+	<selectKey keyProperty="keyword_id" resultType="int" order="BEFORE">
+		SELECT NVL(MAX(keyword_id)+1 , 1) FROM keyword
+	</selectKey>
 		INSERT INTO
 			keyword
 		VALUES (
-			(SELECT NVL(MAX(keyword_id)+1,1) FROM keyword ), #{query_keyword}, #{id}
+			#{keyword_id}, #{keyword}, #{query_keyword}, #{query_location}, #{upso_id}
 		)
 	</insert>
 </mapper>

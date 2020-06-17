@@ -1,4 +1,5 @@
 package www.mmy.YummyMap.Service.main;
+import www.mmy.YummyMap.vo.SearchInfoVO;
 /**
  * 업소 서비스를 위해 필요한 최소 기능이 담긴 인터페이스입니다.
  * @author	김종형
@@ -13,5 +14,5 @@ public interface UpSoService {
 	
 	public int insertUpSo(UpsoVO upSoVo);
 	
-	public int insertKeyword(UpsoVO upSoVo);
+	public int insertKeyword(SearchInfoVO searchInfoVo);
 }

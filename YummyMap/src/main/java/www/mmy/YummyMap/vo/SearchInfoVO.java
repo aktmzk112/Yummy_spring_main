@@ -5,12 +5,27 @@ package www.mmy.YummyMap.vo;
  *
  */
 public class SearchInfoVO {
-	double x; // 검색 요청자의 경도값
-	double y; // 검색 요청자의 위도값
-	String keyword; // 현재 검색어
-	String query_location; // 검색어에 장소키워드가 포함되었는지 여부
-	String query_keyword; // 검색어에 카테고리 혹은 음식 키워드가 포함되었는지 여부
-	String category_name;
+	private int keyword_id;
+	private int keywordCountInTable;
+	private double x; // 검색 요청자의 경도값
+	private double y; // 검색 요청자의 위도값
+	private String upso_id;
+	private String keyword; // 현재 검색어
+	private String query_location; // 검색어에 장소키워드가 포함되었는지 여부
+	private String query_keyword; // 검색어에 카테고리 혹은 음식 키워드가 포함되었는지 여부
+	private String category_name;
+	public int getKeyword_id() {
+		return keyword_id;
+	}
+	public void setKeyword_id(int keyword_id) {
+		this.keyword_id = keyword_id;
+	}
+	public int getKeywordCountInTable() {
+		return keywordCountInTable;
+	}
+	public void setKeywordCountInTable(int keywordCountInTable) {
+		this.keywordCountInTable = keywordCountInTable;
+	}
 	public double getX() {
 		return x;
 	}
@@ -22,6 +37,12 @@ public class SearchInfoVO {
 	}
 	public void setY(double y) {
 		this.y = y;
+	}
+	public String getUpso_id() {
+		return upso_id;
+	}
+	public void setUpso_id(String upso_id) {
+		this.upso_id = upso_id;
 	}
 	public String getKeyword() {
 		return keyword;
@@ -41,7 +62,6 @@ public class SearchInfoVO {
 	public void setQuery_keyword(String query_keyword) {
 		this.query_keyword = query_keyword;
 	}
-	
 	public String getCategory_name() {
 		return category_name;
 	}
@@ -50,9 +70,8 @@ public class SearchInfoVO {
 	}
 	@Override
 	public String toString() {
-		return "SearchInfoVO [x=" + x + ", y=" + y + ", keyword=" + keyword + ", query_location=" + query_location
+		return "SearchInfoVO [keyword_id=" + keyword_id + ", keywordCountInTable=" + keywordCountInTable + ", x=" + x
+				+ ", y=" + y + ", upso_id=" + upso_id + ", keyword=" + keyword + ", query_location=" + query_location
 				+ ", query_keyword=" + query_keyword + ", category_name=" + category_name + "]";
 	}
-
-
 }

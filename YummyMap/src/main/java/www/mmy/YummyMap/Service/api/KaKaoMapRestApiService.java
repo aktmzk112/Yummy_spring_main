@@ -23,8 +23,10 @@ public class KaKaoMapRestApiService {
 	private String basePath = "https://dapi.kakao.com/v2/local/search/keyword.json?category_group_code=FD6";
 	private String subwayPath = "https://dapi.kakao.com/v2/local/search/keyword.json?category_group_code=SW8";
 	private String authorKey = "e457f7b2d3393084fafd19c71b0c5bed";
-	public final int BASE = 1;
-	public final int SUBWAY = 2;
+	enum KakaoMapCategoryCode {
+		BASE, SUBWAY
+	}
+
 	
 	/*
 	 * parameter	: SearchInfoVO, page
@@ -38,9 +40,9 @@ public class KaKaoMapRestApiService {
 		HttpURLConnection conn = null;
 		BufferedReader rd = null;
 		StringBuilder sb = null;
+		URL pathUrl = setUrl(searchInfoVo, page, KakaoMapCategoryCode.BASE);
 		try {
-			URL url = setUrl(searchInfoVo, page, BASE);
-			conn = (HttpURLConnection) url.openConnection();
+			conn = (HttpURLConnection) pathUrl.openConnection();
 			conn.setRequestMethod("GET");
 			conn.setRequestProperty("Authorization", "KakaoAK "+ authorKey);
 			System.out.println("[ Response Code ::: " + conn.getResponseCode() + " ]");
@@ -60,8 +62,7 @@ public class KaKaoMapRestApiService {
 			try {
 				rd.close();
 				conn.disconnect();
-			} catch (Exception e2) {
-			}
+			} catch (Exception e2) {}
 		}
 		JsonObject jsonObject = (JsonObject) new JsonParser().parse(sb.toString());
 		return jsonObject;
@@ -74,7 +75,7 @@ public class KaKaoMapRestApiService {
 		try {
 			SearchInfoVO searchInfoVo = new SearchInfoVO();
 			searchInfoVo.setQuery_keyword(query_keyword);
-			URL url = setUrl(searchInfoVo, 1, SUBWAY);
+			URL url = setUrl(searchInfoVo, 1, KakaoMapCategoryCode.SUBWAY);
 			conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("GET");
 			conn.setRequestProperty("Authorization", "KakaoAK "+ authorKey);
@@ -102,12 +103,12 @@ public class KaKaoMapRestApiService {
 		return jsonObject;
 	}
 	
-	private URL setUrl(SearchInfoVO searchInfoVo, int page, int code) {
+	public URL setUrl(SearchInfoVO searchInfoVo, int page, KakaoMapCategoryCode categoryCode) {
 		URL pathUrl = null;
 		StringBuffer path = new StringBuffer();
 		String query;
 		try {
-			switch(code) {
+			switch(categoryCode) {
 			case BASE:
 				query = URLEncoder.encode(searchInfoVo.getKeyword(),"UTF-8");
 				path.append(basePath);

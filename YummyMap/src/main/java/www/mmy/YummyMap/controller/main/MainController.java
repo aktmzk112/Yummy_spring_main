@@ -28,9 +28,11 @@ public class MainController {
 	
 	@RequestMapping("/main/getList.mmy")
 	public ModelAndView searchList(ModelAndView mv, SearchInfoVO searchInfoVo) {
-		Map<String, Object> resultMap = mainService.getSearchList(searchInfoVo);
-		List<UpsoVO> upSoVoList = (List<UpsoVO>) resultMap.get("upSoListReturnValue");
-		searchInfoVo = (SearchInfoVO) resultMap.get("searchInfoVo");
+		searchInfoVo = mainService.analyzeKeyword(searchInfoVo);
+		int count = searchInfoVo.getKeywordCountInTable();
+		if(count == 0)
+			mainService.setUpsoList(searchInfoVo);
+		List<UpsoVO> upSoVoList = mainService.getUpsoList(searchInfoVo);
 		mv.setViewName("main/mainSearchList");
 		mv.addObject("upSoVoList",upSoVoList);
 		mv.addObject("searchInfoVo",searchInfoVo);

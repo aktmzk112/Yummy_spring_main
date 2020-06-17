@@ -21,15 +21,15 @@ public class MainDAO {
 	public int isShowUpSo(String upso_id) {
 		return sqlSession.selectOne("mainSql.showUpSo", upso_id);
 	}
-	public int isShowKeyword(String keyword) {
+	public SearchInfoVO isShowKeyword(String keyword) {
 		return sqlSession.selectOne("mainSql.showKeyword", keyword);
 	}
 
 	public int insertUpSo(UpsoVO upSoVo) {
 		return sqlSession.insert("mainSql.insertUpSo", upSoVo);
 	}
-	public int insertKeyword(UpsoVO upSoVo) {
-		return sqlSession.insert("mainSql.insertKeyword", upSoVo);
+	public int insertKeyword(SearchInfoVO searchInfoVo) {
+		return sqlSession.insert("mainSql.insertKeyword", searchInfoVo);
 	}
 	
 	public UpsoVO getUpSoDetailInfo(String upso_id) {

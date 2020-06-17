@@ -9,14 +9,15 @@ package www.mmy.YummyMap.Service.main;
 import org.springframework.stereotype.Service;
 
 import www.mmy.YummyMap.dao.MainDAO;
+import www.mmy.YummyMap.vo.SearchInfoVO;
 import www.mmy.YummyMap.vo.UpsoVO;
 
 
 @Service
-public class UpSoServiceImpl implements UpSoService {
+public class NormalUpso implements UpSoService {
 	private MainDAO mainDao;
 
-	public UpSoServiceImpl(MainDAO mainDao) {
+	public NormalUpso(MainDAO mainDao) {
 		this.mainDao = mainDao;
 	}
 	@Override
@@ -38,8 +39,8 @@ public class UpSoServiceImpl implements UpSoService {
 		return resultCnt;
 	}
 	@Override
-	public int insertKeyword(UpsoVO upSoVo) {
-		int resultCnt = mainDao.insertKeyword(upSoVo);
+	public int insertKeyword(SearchInfoVO searchInfoVo) {
+		int resultCnt = mainDao.insertKeyword(searchInfoVo);
 		return resultCnt;
 	}
 
