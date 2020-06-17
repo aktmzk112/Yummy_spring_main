@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import www.mmy.YummyMap.Service.main.MainService;
+import www.mmy.YummyMap.util.PageUtil;
 import www.mmy.YummyMap.vo.SearchInfoVO;
 import www.mmy.YummyMap.vo.UpsoVO;
 
@@ -27,15 +28,22 @@ public class MainController {
 	}
 	
 	@RequestMapping("/main/getList.mmy")
-	public ModelAndView searchList(ModelAndView mv, SearchInfoVO searchInfoVo) {
+	public ModelAndView searchList(ModelAndView mv, SearchInfoVO searchInfoVo, PageUtil pageUtil) {
 		searchInfoVo = mainService.analyzeKeyword(searchInfoVo);
-		int count = searchInfoVo.getKeywordCountInTable();
-		if(count == 0)
-			mainService.setUpsoList(searchInfoVo);
-		List<UpsoVO> upSoVoList = mainService.getUpsoList(searchInfoVo);
+		int count = searchInfoVo.getUpsoCount();
+		if(count == 0) {
+			mainService.setUpsoList(searchInfoVo);			
+		} else {
+			pageUtil.setTotalCount(count);
+		}
+		pageUtil.setPageRow(10);
+		pageUtil.setPageGroup(5);
+		pageUtil.totalfun();
+		List<UpsoVO> upSoVoList = mainService.getUpsoList(searchInfoVo, pageUtil);
 		mv.setViewName("main/mainSearchList");
 		mv.addObject("upSoVoList",upSoVoList);
 		mv.addObject("searchInfoVo",searchInfoVo);
+		mv.addObject("pageUtil",pageUtil);
 		return mv;
 	}
 	@RequestMapping("/main/getDetail.mmy")

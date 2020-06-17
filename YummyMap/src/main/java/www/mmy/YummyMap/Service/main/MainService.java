@@ -25,6 +25,7 @@ import com.google.gson.reflect.TypeToken;
 import www.mmy.YummyMap.Service.api.DaumSearchRestApiService;
 import www.mmy.YummyMap.Service.api.KaKaoMapRestApiService;
 import www.mmy.YummyMap.dao.MainDAO;
+import www.mmy.YummyMap.util.PageUtil;
 import www.mmy.YummyMap.vo.SearchInfoVO;
 import www.mmy.YummyMap.vo.UpsoVO;
 
@@ -48,7 +49,7 @@ public class MainService {
 		SearchInfoVO tmp = mainDao.isShowKeyword(searchInfoVo.getKeyword());
 
 		if(tmp == null) {
-			searchInfoVo.setKeywordCountInTable(0);
+			searchInfoVo.setUpsoCount(0);
 			// 키워드 분석을 위한 데이터
 			JsonObject jsonObject = kakaoMapService.searchList(searchInfoVo, 1);
 			JsonObject meta = jsonObject.getAsJsonObject("meta");
@@ -73,7 +74,6 @@ public class MainService {
 			}
 		} else {
 			searchInfoVo = tmp;
-			searchInfoVo.setKeywordCountInTable(1);
 		}
 		if(searchInfoVo.getQuery_keyword() == null)
 			searchInfoVo.setQuery_keyword("");
@@ -96,7 +96,9 @@ public class MainService {
 			JsonArray jsonList = (JsonArray) jsonObject.get("documents");
 			Type listType = new TypeToken<ArrayList<UpsoVO>>(){}.getType();
 			List<UpsoVO> upSolist = gson.fromJson(jsonList.toString(), listType);
-			for(int i=0; i<upSolist.size(); i++) {
+			int totalCount = upSolist.size();
+			searchInfoVo.setUpsoCount(totalCount);
+			for(int i=0; i<totalCount; i++) {
 				UpsoVO upsoVo = upSolist.get(i);
 				searchInfoVo.setUpso_id(upsoVo.getId());
 				// 해당 업소가 기존에 DB에 저장되었는지 조회합니다.
@@ -129,8 +131,8 @@ public class MainService {
 	 * parameter : SearchInfoVO
 	 * return	 : List<UpsoVO>
 	 */
-	public List<UpsoVO> getUpsoList(SearchInfoVO searchInfoVo) {
-		List<UpsoVO> upSoList = mainDao.getUpSoList_keyword(searchInfoVo);
+	public List<UpsoVO> getUpsoList(SearchInfoVO searchInfoVo, PageUtil pageUtil) {
+		List<UpsoVO> upSoList = mainDao.getUpSoList_keyword(searchInfoVo, pageUtil);
 		return upSoList;
 	}
 	

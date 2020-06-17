@@ -6,7 +6,7 @@ package www.mmy.YummyMap.vo;
  */
 public class SearchInfoVO {
 	private int keyword_id;
-	private int keywordCountInTable;
+	private int upsoCount;
 	private double x; // 검색 요청자의 경도값
 	private double y; // 검색 요청자의 위도값
 	private String upso_id;
@@ -20,11 +20,12 @@ public class SearchInfoVO {
 	public void setKeyword_id(int keyword_id) {
 		this.keyword_id = keyword_id;
 	}
-	public int getKeywordCountInTable() {
-		return keywordCountInTable;
+	
+	public int getUpsoCount() {
+		return upsoCount;
 	}
-	public void setKeywordCountInTable(int keywordCountInTable) {
-		this.keywordCountInTable = keywordCountInTable;
+	public void setUpsoCount(int upsoCount) {
+		this.upsoCount = upsoCount;
 	}
 	public double getX() {
 		return x;
@@ -70,8 +71,8 @@ public class SearchInfoVO {
 	}
 	@Override
 	public String toString() {
-		return "SearchInfoVO [keyword_id=" + keyword_id + ", keywordCountInTable=" + keywordCountInTable + ", x=" + x
-				+ ", y=" + y + ", upso_id=" + upso_id + ", keyword=" + keyword + ", query_location=" + query_location
+		return "SearchInfoVO [keyword_id=" + keyword_id + ", upsoCount=" + upsoCount + ", x=" + x + ", y=" + y
+				+ ", upso_id=" + upso_id + ", keyword=" + keyword + ", query_location=" + query_location
 				+ ", query_keyword=" + query_keyword + ", category_name=" + category_name + "]";
 	}
 }

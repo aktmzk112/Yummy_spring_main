@@ -25,33 +25,47 @@
 			AND upso_id = res_id(+)
 			AND isShow = 'Y'
 	</select>
-	<select id="getUpSoList_keyword" resultType="upsoVo" parameterType="searchInfoVo">
+	<select id="getUpSoList_keyword" resultType="upsoVo" parameterType="Map">
 		SELECT
-			upso.upso_id id, place_name, category_name, phone, road_address_name, longitude x, latitude y, place_url, image_url,
-			NVL(cont_sum, 0) cont_sum,  NVL(star_avg, 0) star_avg
+		     rnum, id, place_name, category_name, phone, road_address_name,  x,  y, place_url, image_url, cont_sum,   star_avg
 		FROM
-			upso, ( SELECT  
-						res_id, 
-	                	COUNT(rev_no) AS cont_sum,
-	                    AVG(star_num) AS star_avg
-	           		FROM 
-	           			upso_review
-	           		WHERE 
-	           			isShow='Y' 
-	           		GROUP BY  
-	           			res_id 
-	           		),
-	           		( SELECT
-	           			upso_id 
-	           		  FROM
-	           		  	keyword
-	           		  WHERE
-	           		  	keyword = #{keyword}
-	           		) sub
+		    (
+		        SELECT
+		                rownum rnum,  id, place_name, category_name, phone, road_address_name,  x,  y, place_url, image_url, cont_sum,   star_avg               
+		        FROM
+		            (
+		                SELECT
+		                            upso.upso_id id, place_name, category_name, phone, road_address_name, longitude x, latitude y, place_url, image_url,
+		                            NVL(cont_sum, 0) cont_sum,  NVL(star_avg, 0) star_avg
+		                FROM
+		                    upso, ( SELECT  
+		                                res_id, 
+		                                COUNT(rev_no) AS cont_sum,
+		                                AVG(star_num) AS star_avg
+		                            FROM 
+		                                upso_review
+		                            WHERE 
+		                                isShow='Y' 
+		                            GROUP BY  
+		                                res_id 
+		                            ),
+		                            ( SELECT
+		                                upso_id 
+		                              FROM
+		                                keyword
+		                              WHERE
+		                                keyword = #{searchInfoVo.keyword}
+		                            ) sub
+		                WHERE
+		                    upso.isShow = 'Y'
+		                    AND upso.upso_id = sub.upso_id
+		                    AND upso.upso_id = res_id(+)
+		                ORDER BY
+		                    star_avg
+		                )
+		        )
 		WHERE
-			upso.isShow = 'Y'
-			AND upso.upso_id = sub.upso_id
-			AND upso.upso_id = res_id(+)
+		    rnum BETWEEN #{pageUtil.startCont} AND #{pageUtil.endCont}
 	</select>
 
 	<select id="upSoList_geolocation" resultType="upsoVo" parameterType="searchInfoVo">
@@ -98,9 +112,10 @@
 	
 	<select id="showKeyword" resultType="searchInfoVo" parameterType="String">
 		SELECT
-			keyword_id, keyword, query_keyword, query_location
+			keyword_id, keyword, query_keyword, query_location, upsoCount
 		FROM
-			keyword
+			keyword,
+			 (SELECT count(*) upsoCount FROM keyword WHERE keyword = #{keyword} GROUP BY keyword)
 		WHERE
 			keyword = #{keyword}
 			AND rownum = 1
