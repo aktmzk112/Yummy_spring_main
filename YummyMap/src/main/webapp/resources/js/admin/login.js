@@ -77,15 +77,26 @@ function pwchk(pw) {
 	let pwok = patt.test(pw);
 	return pwok;
 }
-function doNotReload(event){
-	if( (event.ctrlKey == true && (event.keyCode == 78 || event.keyCode == 82)) || (event.keyCode == 116)){
-		$('#frm').attr('action','/YummyMap/admin/login.mmy');
-		$('#frm').submit();
-	}
-}
+//function doNotReload(){
+//		$('#frm').attr('action','/YummyMap/admin/login.mmy');
+//		$('#frm').submit();
+//	
+//}
 $(function(){
 	
-	$(document).keydown(doNotReload);
+	let rsam = $('#RSAModulus').val();
+	let rsae = $('#RSAExponent').val();
+	
+	window.history.forward();
+    function noBack(){window.history.forward();}
+	
+	$(document).keydown(function(event){
+		if( event.keyCode == 82 || event.keyCode == 116){
+			$('#frm').attr('action','/YummyMap/admin/login.mmy');
+			$('#frm').submit();
+			return false;
+		}
+	});
 	
 	$('#join').click(join);
 	

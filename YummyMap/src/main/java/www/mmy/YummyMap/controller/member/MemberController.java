@@ -70,7 +70,6 @@ public class MemberController {
 	@RequestMapping("/mailCk.mmy")
 	@ResponseBody
 	public HashMap<String, String> mailCk(String email, HttpSession session) {
-
 		String from = email;
 
 		// 인증번호 생성

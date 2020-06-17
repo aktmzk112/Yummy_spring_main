@@ -1,8 +1,4 @@
-<!-- 
-@author 유태희
-@since 2020.05.23
- 	이 페이지는 관리자 로그인 페이지 입니다
- -->
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -18,20 +14,20 @@
 	<link rel="stylesheet" href="/YummyMap/css/admin/login.css">
 	<script type="text/javascript" src="/YummyMap/js/jquery-3.5.0.min.js"></script>
 	<script type="text/javascript" src="/YummyMap/js/bootstrap.bundle.min.js"></script>
-	<script type="text/javascript" src="/YummyMap/js/admin/login.js"></script>
 	<script type="text/javascript" src="/YummyMap/js/RSA/rsa.js"></script>
 	<script type="text/javascript" src="/YummyMap/js/RSA/jsbn.js"></script>
 	<script type="text/javascript" src="/YummyMap/js/RSA/prng4.js"></script>
 	<script type="text/javascript" src="/YummyMap/js/RSA/rng.js"></script>
+	<script type="text/javascript">
 
+	</script>
+	<script type="text/javascript" src="/YummyMap/js/admin/login.js"></script>
 	<title>관리자 로그인 페이지</title>
 
 </head>
 
-<body>
 
-
-
+<body onload="noBack();">
 	<div class="container  mt80" style="width: 900px;">
 		<nav class="d-flex justify-content-between navbar navbar-light ">
 			<div>
@@ -56,14 +52,13 @@
 					<span class="input-group-text" id="inputGroup-sizing-default">I &nbspD&nbsp</span>
 				</div>
 				<input type="text" class="form-control" aria-label="Sizing example input"
-					aria-describedby="inputGroup-sizing-default" id="id" name="id" autofocus="autofocus">
+					aria-describedby="inputGroup-sizing-default" id="id" name="id" autofocus="autofocus" />
 			</div>
 			<div class="input-group mb-3">
 				<div class="input-group-prepend">
 					<span class="input-group-text" id="inputGroup-sizing-default">P W</span>
 				</div>
-				<input type="password" class="form-control" aria-label="Sizing example input"
-					aria-describedby="inputGroup-sizing-default" id="pw" name="pw">
+				<input type="password" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" id="pw" name="pw" autocomplete="on"/>
 			</div>
 			<c:if test="${param.noad eq 'b'}">
 			<div class="text-danger" id="idck"> *일치하는 관리자가 없습니다</div>

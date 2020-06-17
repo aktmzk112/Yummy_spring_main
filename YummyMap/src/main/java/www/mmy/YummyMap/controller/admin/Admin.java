@@ -41,8 +41,9 @@ public class Admin {
 	
 	//관리자 로그인 뷰 전담 함수
 	@RequestMapping("/login.mmy")
-	public String loginView(HttpServletRequest request ,  String RSAModulus ,String RSAExponent) {
-		
+	public String loginView(HttpServletRequest request , String RSAModulus ,String RSAExponent) {
+		System.out.println(RSAModulus);
+		System.out.println(RSAExponent);
 		if(RSAModulus == null || RSAModulus.length() == 0) { 
 			rsaServiceImpl.initRsa(request);
 		}else {
@@ -59,12 +60,9 @@ public class Admin {
 	public ModelAndView loginck(AdminVO avo , ModelAndView mv , HttpSession session , String RSAModulus) {
 		
 		
-		System.out.println(RSAModulus + " RSA MO DDDD");
 //		PrivateKey privateKey = (PrivateKey) session.getAttribute(rsaServiceImpl.getRSA_WEB_KEY());
 		PrivateKey privateKey = rsaServiceImpl.getMap().get(RSAModulus);
 //		Object privateKeyObj = (Object) rsaServiceImpl.getRSA_WEB_KEY();
-		
-		System.out.println(avo.getMid());
 		
         // 복호화
         try {
@@ -98,14 +96,14 @@ public class Admin {
 	public ModelAndView mainView(ModelAndView mv , HttpSession session) {
 
 
-		String sid = (String) session.getAttribute("SID");
+//		String sid = (String) session.getAttribute("SID");
 		String view = "admin/main";
-		if (sid == null || sid.length() == 0) {
-			view = "/YummyMap/admin/login.mmy";
-			RedirectView rv = new RedirectView(view);
-			mv.setView(rv);
-			return mv;
-		}
+//		if (sid == null || sid.length() == 0) {
+//			view = "/YummyMap/admin/login.mmy";
+//			RedirectView rv = new RedirectView(view);
+//			mv.setView(rv);
+//			return mv;
+//		}
 		
 		ArrayList<ResCntVO> list = (ArrayList<ResCntVO>) chartServiceImpl.resChart();
 		
@@ -147,7 +145,7 @@ public class Admin {
 		page.totalfun();
 		
 		
-		HashMap hmap = new HashMap();
+		HashMap<String, Object> hmap = new HashMap<String, Object>();
 		hmap.put("avo" , avo);
 		hmap.put("page" , page);
 		
@@ -168,8 +166,6 @@ public class Admin {
 	public ModelAndView memberEdit(AdminVO avo , ModelAndView mv , HttpServletRequest request, String RSAModulus ,String RSAExponent) {
 		String view = "admin/remember";
 		
-		System.out.println(RSAExponent);
-		System.out.println(RSAModulus); 
 		if(RSAModulus == null || RSAModulus.length() == 0) { 
 			rsaServiceImpl.initRsa(request);
 		}else {
@@ -204,9 +200,8 @@ public class Admin {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		 
 		avo.setMemail(avo.getEmail() +"@"+avo.getDomain());
-		
 		
 		
 		if(avo.getIssue() == null) {
@@ -277,14 +272,6 @@ public class Admin {
 	public ModelAndView boardList(String opts ,AdminBoardVO abvo , ModelAndView mv , HttpSession session , PageUtil page) {
 		
 		String view = "admin/board";
-		if(session.getAttribute("SID") == null) {
-			view = "/YummyMap/admin/login.mmy";
-			RedirectView rv = new RedirectView(view);
-			mv.setView(rv);
-			return mv;
-		}
-		
-
 		
 		page.setTotalCount(adminDao.boardCnt(abvo));
 		page.setPageRow(2);

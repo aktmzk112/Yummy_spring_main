@@ -11,10 +11,10 @@
 $(function(){
 	
 	$(document).keydown(function(event){
-		if( event.keyCode == 78 || event.keyCode == 82 || event.keyCode == 116){
-			alert($('#RSAModulus').val());
+		if( event.keyCode == 82 || event.keyCode == 116){
 			$('#frm').attr('action','/YummyMap/admin/memberEdit.mmy');
 			$('#frm').submit();
+			return false; 	
 		}
 	});
 	

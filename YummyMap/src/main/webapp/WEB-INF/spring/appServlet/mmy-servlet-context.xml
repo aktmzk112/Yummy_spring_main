@@ -21,6 +21,21 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
+	<beans:bean id="Interceptor" class="www.mmy.YummyMap.interceptor.LoginCheckInterceptor" />
+	
+	<interceptors>
+		<interceptor>
+			<mapping path="/**/*.mmy"/>
+			<exclude-mapping  path="/admin/login.mmy"/>
+			<exclude-mapping  path="/admin/**Proc.mmy"/>
+			<exclude-mapping  path="/member/loginView.mmy"/>
+			<exclude-mapping  path="/member/join.mmy"/>
+			<exclude-mapping  path="/member/mail*.mmy"/>
+			<exclude-mapping  path="/*.mmy"/>
+			<beans:ref bean="Interceptor"/>
+		</interceptor>
+	</interceptors>	
+	
 	<beans:bean id="YummyMail" class="www.mmy.YummyMap.util.MailUtil">
 		<beans:property name="host" value="smtp.naver.com" />
 		<beans:property name="pass" value="yth1356YTH!" />
