@@ -1,3 +1,48 @@
+function $ComTimer(){
+    //prototype extend
+}
+
+$ComTimer.prototype = {
+	  comSecond : ""
+    , fnCallback : function(){}
+    , timer : ""
+    , domId : ""
+    , fnTimer : function(){
+        var m = Math.floor(this.comSecond / 60) + "분 " + (this.comSecond % 60) + "초";	// 남은 시간 계산
+        this.comSecond--;					// 1초씩 감소
+        console.log(m);
+        this.domId.innerText = m;
+        if (this.comSecond < 0) {			// 시간이 종료 되었으면..
+            clearInterval(this.timer);		// 타이머 해제
+            this.domId.innerText = '인증시간 만료 입니다. 다시 인증해 주세요';
+            $('#mailckBox').addClass('d-none');
+            
+            let mail1 = $('#email1').val();
+            let mail2 = $('#email2').val();
+            
+            let totalmail = mail1 + mail2;
+            $.ajax({
+            	url: '/YummyMap/member/rmMail.mmy',
+            	type: 'post',
+            	dataType : 'text',
+            	data:{
+            		'mail' : totalmail
+            	},
+            	success: function(data){},
+            	errer: function(){
+            		alert('통신오류');
+            	}
+            	
+            		
+            });
+        }
+    }
+    ,fnStop : function(){
+        clearInterval(this.timer);
+    }
+}
+
+
 $(document).ready(function () {
 	
 let mailOk;
@@ -168,6 +213,12 @@ let mailcode=false;
 			 
 	        if(data.emailCk == 'ok'){
 	        	$('#mailckBox').removeClass('d-none');
+	        	$('#mailmsg').addClass('d-none');
+	        	var AuthTimer = new $ComTimer()
+	        	AuthTimer.comSecond = 10;
+	        	AuthTimer.timer =  setInterval(function(){AuthTimer.fnTimer()},1000);
+	        	AuthTimer.domId = document.getElementById("mailmsg2");
+	        	$('#mailmsg2').removeClass('d-none');
 	        }
 
 		 },error : function(){

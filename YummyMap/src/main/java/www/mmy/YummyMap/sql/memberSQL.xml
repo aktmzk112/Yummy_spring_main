@@ -76,4 +76,13 @@
 			)
 		</insert>
 		
+		<update id="rmjoinMail" parameterType="hashmap">
+			UPDATE
+				joinmail
+			SET
+				cftnum = #{NUM}
+			WHERE
+				mail = #{MAIL}
+		</update>
+		
 </mapper>

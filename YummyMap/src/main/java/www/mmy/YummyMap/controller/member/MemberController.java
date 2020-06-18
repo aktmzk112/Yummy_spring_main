@@ -162,4 +162,21 @@ public class MemberController {
 		
 		return mv;
 	}
+	
+	@RequestMapping("/rmMail.mmy")
+	@ResponseBody
+	public String rmMail(String mail) {
+		Random ran = new Random();
+		StringBuffer tmp = new StringBuffer();
+		for (int i = 0; i < 6; i++) {
+			tmp.append(ran.nextInt(10));
+		}
+		HashMap<String, String> map = new HashMap<String, String>();
+		
+		map.put("MAIL", mail);
+		map.put("NUM" , tmp.toString());
+		
+		int cnt = memberService.rmMail(map);
+		return "";
+	}
 }

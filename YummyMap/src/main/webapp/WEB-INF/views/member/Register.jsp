@@ -127,6 +127,7 @@
            <span id="mailckBox"><button type="button" class="btn btn-secondary btn-sm d-inline-block mb-1" id="eokbtn">이메일 인증 확인</button></span>
           </div>
           <small id="mailmsg" class="text-danger" >이메일 인증을 진행해주세요</small>
+          <small id="mailmsg2" class="text-danger d-none" ></small>
         </div>
       </form>
       <div class="btn-box">

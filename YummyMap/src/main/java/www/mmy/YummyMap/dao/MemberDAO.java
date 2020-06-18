@@ -1,5 +1,7 @@
 package www.mmy.YummyMap.dao;
 
+import java.util.HashMap;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -45,6 +47,10 @@ public class MemberDAO {
 	
 	public int addMember(MemberVO mvo) {
 		return sqlSession.insert("memberSql.addMember",mvo);
+	}
+	
+	public int rmjoinMail(HashMap<String, String> map) {
+		return sqlSession.insert("memberSql.rmjoinMail", map);
 	}
 		
 }

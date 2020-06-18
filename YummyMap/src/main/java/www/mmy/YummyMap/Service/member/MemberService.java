@@ -1,5 +1,7 @@
 package www.mmy.YummyMap.Service.member;
 
+import java.util.HashMap;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Service;
@@ -58,6 +60,12 @@ public class MemberService {
 	public int addMember(MemberVO mvo) {
 		int cnt = 0;
 		cnt = memberDao.addMember(mvo);
+		return cnt;
+	}
+	
+	public int rmMail(HashMap<String, String> map) {
+		int cnt = 0;
+		cnt = memberDao.rmjoinMail(map);
 		return cnt;
 	}
 	
