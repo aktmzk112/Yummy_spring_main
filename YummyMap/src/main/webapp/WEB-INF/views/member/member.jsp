@@ -106,8 +106,8 @@
                                     </path>
                                 </svg></a></div>
                     </div>
-                    <a href="/YummyMap/join/login.mmy" class="badge badge-light nav-item" id="login">LOGIN</a>
-                    <a href="/YummyMap/join/logoutProc.mmy" class="badge badge-light nav-item" id="logout">LOGOUT</a>
+                    <a href="/YummyMap/member/login.mmy" class="badge badge-light nav-item" id="login">LOGIN</a>
+                    <a href="/YummyMap/member/logoutProc.mmy" class="badge badge-light nav-item" id="logout">LOGOUT</a>
                 </div>
             </div>
         </div>

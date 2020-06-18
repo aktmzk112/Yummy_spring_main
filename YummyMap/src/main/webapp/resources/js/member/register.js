@@ -40,6 +40,19 @@ let mailcode=false;
     	return;
     }
     
+    let teltop = $('#teltop').val();
+    let telmid = $('#telmid').val();
+    let telend = $('#telend').val();
+    
+    let totaltel = teltop + "-" + telmid + "-" + telend;
+    $('#mtel').val(totaltel);
+    
+    let mail1 = $('#email1').val();
+    let mail2 = $('#email2').val();
+    
+    let totalmail = mail1 + mail2;
+    $('#meMail').val(totalmail);
+    
     $('#frm').submit();
   });
 // input태그의 모든 값이 들어있는지 체크해주는 함수입니다.
@@ -109,15 +122,14 @@ let mailcode=false;
   //아이디체크 이벤트를 비동기로 진행합니다.
   $('#idcheck').click(function() {
 	  let bid = $('#id').val();
-	  if(!bid)
-		  return;
+	  if(!bid) return;
 	  
 		$.ajax({
-			url: '/YummyMap/join/idCheck.mmy',
+			url: '/YummyMap/member/idCheck.mmy',
 			type: 'post',
 			dataType: 'json',
 			data: {
-				'id': bid
+				'mid': bid
 			},
 			success: function(data){
 				let str = data.result;
@@ -131,7 +143,9 @@ let mailcode=false;
 					ckIdResult = false;
 				}
 					$('#idmsg2').show();
-			}
+			},error : function(){
+				alert('통신오류!!!');
+			} 
 		});
   });
   //이메일 인증 처리 

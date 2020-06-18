@@ -126,4 +126,40 @@ public class MemberController {
 		
 		return map;
 	}
+	
+	//아이디 체크 비동기 통신
+	@RequestMapping("/idCheck.mmy")
+	@ResponseBody
+	public HashMap<String, String> idCheck(MemberVO mvo) {
+		System.out.println("#################################");
+		HashMap<String , String> map = new HashMap<String, String>();
+		int cnt = memberService.idCk(mvo);
+		System.out.println(cnt + " cnt");
+		if(cnt == 0 ) {
+			map.put("result" , "ok");
+		}else {
+			map.put("result" , "no");
+		}
+		return map;
+	}
+	
+	//회원가입처리 
+	@RequestMapping("/joinProcess.mmy")
+	public ModelAndView joinProc(MemberVO mvo , ModelAndView mv) {
+		int cnt = memberService.addMember(mvo);
+		String view = "";
+		if(cnt == 1) {
+			view = "/YummyMap/member/loginView.mmy";
+			System.out.println("정상 가입 완료");
+			
+		}else {
+			view ="/YummyMap/member/join.mmy";
+			System.out.println("가입 실패!!!");
+		}
+
+		RedirectView rv = new RedirectView(view);
+		mv.setView(rv);
+		
+		return mv;
+	}
 }

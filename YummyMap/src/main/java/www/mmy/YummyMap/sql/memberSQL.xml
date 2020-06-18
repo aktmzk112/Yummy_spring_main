@@ -59,5 +59,21 @@
 				mail = #{mail}
 				AND cftnum = #{cftnum}
 		</select>
+		<select id="idCheck" resultType="int" parameterType="memberVo">
+			SELECT
+				count(*) cnt
+			FROM
+				member
+			WHERE
+				mid = #{mid}	
+		</select>
+		
+		<insert id="addMember" parameterType="memberVo">
+			INSERT INTO
+				member(mno,mname, mid, mpw, mtel, memail)
+			VALUES(
+				getmno.nextval , #{mname} , #{mid}, #{mpw} , #{mtel} , #{meMail} 
+			)
+		</insert>
 		
 </mapper>

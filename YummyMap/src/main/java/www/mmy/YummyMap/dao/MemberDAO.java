@@ -39,5 +39,12 @@ public class MemberDAO {
 		return sqlSession.selectOne("memberSql.joinMailOk" , jmailVo);
 	}
 	
+	public int idCheck(MemberVO mvo) {
+		return sqlSession.selectOne("memberSql.idCheck", mvo);
+	}
+	
+	public int addMember(MemberVO mvo) {
+		return sqlSession.insert("memberSql.addMember",mvo);
+	}
 		
 }

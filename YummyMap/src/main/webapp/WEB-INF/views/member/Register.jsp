@@ -45,7 +45,7 @@
                           </svg></a></div>
               </div>
               <!-- <a href="#" class="badge badge-light nav-item" id="join">Join</a>-->
-              <a href="/YummyMap/join/login.mmy" class="badge badge-light nav-item" id="login">LOGIN</a>
+              <a href="/YummyMap/member/login.mmy" class="badge badge-light nav-item" id="login">LOGIN</a>
           </div>
       </div>
   </div>
@@ -66,18 +66,20 @@
 <!-- body 시작 입니다-->
   <div class="main-body mb-5">
     <div class="m-box mt-4">
-      <form id="frm" action="/YummyMap/join/joinProc.mmy" method="POST">
+      <form id="frm" action="/YummyMap/member/joinProcess.mmy" method="POST">
+      	<input type="hidden" name="meMail" id="meMail" >
+      	<input type="hidden" name="mtel" id="mtel" >
         <div class="form-group">
           <label for="id" class="idlabel mr-2 d-inline-block">아이디</label>
           <button type="button" id="idcheck" class="btn btn-secondary btn-sm d-inline-block mb-1">아이디 체크</button>
-          <input type="text" class="form-control ckinput" id="id" name="id">
+          <input type="text" class="form-control ckinput" id="id" name="mid">
           <small id="idmsg" class="text-secondary d-block">첫글자 영문자, 영문자 혹은 숫자 조합 5~13자리 입력</small>
           <small id="idmsg1" class="dnone d-block"></small>
           <small id="idmsg2" class="dnone d-block"></small>
         </div>
         <div class="form-group">
           <label for="pw">비밀번호</label>
-          <input type="password" class="form-control ckinput" id="pw" name="pw">
+          <input type="password" class="form-control ckinput" id="pw" name="mpw">
           <small id="pwmsg" class="text-secondary d-block">첫글자 영문자, 영문+숫자+특수문자 조합 8~15자리 입력</small>
           <small id="pwmsg1" class="text-danger">비밀번호 패턴을 확인해주세요</small>
         </div>
@@ -88,12 +90,12 @@
         </div>
         <div class="form-group">
           <label for="repw">이름</label>
-          <input type="text" class="form-control ckinput" id="name" name="name">
+          <input type="text" class="form-control ckinput" id="name" name="mname">
         </div>
         <div class="form-group">
           <label for="telmid">휴대전화</label>
           <div class="d-flex">
-            <select class="form-control" name="teltop">
+            <select class="form-control" id="teltop" name="teltop">
               <option value="010">010</option>
               <option value="011">011</option>
               <option value="017">017</option>

@@ -49,4 +49,16 @@ public class MemberService {
 		return cnt;
 	}
 	
+	public int idCk(MemberVO mvo) {
+		int cnt = 0;
+		cnt = memberDao.idCheck(mvo);
+		return cnt;
+	}
+	
+	public int addMember(MemberVO mvo) {
+		int cnt = 0;
+		cnt = memberDao.addMember(mvo);
+		return cnt;
+	}
+	
 }

@@ -42,7 +42,7 @@ public class Admin {
 	//관리자 로그인 뷰 전담 함수
 	@RequestMapping("/login.mmy")
 	public String loginView(HttpServletRequest request , String RSAModulus ,String RSAExponent) {
-		System.out.println(RSAModulus);
+		System.out.print(RSAModulus);
 		System.out.println(RSAExponent);
 		if(RSAModulus == null || RSAModulus.length() == 0) { 
 			rsaServiceImpl.initRsa(request);

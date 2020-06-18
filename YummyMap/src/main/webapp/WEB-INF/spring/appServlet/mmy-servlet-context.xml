@@ -25,12 +25,16 @@
 	
 	<interceptors>
 		<interceptor>
-			<mapping path="/**/*.mmy"/>
+			<mapping path="/admin/main.mmy"/>
+			<mapping path="/admin/memberList.mmy"/>
+			<mapping path="/member/*.mmy"/>
 			<exclude-mapping  path="/admin/login.mmy"/>
 			<exclude-mapping  path="/admin/**Proc.mmy"/>
 			<exclude-mapping  path="/member/loginView.mmy"/>
 			<exclude-mapping  path="/member/join.mmy"/>
 			<exclude-mapping  path="/member/mail*.mmy"/>
+			<exclude-mapping  path="/member/idCheck.mmy"/>
+			<exclude-mapping  path="/member/**Process.mmy"/>
 			<exclude-mapping  path="/*.mmy"/>
 			<beans:ref bean="Interceptor"/>
 		</interceptor>

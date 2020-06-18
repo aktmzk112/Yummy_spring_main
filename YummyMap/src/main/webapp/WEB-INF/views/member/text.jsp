@@ -24,7 +24,7 @@
 		  if(!userid) {
 			  $('#login').show();
 			  $('#logout').hide();
-			  $('#mypage').attr('href', '/YummyMap/join/join.mmy');
+			  $('#mypage').attr('href', '/YummyMap/member/join.mmy');
 		  } else {
 			  $('#login').hide();
 			  $('#logout').show();
