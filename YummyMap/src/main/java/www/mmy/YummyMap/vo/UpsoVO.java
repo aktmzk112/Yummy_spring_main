@@ -1,7 +1,8 @@
 package www.mmy.YummyMap.vo;
 
 public class UpsoVO {
-	private int cont_sum, star_avg;
+	private int cont_sum;
+	private double star_avg;
 	private double x, y;
 	private String id, place_name, category_name, phone, address_name, road_address_name, place_url, image_url;
 	public int getCont_sum() {
@@ -10,10 +11,10 @@ public class UpsoVO {
 	public void setCont_sum(int cont_sum) {
 		this.cont_sum = cont_sum;
 	}
-	public int getStar_avg() {
+	public double getStar_avg() {
 		return star_avg;
 	}
-	public void setStar_avg(int star_avg) {
+	public void setStar_avg(double star_avg) {
 		this.star_avg = star_avg;
 	}
 	public double getX() {

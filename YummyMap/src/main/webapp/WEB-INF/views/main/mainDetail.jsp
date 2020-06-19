@@ -47,8 +47,12 @@
 			</div>
 	        <div class="d-flex">
 	        	<div class="d-flex upso-avgBox pt-2">
+	        	<c:forEach begin="1" end="${upsoVo.star_avg}">
 		            <i class="fas fa-star upso-star"></i>
+	        	</c:forEach>
+	        	<c:if test="${upsoVo.star_avg*10%10 >= 1}">
 		            <i class="fas fa-star-half upso-star"></i>
+	        	</c:if>
 					<div class="upso-avg">${upsoVo.star_avg}</div>		
 	        	</div>
 	        	<div>
@@ -75,7 +79,8 @@
 		        </div>
 		        <div class="d-flex">
 			        <div>
-			        	<div class="avg">4.5</div>
+			        	<div class="avg">${upsoVo.star_avg}</div>
+			        	<div>${ratingVo.rating_total}개의 리뷰</div>
 			        </div>
 			        <div class="mt-3 ml-2">
 			        	<div class="d-flex">
@@ -86,7 +91,7 @@
 								<i class="fas fa-star upso-star2"></i>
 								<i class="fas fa-star upso-star2"></i>
 							</div>
-							<div class="bar" style="width: ${ratingVo.star1_per*2.5}px;">${ratingVo.rating_star5}</div>
+							<div class="bar" style="width: ${ratingVo.star5_per*2}px;">${ratingVo.rating_star5}</div>
 			        	</div>
 			        	<div class="d-flex">
 							<div class="chart-star-box">
@@ -96,7 +101,7 @@
 								<i class="fas fa-star upso-star2"></i>
 								<i class="fas fa-star upso-star2"></i>
 							</div>
-							<div class="bar" style="width: ${ratingVo.star2_per*2.5}px;">${ratingVo.rating_star4}</div>
+							<div class="bar" style="width: ${ratingVo.star4_per*2}px;">${ratingVo.rating_star4}</div>
 			        	</div>
 			        	<div class="d-flex">
 							<div class="chart-star-box">
@@ -106,7 +111,7 @@
 								<i class="fas fa-star upso-star2"></i>
 								<i class="fas fa-star upso-star2"></i>
 							</div>
-							<div class="bar" style="width: ${ratingVo.star3_per*2.5}px;">${ratingVo.rating_star3}</div>
+							<div class="bar" style="width: ${ratingVo.star3_per*2}px;">${ratingVo.rating_star3}</div>
 			        	</div>
 			        	<div class="d-flex">
 							<div class="chart-star-box">
@@ -116,7 +121,7 @@
 								<i class="fas fa-star upso-star2"></i>
 								<i class="fas fa-star upso-star2"></i>
 							</div>
-							<div class="bar" style="width: ${ratingVo.star4_per*2.5}px;">${ratingVo.rating_star2}</div>
+							<div class="bar" style="width: ${ratingVo.star2_per*2}px;">${ratingVo.rating_star2}</div>
 			        	</div>
 			        	<div class="d-flex">
 							<div class="chart-star-box">
@@ -126,7 +131,7 @@
 								<i class="fas fa-star upso-star2 dhidden"></i>
 								<i class="fas fa-star upso-star2"></i>
 							</div>
-							<div class="bar" style="width: ${ratingVo.star5_per *2.5}px;">${ratingVo.rating_star1}</div>
+							<div class="bar" style="width: ${ratingVo.star1_per *2}px;">${ratingVo.rating_star1}</div>
 			        	</div>
 							        
 			        </div>

@@ -77,9 +77,7 @@ public class MainController {
 		boolean result = mainService.insertReview(reviewVo, userId);
 		String param = "?id="+reviewVo.getRes_id();
 		redirect.setUrl(ProjectUrl.UPSO_DETAIL_VIEW.getUrl()+param);
-		if(result == false) {
-			
-		}
+		
 		mv.setView(redirect);
 		return mv;
 	}

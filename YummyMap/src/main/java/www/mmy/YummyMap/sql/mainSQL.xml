@@ -13,7 +13,7 @@
 			upso,( SELECT  
 						res_id, 
 	                	COUNT(rev_no) AS cont_sum,
-	                    AVG(rating_upso) AS star_avg
+	                    TRUNC(AVG(rating_upso), 1) AS star_avg
 	           		FROM 
 	           			upso_review
 	           		WHERE 

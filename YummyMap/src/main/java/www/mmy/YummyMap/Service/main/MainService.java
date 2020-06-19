@@ -46,7 +46,7 @@ public class MainService {
 		this.mainDao = mainDao;
 	}
 	
-	// 검색 키워드를 분석해주는 메소드입니다.
+	// 검색 키워드를 분석해주는 메소드입니다. 
 	public SearchInfoVO analyzeKeyword(SearchInfoVO searchInfoVo) {
 		SearchInfoVO tmp = mainDao.isShowKeyword(searchInfoVo.getKeyword());
 

@@ -1,7 +1,7 @@
 package www.mmy.YummyMap.vo;
 
 public class RatingUpsoVO {
-	private int rating_star1, rating_star2, rating_star3, rating_star4, rating_star5, rating_value, rating_value_count;
+	private int rating_star1, rating_star2, rating_star3, rating_star4, rating_star5, rating_value, rating_value_count, rating_total;
 	private double star1_per, star2_per, star3_per, star4_per, star5_per;
 	public int getRating_star1() {
 		return rating_star1;
@@ -82,10 +82,15 @@ public class RatingUpsoVO {
 	public void setStar5_per(double star5_per) {
 		this.star5_per = setDecimal(star5_per);
 	}
-	public int getTotal() {
+	
+	public int getRating_total() {
 		return rating_star1 + rating_star2 + rating_star3 + rating_star4 + rating_star5;
 	}
-	
+
+	public void setRating_total(int rating_total) {
+		this.rating_total = rating_total;
+	}
+
 	public int getRating_value() {
 		return rating_value;
 	}
@@ -122,8 +127,8 @@ public class RatingUpsoVO {
 	public String toString() {
 		return "RatingUpsoVO [rating_star1=" + rating_star1 + ", rating_star2=" + rating_star2 + ", rating_star3="
 				+ rating_star3 + ", rating_star4=" + rating_star4 + ", rating_star5=" + rating_star5 + ", rating_value="
-				+ rating_value + ", rating_value_count=" + rating_value_count + ", star1_per=" + star1_per
-				+ ", star2_per=" + star2_per + ", star3_per=" + star3_per + ", star4_per=" + star4_per + ", star5_per="
-				+ star5_per + "]";
+				+ rating_value + ", rating_value_count=" + rating_value_count + ", rating_total=" + rating_total
+				+ ", star1_per=" + star1_per + ", star2_per=" + star2_per + ", star3_per=" + star3_per + ", star4_per="
+				+ star4_per + ", star5_per=" + star5_per + "]";
 	}
 }
