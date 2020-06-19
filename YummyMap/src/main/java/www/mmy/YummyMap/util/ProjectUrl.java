@@ -7,6 +7,7 @@ package www.mmy.YummyMap.util;
  */
 public enum ProjectUrl {
 	MAIN_LIST_VIEW ("/YummyMap/main.mmy"),
+	UPSO_DETAIL_VIEW("/YummyMap/main/getDetail.mmy"),
 	LOGIN_VIEW ("/YummyMap/member/loginView.mmy");
 	
 	private String url;

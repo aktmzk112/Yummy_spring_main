@@ -5,12 +5,18 @@ package www.mmy.YummyMap.controller.main;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import www.mmy.YummyMap.Service.main.MainService;
 import www.mmy.YummyMap.util.PageUtil;
+import www.mmy.YummyMap.util.ProjectUrl;
+import www.mmy.YummyMap.vo.RatingUpsoVO;
+import www.mmy.YummyMap.vo.ReviewVO;
 import www.mmy.YummyMap.vo.SearchInfoVO;
 import www.mmy.YummyMap.vo.UpsoVO;
 
@@ -56,8 +62,25 @@ public class MainController {
 	@RequestMapping("/main/getDetail.mmy")
 	public ModelAndView getUpsoDetail(UpsoVO upsoVo, ModelAndView mv) {
 		upsoVo = mainService.getUpsoDetail(upsoVo);
+		RatingUpsoVO ratingVo = mainService.getRatingInfo(upsoVo.getId());
+		List<ReviewVO> reviewList = mainService.getReviewList(upsoVo.getId());
 		mv.setViewName("main/mainDetail");
 		mv.addObject("upsoVo",upsoVo);
+		mv.addObject("ratingVo",ratingVo);
+		mv.addObject("reviewList",reviewList);
+		return mv;
+	}
+	
+	@RequestMapping("/main/reviewProcess.mmy")
+	public ModelAndView reviewProcess(ModelAndView mv, ReviewVO reviewVo, HttpSession session, RedirectView redirect) {
+		String userId = (String)session.getAttribute("SID");
+		boolean result = mainService.insertReview(reviewVo, userId);
+		String param = "?id="+reviewVo.getRes_id();
+		redirect.setUrl(ProjectUrl.UPSO_DETAIL_VIEW.getUrl()+param);
+		if(result == false) {
+			
+		}
+		mv.setView(redirect);
 		return mv;
 	}
 	

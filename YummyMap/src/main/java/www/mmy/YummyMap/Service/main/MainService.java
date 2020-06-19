@@ -26,21 +26,23 @@ import www.mmy.YummyMap.Service.api.DaumSearchRestApiService;
 import www.mmy.YummyMap.Service.api.KaKaoMapRestApiService;
 import www.mmy.YummyMap.dao.MainDAO;
 import www.mmy.YummyMap.util.PageUtil;
+import www.mmy.YummyMap.vo.RatingUpsoVO;
+import www.mmy.YummyMap.vo.ReviewVO;
 import www.mmy.YummyMap.vo.SearchInfoVO;
 import www.mmy.YummyMap.vo.UpsoVO;
 
 @Service
 public class MainService {
 
-	private UpSoService normalUpso;
+	private UpsoService upsoService;
 	private MainDAO mainDao;
 	@Autowired
 	private KaKaoMapRestApiService kakaoMapService;
 	@Autowired
 	private DaumSearchRestApiService daumSearchService;
 	
-	public MainService(UpSoService upsoService, MainDAO mainDao) {
-		this.normalUpso = upsoService;
+	public MainService(UpsoService upsoService, MainDAO mainDao) {
+		this.upsoService = upsoService;
 		this.mainDao = mainDao;
 	}
 	
@@ -107,16 +109,16 @@ public class MainService {
 				UpsoVO upsoVo = upSolist.get(i);
 				searchInfoVo.setUpso_id(upsoVo.getId());
 				// 해당 업소가 기존에 DB에 저장되었는지 조회합니다.
-				boolean isShow_upso = normalUpso.isShowUpSo(upsoVo.getId());
+				boolean isShow_upso = upsoService.isShowUpSo(upsoVo.getId());
 				if(isShow_upso) {
 					// 뉴 키워드만 DB에 저장합니다.
-					normalUpso.insertKeyword(searchInfoVo);
+					upsoService.insertKeyword(searchInfoVo);
 					continue;
 				}
 				// 이미지 정보를 요청해옵니다.
 				setUpsoImage(upsoVo, searchInfoVo);
-				normalUpso.insertUpSo(upsoVo);
-				normalUpso.insertKeyword(searchInfoVo);
+				upsoService.insertUpSo(upsoVo);
+				upsoService.insertKeyword(searchInfoVo);
 			}
 			// 검색결과 페이지가 더 있는지 조회합니다.
 			JsonElement is_end = jsonObject.getAsJsonObject("meta").get("is_end");
@@ -142,7 +144,7 @@ public class MainService {
 	}
 	
 	public UpsoVO getUpsoDetail(UpsoVO upsoVo) {
-		upsoVo = normalUpso.getUpSoDetailInfo(upsoVo.getId());
+		upsoVo = upsoService.getUpSoDetailInfo(upsoVo.getId());
 		return upsoVo;
 	}
 
@@ -169,6 +171,37 @@ public class MainService {
 	public int upsoCount_group_category(SearchInfoVO searchInfoVo) {
 		int result = 0;
 		result = mainDao.countUpso_category(searchInfoVo);
+		return result;
+	}
+	
+	/*
+	 * 업소의 리뷰 분석 정보를 가져오는 메소드입니다.
+	 */
+	public RatingUpsoVO getRatingInfo(String upso_id) {
+		if(upso_id == null) {
+			return new RatingUpsoVO();
+		}
+		RatingUpsoVO ratingVo = upsoService.getRatingInfo(upso_id);
+		return ratingVo;
+	}
+	
+	public List<ReviewVO> getReviewList(String upso_id){
+		if(upso_id == null) {
+			return new ArrayList<ReviewVO>();
+		}
+		List<ReviewVO> reviewList = upsoService.getReviewList(upso_id);
+		return reviewList;
+	}
+	
+	/*
+	 * 업소 리뷰를 저장해주는 메소드입니다.
+	 * return : 성공 - true, 실패 - false
+	 */
+	public boolean insertReview(ReviewVO reviewVo, String userId) {
+		if(userId == null || userId.equals(""))
+			return false;
+		reviewVo.setMid(userId);
+		boolean result = upsoService.insertReview(reviewVo);
 		return result;
 	}
 }

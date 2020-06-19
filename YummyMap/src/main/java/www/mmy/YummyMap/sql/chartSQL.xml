@@ -28,67 +28,13 @@
 		<!-- 업소별 rating 조회 쿼리 -->
 		<select id="upso_rating_total" parameterType="String" resultType="ratingUpsoVo">
 		SELECT
-			rating_star1, rating_star2, rating_star3, rating_star4, rating_star5
+		     count(rev_no) rating_value_count, rating_upso rating_value
 		FROM
-			(
-				SELECT
-					count(rating_upso) rating_star1
-				FROM
-					upso_review
-				WHERE
-					res_id = #{upso_id}
-					AND rating_upso = 1
-					AND isshow = 'Y'
-				GROUP BY
-					res_id
-			),
-			(
-				SELECT
-					count(rating_upso) rating_star2
-				FROM
-					upso_review
-				WHERE
-					res_id = #{upso_id}
-					AND rating_upso = 2
-					AND isshow = 'Y'
-				GROUP BY
-					res_id
-			),
-			(
-				SELECT
-					count(rating_upso) rating_star3
-				FROM
-					upso_review
-				WHERE
-					res_id = #{upso_id}
-					AND rating_upso = 3
-					AND isshow = 'Y'
-				GROUP BY
-					res_id
-			),
-			(
-				SELECT
-					count(rating_upso) rating_star4
-				FROM
-					upso_review
-				WHERE
-					res_id = #{upso_id}
-					AND rating_upso = 4
-					AND isshow = 'Y'
-				GROUP BY
-					res_id
-			),
-			(
-				SELECT
-					count(rating_upso) rating_star5
-				FROM
-					upso_review
-				WHERE
-					res_id = #{upso_id}
-					AND rating_upso = 5
-					AND isshow = 'Y'
-				GROUP BY
-					res_id
-			)
+		    upso_review
+		WHERE
+		    res_id = #{upso_id}
+		    AND isshow = 'Y'
+		GROUP BY
+		    rating_upso		
 		</select>
 </mapper>

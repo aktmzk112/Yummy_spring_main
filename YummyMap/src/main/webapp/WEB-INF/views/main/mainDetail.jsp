@@ -59,8 +59,8 @@
 	        	</div>
 	        </div>
 		</div>
-		<div class="d-flex border">
-			<div class="upso-subinfo-box pt-1 border">
+		<div class="d-flex">
+			<div class="upso-subinfo-box pt-1 border-right">
 		        <div>
 		            <i class="fas fa-map-marked-alt rgba4"></i>
 		            <div class="upso-subinfo-font">${upsoVo.road_address_name}</div>
@@ -86,7 +86,7 @@
 								<i class="fas fa-star upso-star2"></i>
 								<i class="fas fa-star upso-star2"></i>
 							</div>
-							<div class="bar" style="width: 50px;">20</div>
+							<div class="bar" style="width: ${ratingVo.star1_per*2.5}px;">${ratingVo.rating_star5}</div>
 			        	</div>
 			        	<div class="d-flex">
 							<div class="chart-star-box">
@@ -96,7 +96,7 @@
 								<i class="fas fa-star upso-star2"></i>
 								<i class="fas fa-star upso-star2"></i>
 							</div>
-							<div class="bar" style="width: 50px;">20</div>
+							<div class="bar" style="width: ${ratingVo.star2_per*2.5}px;">${ratingVo.rating_star4}</div>
 			        	</div>
 			        	<div class="d-flex">
 							<div class="chart-star-box">
@@ -106,7 +106,7 @@
 								<i class="fas fa-star upso-star2"></i>
 								<i class="fas fa-star upso-star2"></i>
 							</div>
-							<div class="bar" style="width: 50px;">20</div>
+							<div class="bar" style="width: ${ratingVo.star3_per*2.5}px;">${ratingVo.rating_star3}</div>
 			        	</div>
 			        	<div class="d-flex">
 							<div class="chart-star-box">
@@ -116,7 +116,7 @@
 								<i class="fas fa-star upso-star2"></i>
 								<i class="fas fa-star upso-star2"></i>
 							</div>
-							<div class="bar" style="width: 50px;">20</div>
+							<div class="bar" style="width: ${ratingVo.star4_per*2.5}px;">${ratingVo.rating_star2}</div>
 			        	</div>
 			        	<div class="d-flex">
 							<div class="chart-star-box">
@@ -126,7 +126,7 @@
 								<i class="fas fa-star upso-star2 dhidden"></i>
 								<i class="fas fa-star upso-star2"></i>
 							</div>
-							<div class="bar" style="width: 0px;">20</div>
+							<div class="bar" style="width: ${ratingVo.star5_per *2.5}px;">${ratingVo.rating_star1}</div>
 			        	</div>
 							        
 			        </div>
@@ -142,31 +142,43 @@
 	        <div class="reviewBtn" onclick="showInputBox()">
 	            <i class="fas fa-pen"></i>
 	        </div>
-	        <div class="writeBox dnone">
-	            <div class="d-flex starBox" id="star_grade">
-	                <i class="fas fa-star"></i>
-	                <i class="fas fa-star"></i>
-	                <i class="fas fa-star"></i>
-	                <i class="fas fa-star"></i>
-	                <i class="fas fa-star"></i>
-	            </div>
-	            <div class="input-group mt-1 mb-0">
-	                <input type="text" class="form-control" >
-	                <div class="input-group-append">
-	                  <button class="btn border writeBtn" type="button" id="button-addon2">작성</button>
-	                </div>
-	            </div>
-	        </div>
+	        <form method="POST" action="/YummyMap/main/reviewProcess.mmy" id="reviewForm">
+		        <div class="writeBox mb-4 dnone ">
+		            <div class="d-flex starBox" id="star_grade">
+		                <i class="fas fa-star" id="1" onclick="setRating()"></i>
+		                <i class="fas fa-star" id="2" onclick="setRating()"></i>
+		                <i class="fas fa-star" id="3" onclick="setRating()"></i>
+		                <i class="fas fa-star" id="4" onclick="setRating()"></i>
+		                <i class="fas fa-star" id="5" onclick="setRating()"></i>
+		            </div>
+		            <input type="hidden" name="rating_upso" id="rating_upso">
+		            <input type="hidden" name="res_id" id="res_id" value="${upsoVo.id}">
+		            <div class="input-group mt-1 mb-0">
+		                <input type="text" name="rev_txt" id="rev_txt" class="form-control" >
+		                <div class="input-group-append">
+		                  <button class="btn border writeBtn" type="button" onclick="submitReview()">작성</button>
+		                </div>
+		            </div>
+		        </div>
+	        </form>
 	    </div>
+	    
 	    <div class="mb-5">
+	    <c:if test="${reviewList.size() == '0'}">
+	    	<div class="reviewInfoText">첫 번째 리뷰를 등록해 주세요</div>
+	    </c:if>
+	    <c:forEach var="reviewVo" items="${reviewList}">
 	        <div class="review-item border-bottom pt-4">
-	            <div class="reviewId">아이디</div>
+	            <div class="reviewId">${reviewVo.mid}</div>
 	            <div class="d-flex reviewStarBox">
-	                <i class="fas fa-star"></i>
-	                <div class="pl-1">2020/05/01</div>
+	            <c:forEach begin="1" end="${reviewVo.rating_upso}" >
+                <i class="fas fa-star"></i>
+	            </c:forEach>
+	                <div class="pl-1">${reviewVo.cr_date}</div>
 	            </div>
-	            <div class="review-txt pt-4 pb-4">내용...</div>
+	            <div class="review-txt pt-4 pb-4">${reviewVo.rev_txt}</div>
 	        </div>
+	    </c:forEach>
 	    </div>
     </div>
 </body>
@@ -180,6 +192,19 @@ function submitKeyword(){
 		location.href = "/YummyMap/main/getList.mmy?keyword="+keyword;
 	}
 }
+function setRating(){
+	let rating = event.target.getAttribute('id');
+	document.getElementById('rating_upso').value = rating;
+}
+function submitReview(data) {
+	let rev_txt = document.getElementById('rev_txt').value;
+	let rating_upso = document.getElementById('rating_upso').value;
+	let res_id = document.getElementById('res_id').value;
+	if(!rev_txt || !rating_upso || !res_id)
+		return;
+	document.getElementById('reviewForm').submit();
+}
+
 $('#star_grade i').click(function(){
             $(this).parent().children("i").removeClass("on");  /* 별점의 on 클래스 전부 제거 */ 
             $(this).addClass("on").prevAll("i").addClass("on"); /* 클릭한 별과, 그 앞 까지 별점에 on 클래스 추가 */

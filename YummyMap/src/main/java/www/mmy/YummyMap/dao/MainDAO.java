@@ -1,5 +1,9 @@
 package www.mmy.YummyMap.dao;
-
+/**
+ * 메인페이지에서 필요한 DAO 작업을 전담하는 클래스입니다.
+ * 
+ * @author	김종형
+ */
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -89,8 +93,8 @@ public class MainDAO {
 	 * 업소의 리뷰 평점 정보를 조회합니다.
 	 * param : upso_id (업소 id)
 	 */
-	public RatingUpsoVO getUpsoRatingInfo(String upso_id) {
-		return sqlSession.selectOne("chartSQL.upso_rating_total", upso_id);
+	public List<RatingUpsoVO> getUpsoRatingInfo(String upso_id) {
+		return sqlSession.selectList("chartSQL.upso_rating_total", upso_id);
 	}
 	/*
 	 * 업소정보에 등록된 모든 리뷰를 조회합니다.
@@ -98,5 +102,11 @@ public class MainDAO {
 	 */
 	public List<ReviewVO> getReviewList(String upso_id) {
 		return sqlSession.selectList("mainSql.reviewList", upso_id);
+	}
+	/*
+	 * 리뷰정보를 DB에 저장합니다.
+	 */
+	public int insertReview(ReviewVO reviewVo) {
+		return sqlSession.insert("mainSql.insertReview", reviewVo);
 	}
 }
