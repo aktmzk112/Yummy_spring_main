@@ -119,6 +119,8 @@ public class KakaoAPI {
 	    return userInfo;
 	}
 	
+	
+	
 	public void logoutone() {
 		  String reqURL = "https://kauth.kakao.com/oauth/logout?client_id=4feafed6fab67012d774f050c5c744ff&logout_redirect_uri=http://localhost/YummyMap/member/loginView.mmy";
 		    try {

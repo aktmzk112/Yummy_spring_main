@@ -50,8 +50,11 @@
                 <c:if test="${SID == null}">
                 <li><a class="topNavItem-icon" href="/YummyMap/member/loginView.mmy"><i class="fas fa-toggle-off"></i></a></li>
                 </c:if>
-                <c:if test="${SID != null}">
+                <c:if test="${SID != null and Token == null}">
                 <li><a class="topNavItem-icon" href="/YummyMap/member/logoutProcess.mmy"><i class="fas fa-toggle-on"></i></a></li>
+                </c:if>
+                <c:if test="${SID != null and Token != null}">
+                <li><a class="topNavItem-icon" href="" id="kakaoLogout"><i class="fas fa-toggle-on"></i></a></li>
                 </c:if>
             </ul>
         </div>
@@ -122,6 +125,8 @@
     </div>
 </body>
 <script type="text/javascript">
+
+
 function submitKeyword(){
 	if(event.keyCode == 13) {
 		let keyword = event.target.value;
@@ -145,6 +150,9 @@ onmousewheel = function(e){
     }
 }
 
+document.getElementById('kakaoLogout').onclick = function(){
+	 window.open('http://localhost/YummyMap/kakaoLogout.mmy','test','top=0, left=0, width=1, height=1');
+}
 
 
 </script>

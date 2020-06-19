@@ -82,4 +82,9 @@ public class MainController {
 		return mv;
 	}
 	
+	@RequestMapping("/kakaoLogout.mmy")
+	public String kakaoLogout() {
+		return "member/kakaoLogout";
+	}
+	
 }
