@@ -11,9 +11,10 @@ import www.mmy.YummyMap.vo.MemberVO;
 public class UserServiceImpl implements UserService {
 	
 	private MemberDAO memberDao;
-	
-	public UserServiceImpl(MemberDAO memberDao) {
+	private KakaoAPI kakaoApi;
+	public UserServiceImpl(MemberDAO memberDao, KakaoAPI kakaoApi) {
 		this.memberDao = memberDao;
+		this.kakaoApi = kakaoApi;
 	}
 	@Override
 	public boolean isUserLoggedin(HttpSession session) {
@@ -23,12 +24,24 @@ public class UserServiceImpl implements UserService {
 	}
 	@Override
 	public void logoutProcess(HttpSession session) {
-		session.removeAttribute("SID");
+		String token = (String) session.getAttribute("Token");
+		System.out.println(token + " 토 큰 ###################################");
+		if(token == null || token.length() == 0) {
+			session.removeAttribute("SID");
+		}else {
+			System.out.println("카카오 로그아웃 처리 ");
+			kakaoApi.logoutone();
+			kakaoApi.kakaoLogout(token);
+			session.removeAttribute("Token");
+			session.removeAttribute("SID");
+		}
 	}
 	@Override
 	public void loginProcess(HttpSession session, MemberVO memberVo) {
-		session.setAttribute("SID", memberVo.getMid());
+			session.setAttribute("SID", memberVo.getMid());
 	}
+	
+	
 	@Override
 	public MemberVO getUserInfo(HttpSession session) {
 		String userId = (String) session.getAttribute("SID");

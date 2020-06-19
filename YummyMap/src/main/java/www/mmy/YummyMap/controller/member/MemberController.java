@@ -1,10 +1,11 @@
 package www.mmy.YummyMap.controller.member;
 
-import java.security.PrivateKey;
 import java.util.HashMap;
 import java.util.Random;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +15,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import www.mmy.YummyMap.Service.member.KakaoAPI;
 import www.mmy.YummyMap.Service.member.MemberService;
-import www.mmy.YummyMap.Service.rsa.RsaServiceImpl;
 import www.mmy.YummyMap.util.MailUtil;
 import www.mmy.YummyMap.util.ProjectUrl;
 import www.mmy.YummyMap.vo.JoinMailVO;
@@ -28,13 +29,18 @@ public class MemberController {
 	MailUtil yummyMail;
 
 	MemberService memberService;
+	KakaoAPI KakaoApi;
 
-	public MemberController(RsaServiceImpl rsaServiceImpl, MemberService memberService) {
+	public MemberController(KakaoAPI kakaoApi, MemberService memberService) {
 		this.memberService = memberService;
+		this.KakaoApi = kakaoApi;
 	}
 
 	@RequestMapping("/loginView.mmy")
-	public String looginView() {
+	public String looginView(HttpServletResponse response, HttpServletRequest request) {
+
+		
+		
 		String view = "member/Login";
 		return view;
 	}
@@ -52,7 +58,10 @@ public class MemberController {
 	}
 
 	@RequestMapping("/logoutProcess.mmy")
-	public ModelAndView logoutProcess(ModelAndView mv, RedirectView rv, HttpSession session) {
+	public ModelAndView logoutProcess(ModelAndView mv, RedirectView rv, HttpSession session ) {
+
+
+	
 		memberService.userService.logoutProcess(session);
 		rv.setUrl(ProjectUrl.LOGIN_VIEW.getUrl());
 		mv.setView(rv);
@@ -111,58 +120,55 @@ public class MemberController {
 		map.put("emailCk", "ok");
 		return map;
 	}
-	
+
 	@RequestMapping("/mailOk.mmy")
 	@ResponseBody
-	public HashMap<String, String> joinMailOk(JoinMailVO jmvo){
+	public HashMap<String, String> joinMailOk(JoinMailVO jmvo) {
 		int cnt = memberService.joinMaillOk(jmvo);
-		System.out.println(cnt + " cnt ###############################");
 		HashMap<String, String> map = new HashMap<String, String>();
-		if(cnt == 1) {
+		if (cnt == 1) {
 			map.put("status", "ok");
-		}else {
+		} else {
 			map.put("status", "no");
 		}
-		
+
 		return map;
 	}
-	
-	//아이디 체크 비동기 통신
+
+	// 아이디 체크 비동기 통신
 	@RequestMapping("/idCheck.mmy")
 	@ResponseBody
 	public HashMap<String, String> idCheck(MemberVO mvo) {
-		System.out.println("#################################");
-		HashMap<String , String> map = new HashMap<String, String>();
+		HashMap<String, String> map = new HashMap<String, String>();
 		int cnt = memberService.idCk(mvo);
-		System.out.println(cnt + " cnt");
-		if(cnt == 0 ) {
-			map.put("result" , "ok");
-		}else {
-			map.put("result" , "no");
+		if (cnt == 0) {
+			map.put("result", "ok");
+		} else {
+			map.put("result", "no");
 		}
 		return map;
 	}
-	
-	//회원가입처리 
+
+	// 회원가입처리
 	@RequestMapping("/joinProcess.mmy")
-	public ModelAndView joinProc(MemberVO mvo , ModelAndView mv) {
+	public ModelAndView joinProc(MemberVO mvo, ModelAndView mv) {
 		int cnt = memberService.addMember(mvo);
 		String view = "";
-		if(cnt == 1) {
+		if (cnt == 1) {
 			view = "/YummyMap/member/loginView.mmy";
 			System.out.println("정상 가입 완료");
-			
-		}else {
-			view ="/YummyMap/member/join.mmy";
+
+		} else {
+			view = "/YummyMap/member/join.mmy";
 			System.out.println("가입 실패!!!");
 		}
 
 		RedirectView rv = new RedirectView(view);
 		mv.setView(rv);
-		
+
 		return mv;
 	}
-	
+
 	@RequestMapping("/rmMail.mmy")
 	@ResponseBody
 	public String rmMail(String mail) {
@@ -172,11 +178,31 @@ public class MemberController {
 			tmp.append(ran.nextInt(10));
 		}
 		HashMap<String, String> map = new HashMap<String, String>();
-		
+
 		map.put("MAIL", mail);
-		map.put("NUM" , tmp.toString());
-		
+		map.put("NUM", tmp.toString());
+
 		int cnt = memberService.rmMail(map);
 		return "";
+	}
+
+	@RequestMapping("/kakaoLogin.mmy")
+	public ModelAndView kakao(String code, ModelAndView mv, HttpSession session,HttpServletRequest request, HttpServletResponse response) {
+		
+		String token = KakaoApi.getAccessToken(code);
+		HashMap<String, Object> map = KakaoApi.getUserInfo(token);
+
+		System.out.println("login Cont" + map);
+
+		String email = (String) map.get("email");
+		if (email != null || email.length() != 0) {
+			session.setAttribute("SID", email);
+			session.setAttribute("Token", token);
+		}
+
+		String view = "/YummyMap/main.mmy";
+		RedirectView rv = new RedirectView(view);
+		mv.setView(rv);
+		return mv;
 	}
 }

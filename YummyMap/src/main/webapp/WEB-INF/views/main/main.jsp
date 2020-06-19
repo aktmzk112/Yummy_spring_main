@@ -122,7 +122,6 @@
     </div>
 </body>
 <script type="text/javascript">
-
 function submitKeyword(){
 	if(event.keyCode == 13) {
 		let keyword = event.target.value;
