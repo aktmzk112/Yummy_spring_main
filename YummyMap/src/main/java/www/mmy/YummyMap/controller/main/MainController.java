@@ -30,10 +30,17 @@ public class MainController {
 	@RequestMapping("/main/getList.mmy")
 	public ModelAndView searchList(ModelAndView mv, SearchInfoVO searchInfoVo, PageUtil pageUtil) {
 		searchInfoVo = mainService.analyzeKeyword(searchInfoVo);
-		int count = searchInfoVo.getUpsoCount();
-		if(count == 0) {
-			mainService.setUpsoList(searchInfoVo);			
+		String category_name = searchInfoVo.getCategory_name();
+		int count = 0;
+		if(category_name == null) {
+			count = searchInfoVo.getUpsoCount();
+			if(count == 0) {
+				mainService.setUpsoList(searchInfoVo);			
+			} else {
+				pageUtil.setTotalCount(count);
+			}
 		} else {
+			count = mainService.upsoCount_group_category(searchInfoVo);
 			pageUtil.setTotalCount(count);
 		}
 		pageUtil.setPageRow(10);
@@ -54,12 +61,4 @@ public class MainController {
 		return mv;
 	}
 	
-	@RequestMapping("/main/groupByCategory.mmy")
-	public ModelAndView groupByCategory(ModelAndView mv, SearchInfoVO searchInfoVo) {
-		List<UpsoVO> upSoVoList = mainService.getUpsoListGroupByCategory(searchInfoVo);
-		mv.addObject("upSoVoList", upSoVoList);
-		mv.addObject("searchInfoVo", searchInfoVo);
-		mv.setViewName("main/mainSearchList");
-		return mv;
-	}
 }

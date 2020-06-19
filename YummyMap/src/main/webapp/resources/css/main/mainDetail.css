@@ -9,6 +9,9 @@ a, a:hover, a:link, a:visited{
 .dnone{
     display: none;
 }
+.dhidden {
+	visibility: hidden;
+}
 img{
 	width: 100%;
 	height: 100%;
@@ -126,7 +129,6 @@ img{
     font-weight: 500;
 }
 .reviewStarBox i {
-    
     font-size: 11pt;
     color: rgb(255, 187, 0);
 }
@@ -136,4 +138,29 @@ img{
 }
 .review-txt{
 	letter-spacing: 1px;
+}
+
+.chart-star-box{
+	height: 15px;
+}
+
+.upso-star2{
+	font-size:8pt;
+	color: rgb(255, 187, 0); 
+}
+.avg{
+	padding-top: 10px;
+	padding-right: 10px;
+	font-size: 30pt;
+	font-weight: 500;
+}
+.bar{
+	margin-left: 8px;
+	height: 8px;
+	min-width: 10px !important;
+	max-width: 250px !important;
+	margin-top: 10px;
+	background-color: rgba(0,0,0,0.1);
+	font-size: 8pt;
+	color: rgba(0,0,0,0.4);
 }

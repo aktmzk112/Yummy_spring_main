@@ -6,14 +6,15 @@ package www.mmy.YummyMap.vo;
  */
 public class SearchInfoVO {
 	private int keyword_id;
-	private int upsoCount;
+	private int upsoCount; // 업소 리스트 토탈카운트 변수
 	private double x; // 검색 요청자의 경도값
 	private double y; // 검색 요청자의 위도값
 	private String upso_id;
-	private String keyword; // 현재 검색어
-	private String query_location; // 검색어에 장소키워드가 포함되었는지 여부
-	private String query_keyword; // 검색어에 카테고리 혹은 음식 키워드가 포함되었는지 여부
-	private String category_name;
+	private String keyword; // 사용자가 입력한 현재 검색어 입니다
+	private String query_location; // 검색어에 장소키워드가 포함되었을때 담을 변수입니다
+	private String query_keyword; // 검색어에 카테고리 혹은 음식 키워드가 포함되었을때 담을 변수입니다
+	private String category_name; // 카테고리 정렬시 카테고리를 담을 변수입니다
+	private String order_standard = "star_avg"; // 정렬방식을 지정하는 변수입니다. 기본값 star_avg
 	public int getKeyword_id() {
 		return keyword_id;
 	}
@@ -69,10 +70,24 @@ public class SearchInfoVO {
 	public void setCategory_name(String category_name) {
 		this.category_name = category_name;
 	}
+	public String getOrder_standard() {
+		return order_standard;
+	}
+	/*
+	 * 정렬방식을 결정합니다
+	 * 매개변수로 다음의 문자열을 입력받습니다
+	 *  - star_avg
+	 *  - cont_sum
+	 */
+	public void setOrder_standard(String order_standard) {
+		this.order_standard = order_standard;
+	}
 	@Override
 	public String toString() {
 		return "SearchInfoVO [keyword_id=" + keyword_id + ", upsoCount=" + upsoCount + ", x=" + x + ", y=" + y
 				+ ", upso_id=" + upso_id + ", keyword=" + keyword + ", query_location=" + query_location
-				+ ", query_keyword=" + query_keyword + ", category_name=" + category_name + "]";
+				+ ", query_keyword=" + query_keyword + ", category_name=" + category_name + ", order_standard="
+				+ order_standard + "]";
 	}
+
 }

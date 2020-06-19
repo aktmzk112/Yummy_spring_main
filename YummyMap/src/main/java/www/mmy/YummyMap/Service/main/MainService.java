@@ -73,6 +73,11 @@ public class MainService {
 					searchInfoVo.setQuery_keyword(query_keyword);
 			}
 		} else {
+			String category_name = searchInfoVo.getCategory_name();
+			if(category_name != null)
+				tmp.setCategory_name(category_name);
+			String order_standard = searchInfoVo.getOrder_standard();
+			tmp.setOrder_standard(order_standard);
 			searchInfoVo = tmp;
 		}
 		if(searchInfoVo.getQuery_keyword() == null)
@@ -141,10 +146,6 @@ public class MainService {
 		return upsoVo;
 	}
 
-	public List<UpsoVO> getUpsoListGroupByCategory(SearchInfoVO searchInfoVo){
-		List<UpsoVO> upsoList = mainDao.getUpSoList_groupByCategory(searchInfoVo);
-		return upsoList;
-	}
 	
 	// 다음 RestAPI를 통해 이미지 url을 받아오는 메소드입니다.
 	public UpsoVO setUpsoImage(UpsoVO upsoVo, SearchInfoVO searchInfoVo) {
@@ -163,5 +164,11 @@ public class MainService {
 			upsoVo.setImage_url("/YummyMap/img/main/noimage.jpg");
 		}
 		return upsoVo;
+	}
+	
+	public int upsoCount_group_category(SearchInfoVO searchInfoVo) {
+		int result = 0;
+		result = mainDao.countUpso_category(searchInfoVo);
+		return result;
 	}
 }

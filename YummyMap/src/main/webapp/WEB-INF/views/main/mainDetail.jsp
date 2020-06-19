@@ -59,19 +59,78 @@
 	        	</div>
 	        </div>
 		</div>
-		<div class="d-flex">
-			<div class="upso-subinfo-box pt-4">
+		<div class="d-flex border">
+			<div class="upso-subinfo-box pt-1 border">
 		        <div>
 		            <i class="fas fa-map-marked-alt rgba4"></i>
 		            <div class="upso-subinfo-font">${upsoVo.road_address_name}</div>
 		        </div>
-		        <div class="mt-2">
+		        <div class="mt-1">
 		        	<i class="fas fa-phone rgba4"></i>
 		        	<div class="upso-subinfo-font">${upsoVo.phone}</div>
 		        </div>
-		        <div class="mt-2">
+		        <div class="mt-1">
 		            <i class="fas fa-utensils rgba4"></i>
 		            <div class="upso-subinfo-font">${upsoVo.category_name}</div>
+		        </div>
+		        <div class="d-flex">
+			        <div>
+			        	<div class="avg">4.5</div>
+			        </div>
+			        <div class="mt-3 ml-2">
+			        	<div class="d-flex">
+							<div class="chart-star-box">
+								<i class="fas fa-star upso-star2"></i>
+								<i class="fas fa-star upso-star2"></i>
+								<i class="fas fa-star upso-star2"></i>
+								<i class="fas fa-star upso-star2"></i>
+								<i class="fas fa-star upso-star2"></i>
+							</div>
+							<div class="bar" style="width: 50px;">20</div>
+			        	</div>
+			        	<div class="d-flex">
+							<div class="chart-star-box">
+								<i class="fas fa-star upso-star2 dhidden"></i>
+								<i class="fas fa-star upso-star2"></i>
+								<i class="fas fa-star upso-star2"></i>
+								<i class="fas fa-star upso-star2"></i>
+								<i class="fas fa-star upso-star2"></i>
+							</div>
+							<div class="bar" style="width: 50px;">20</div>
+			        	</div>
+			        	<div class="d-flex">
+							<div class="chart-star-box">
+								<i class="fas fa-star upso-star2 dhidden"></i>
+								<i class="fas fa-star upso-star2 dhidden"></i>
+								<i class="fas fa-star upso-star2"></i>
+								<i class="fas fa-star upso-star2"></i>
+								<i class="fas fa-star upso-star2"></i>
+							</div>
+							<div class="bar" style="width: 50px;">20</div>
+			        	</div>
+			        	<div class="d-flex">
+							<div class="chart-star-box">
+								<i class="fas fa-star upso-star2 dhidden"></i>
+								<i class="fas fa-star upso-star2 dhidden"></i>
+								<i class="fas fa-star upso-star2 dhidden"></i>
+								<i class="fas fa-star upso-star2"></i>
+								<i class="fas fa-star upso-star2"></i>
+							</div>
+							<div class="bar" style="width: 50px;">20</div>
+			        	</div>
+			        	<div class="d-flex">
+							<div class="chart-star-box">
+								<i class="fas fa-star upso-star2 dhidden"></i>
+								<i class="fas fa-star upso-star2 dhidden"></i>
+								<i class="fas fa-star upso-star2 dhidden"></i>
+								<i class="fas fa-star upso-star2 dhidden"></i>
+								<i class="fas fa-star upso-star2"></i>
+							</div>
+							<div class="bar" style="width: 0px;">20</div>
+			        	</div>
+							        
+			        </div>
+		        
 		        </div>
 			</div>
 			<div class="upso-mapBox"></div>

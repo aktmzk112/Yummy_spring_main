@@ -43,6 +43,7 @@ public class NormalUpso implements UpSoService {
 		int resultCnt = mainDao.insertKeyword(searchInfoVo);
 		return resultCnt;
 	}
+	
 
 }
 

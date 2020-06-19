@@ -46,6 +46,8 @@
 		<typeAlias type="www.mmy.YummyMap.vo.SearchInfoVO" alias="searchInfoVo"/>
 		<typeAlias type="www.mmy.YummyMap.vo.admin.ChartCntVO" alias="chartCntVo"/>
 		<typeAlias type="www.mmy.YummyMap.vo.admin.ResCntVO" alias="resCntVo"/>
+		<typeAlias type="www.mmy.YummyMap.vo.RatingUpsoVO" alias="ratingUpsoVo"/>
+		<typeAlias type="www.mmy.YummyMap.vo.ReviewVO" alias="reviewVo"/>
 	 </typeAliases>
 	 
  	 <!-- 오라클에서 Long타입 가져오기 위한 핸들러 -->

@@ -41,31 +41,43 @@
     </div>
     <div class="itemBody container mb-5">
    	    <c:if test="${searchInfoVo.query_keyword.length() == 0 || searchInfoVo.query_keyword == null}">
-    	<div class="title mt-4">${searchInfoVo.query_location} 인기 검색 순위</div>
-    	<div class="border-bottom border-top mt-2 mb-2 p-2 d-flex">
-    		<div class="filter-item border p-2 mr-2" onclick="groupByCategory('한식')">한식</div>
-    		<div class="filter-item border p-2 mr-2" onclick="groupByCategory('양식')">양식</div>
-    		<div class="filter-item border p-2 mr-2" onclick="groupByCategory('중식')">중식</div>
-    		<div class="filter-item border p-2 mr-2" onclick="groupByCategory('일식')">일식</div>
-    		<div class="filter-item border p-2 mr-2" onclick="groupByCategory('뷔페')">뷔페</div>
-    		<div class="filter-item border p-2 mr-2" onclick="groupByCategory('분식')">분식</div>
-    		<div class="filter-item border p-2 mr-2" onclick="groupByCategory('아시아음식')">아시아음식</div>
-    		<div class="filter-item border p-2 mr-2" onclick="groupByCategory('패밀리레스토랑')">패밀리레스토랑</div>
-    		<div class="filter-item border p-2 mr-2" onclick="groupByCategory('술집')">술집</div>
-    		<div class="filter-item border p-2 mr-2" onclick="groupByCategory('퓨전요리')">퓨전요리</div>
-    		<div class="filter-item border p-2 mr-2" onclick="groupByCategory('간식')">간식</div>
-    		<div class="filter-item border p-2 mr-2" onclick="groupByCategory('도시락')">도시락</div>
+	    <div class="title mt-4">${searchInfoVo.query_location} 인기 검색 순위</div>
+	     <div class="d-flex justify-content-end">
+	     	<div class="border d-flex p-1 sortBox">
+				<div class="mr-2 border-right pr-2 pl-2" onclick="listSort('star_avg')">평점</div>
+				<div class="mr-2 " onclick="listSort('cont_sum')">리뷰</div>
+	     	</div>
+		</div>
+		<div class="dnone">
+			<form method="POST" action="/YummyMap/main/getList.mmy" id="sortForm">
+				<input type="hidden" name="keyword"  value="${searchInfoVo.keyword}">
+				<input type="hidden" name="order_standard" id="order_standard" value="">
+			</form>
+		</div>
+    	<div class="border-bottom mt-2 mb-2 p-2 d-flex justify-content-around">
+    		<div class="filter-item p-2 mr-2" onclick="groupByCategory('한식')">한식</div>
+    		<div class="filter-item p-2 mr-2" onclick="groupByCategory('양식')">양식</div>
+    		<div class="filter-item p-2 mr-2" onclick="groupByCategory('중식')">중식</div>
+    		<div class="filter-item p-2 mr-2" onclick="groupByCategory('일식')">일식</div>
+    		<div class="filter-item p-2 mr-2" onclick="groupByCategory('뷔페')">뷔페</div>
+    		<div class="filter-item p-2 mr-2" onclick="groupByCategory('분식')">분식</div>
+    		<div class="filter-item p-2 mr-2" onclick="groupByCategory('술집')">주점</div>
+    		<div class="filter-item p-2 mr-2" onclick="groupByCategory('간식')">간식</div>
+    		<div class="filter-item p-2 mr-2" onclick="groupByCategory('도시락')">도시락</div>
+    		<div class="filter-item p-2 mr-2" onclick="groupByCategory('퓨전요리')">퓨전요리</div>
+    		<div class="filter-item p-2 mr-2" onclick="groupByCategory('아시아음식')">아시아음식</div>
+    		<div class="filter-item p-2 mr-2" onclick="groupByCategory('패밀리레스토랑')">패밀리레스토랑</div>
     	</div>
     	</c:if>
    	    <c:if test="${searchInfoVo.query_keyword.length() > 0}">
     	<div class="title mt-4">${searchInfoVo.query_location} ${searchInfoVo.query_keyword} 인기 검색 순위</div>   	    
-   	    </c:if>    	
+   	    </c:if>  	
    	    <c:if test="${searchInfoVo.category_name != null}">
-    	<div class="title mt-5">${searchInfoVo.category_name} 카테고리</div>   	    
+    	<div class="sub-title mt-5">${searchInfoVo.category_name} 카테고리</div>   	    
    	    </c:if>    	
     	<c:forEach var="upSoVoList" items="${upSoVoList}" varStatus="status">
     	<c:if test="${status.count % 2 != 0}">
- 	    <div class="item border d-inline-block mr-4 ml-3 mt-4" >
+ 	    <div class="item d-inline-block mr-4 ml-3 mt-4" >
  	    	<div class="p-2">
 	        	<div class="info-name m-0">${upSoVoList.place_name}</div>
 	        	<div class="info-addr m-0">${upSoVoList.road_address_name}</div> 	    	
@@ -73,20 +85,20 @@
             <div class="imgBox" onclick="getDetail('${upSoVoList.id}')">
                 <img src="${upSoVoList.image_url}" alt="" />
             </div>
-            <div class="info-sub pl-2 pt-1">
+            <div class="info-sub pl-2 pt-1 d-flex">
             	<div class="d-flex">
-            		<div class="mr-2">평점</div>
-            		<div class="info-avg">${upSoVoList.star_avg}</div>
+            		<div class="mr-2"><i class="far fa-star"></i></div>
+            		<div class="info-avg pr-2  mr-2 border-right">${upSoVoList.star_avg}</div>
             	</div>
             	<div class="d-flex">
-    				<div class="mr-2">리뷰</div>        	
+    				<div class="mr-2"><i class="far fa-edit"></i></div>        	
 	                <div class="info-sum">${upSoVoList.cont_sum}</div>
             	</div>
             </div>
         </div>
     	</c:if>
     	<c:if test="${status.count % 2 == 0}">
-        <div class="item border d-inline-block mt-4" >
+        <div class="item d-inline-block mt-4" >
  	    	<div class="p-2">
 	        	<div class="info-name m-0">${upSoVoList.place_name}</div>
 	        	<div class="info-addr m-0">${upSoVoList.road_address_name}</div> 	    	
@@ -94,22 +106,36 @@
             <div class="imgBox" onclick="getDetail('${upSoVoList.id}')">
                 <img src="${upSoVoList.image_url}" alt="" />
             </div>
-            <div class="info-sub pl-2 pt-1">
+            <div class="info-sub pl-2 pt-1 d-flex">
             	<div class="d-flex">
-            		<div class="mr-2">평점</div>
-            		<div class="info-avg">${upSoVoList.star_avg}</div>
+            		<div class="mr-2"><i class="far fa-star"></i></div>
+            		<div class="info-avg pr-2  mr-2 border-right">${upSoVoList.star_avg}</div>
             	</div>
             	<div class="d-flex">
-    				<div class="mr-2">리뷰</div>        	
+    				<div class="mr-2"><i class="far fa-edit"></i></div>        	
 	                <div class="info-sum">${upSoVoList.cont_sum}</div>
             	</div>
             </div>
         </div>
     	</c:if>
     	</c:forEach>
+    	<div class="d-flex justify-content-center mt-5 mb-5">
+	    	<c:forEach var="pageNo" begin="${pageUtil.startPage}" end="${pageUtil.endPage}">
+	    	<c:if test="${pageUtil.nowPage == pageNo}">
+	    		<a href="/YummyMap/main/getList.mmy?keyword=${searchInfoVo.keyword}&nowPage=${pageNo}&category_name=${searchInfoVo.category_name}&order_standard=${searchInfoVo.order_standard}">
+	    			<div class="pager-no border pt-1 pb-1" style="border-bottom: 2px solid #F86624 !important;">${pageNo}</div>
+	    		</a>
+	    	</c:if>
+	    	<c:if test="${pageUtil.nowPage != pageNo}">
+	    		<a href="/YummyMap/main/getList.mmy?keyword=${searchInfoVo.keyword}&nowPage=${pageNo}&category_name=${searchInfoVo.category_name}&order_standard=${searchInfoVo.order_standard}">
+	    			<div class="pager-no border pt-1 pb-1">${pageNo}</div>
+	    		</a>
+	    	</c:if>
+	    	</c:forEach>
+    	</div>
     </div>
     <div class="dnone">
-    	<form method="POST" action="/YummyMap/main/groupByCategory.mmy" id="categoryDataForm">
+    	<form method="POST" action="/YummyMap/main/getList.mmy" id="categoryDataForm">
 	    	<input type="hidden" name="keyword" value="${searchInfoVo.keyword}">
 	    	<input type="hidden" name="query_keyword" value="${searchInfoVo.query_keyword}">
 	    	<input type="hidden" name="query_location" value="${searchInfoVo.query_location}">
@@ -136,6 +162,10 @@ function getDetail(data){
 function groupByCategory(data) {
 	document.getElementById('categoryDataForm_category').value = data;
 	document.getElementById('categoryDataForm').submit();
+}
+function listSort(data) {
+	document.getElementById('order_standard').value = data;
+	document.getElementById('sortForm').submit();
 }
 </script>
 </html>

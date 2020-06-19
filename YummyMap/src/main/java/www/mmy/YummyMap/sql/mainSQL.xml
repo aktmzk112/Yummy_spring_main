@@ -4,6 +4,7 @@
 					"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 					
 <mapper namespace="mainSql">
+
 	<select id="upSoDetailInfo" resultType="upsoVo" parameterType="String">
 		SELECT
 			upso_id id, place_name, category_name, phone, road_address_name, longitude x, latitude y, place_url, image_url,
@@ -60,12 +61,37 @@
 		                    upso.isShow = 'Y'
 		                    AND upso.upso_id = sub.upso_id
 		                    AND upso.upso_id = res_id(+)
+		                    <if test="searchInfoVo.category_name != null">
+							AND category_name LIKE '%${searchInfoVo.category_name}%'		                    	
+		                    </if>
 		                ORDER BY
+		                <if test='searchInfoVo.order_standard.equals("star_avg")'>
 		                    star_avg
+		                </if>
+		                <if test='searchInfoVo.order_standard.equals("cont_sum")'>
+		                    cont_sum
+		                </if>
 		                )
 		        )
 		WHERE
 		    rnum BETWEEN #{pageUtil.startCont} AND #{pageUtil.endCont}
+	</select>
+	<select id="countUpso_category" resultType="int" parameterType="searchInfoVo">
+		SELECT
+		    count(*)
+		FROM
+		    upso,
+		                ( SELECT
+		                    upso_id 
+		                  FROM
+		                    keyword
+		                  WHERE
+		                    keyword = #{keyword}
+		                ) sub
+		WHERE
+		    upso.isShow = 'Y'
+		    AND upso.upso_id = sub.upso_id
+		    AND category_name LIKE '%${category_name}%'	
 	</select>
 
 	<select id="upSoList_geolocation" resultType="upsoVo" parameterType="searchInfoVo">
@@ -151,6 +177,16 @@
 			AND category_name LIKE '%${category_name}%'
 	</select>
 	
+	<select id="reviewList" resultType="reviewVo" parameterType="String">
+		SELECT
+			rev_no, mid, res_id, rev_txt, rating_upso, TO_CHAR(cr_date, 'yyyy"년"mm"월"dd"일" hh24"시"mi"분"')  cr_date
+		FROM
+			upso_review
+		WHERE
+			res_id = #{upso_id}
+			AND isShow = 'Y'
+	</select>
+	
 	<insert id="insertUpSo" parameterType="upsoVo">
 		INSERT INTO
 			upso
@@ -176,4 +212,6 @@
 			#{keyword_id}, #{keyword}, #{query_keyword}, #{query_location}, #{upso_id}
 		)
 	</insert>
+
+
 </mapper>
