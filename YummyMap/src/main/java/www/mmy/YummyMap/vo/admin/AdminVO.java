@@ -100,6 +100,4 @@ public class AdminVO {
 	public void setJointime(Time jointime) {
 		this.jointime = jointime;
 	}
-	
-	
 }
