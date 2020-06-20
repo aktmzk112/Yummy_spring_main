@@ -71,7 +71,7 @@
           <small id="msg2" class="text-danger dnone">입력이 완료되지 않았습니다.</small>
         </div>
         <button type="button" class="btn btn-primary loginbtn" id="loginbtn">로그인</button>
-        <button type="button" class="btn btn-primary loginbtn mt-2" id="kakaobtn">카카오 로그인</button>
+        <button type="button" class="btn btn-kakao loginbtn mt-2" id="kakaobtn">카카오 로그인</button>
       </form>
       <div class="btn-box">
         <div class="optionbox d-flex mt-3">
@@ -118,15 +118,7 @@
 $(document).ready(function () {
 	
 	$('#kakaobtn').click(function(){
-		$.removeCookie('_kadu',{ path: '/' });
-		$.removeCookie('TIARA',{ path: '/' });
-		$.removeCookie('_TI_NID',{ path: '/' });
-		$.removeCookie('_kawlt',{ path: '/' });
-		$.removeCookie('_kawltea',{ path: '/' });
-		$.removeCookie('_karmt',{ path: '/' });
-		$.removeCookie('_karmtea',{ path: '/' });
 		$(location).attr('href','https://kauth.kakao.com/oauth/authorize?client_id=4feafed6fab67012d774f050c5c744ff&redirect_uri=http://localhost/YummyMap/member/kakaoLogin.mmy&response_type=code');	
-		
 	});
 	//로그인 이벤트처리 입니다.
   $('#loginbtn').click(function(){

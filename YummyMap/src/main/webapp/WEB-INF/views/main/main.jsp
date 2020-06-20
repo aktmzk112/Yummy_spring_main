@@ -151,7 +151,7 @@ onmousewheel = function(e){
 }
 
 document.getElementById('kakaoLogout').onclick = function(){
-	 window.open('http://localhost/YummyMap/kakaoLogout.mmy','test','top=0, left=0, width=1, height=1');
+	 window.open('http://localhost/YummyMap/kakaoLogout.mmy','','top=0, left=0, width=1, height=1');
 }
 
 

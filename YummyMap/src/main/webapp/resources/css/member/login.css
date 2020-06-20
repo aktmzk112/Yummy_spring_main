@@ -1,10 +1,15 @@
 .m-box{width: 500px; margin-left: 100px;}
 .option-item-text{font-size: 10pt;}
-.loginbtn,.naverbtn,.kakaobtn{width: 500px; height: 45px;}
+.loginbtn,.naverbtn,.kakaobtn{width: 500px; height: 45px; color: black !important; }
 .dnone{display: none;}
 #searchmem{
 	color: #007bff;
 }
 #searchmem:hover {
 	cursor: pointer;
+}
+
+
+.btn-kakao{
+	background-color: #FFE500;
 }
