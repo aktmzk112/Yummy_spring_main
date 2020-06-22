@@ -41,9 +41,7 @@ public class Admin {
 	
 	//관리자 로그인 뷰 전담 함수
 	@RequestMapping("/login.mmy")
-	public String loginView(HttpServletRequest request , String RSAModulus ,String RSAExponent) {
-		System.out.print(RSAModulus);
-		System.out.println(RSAExponent);
+	public String loginView(HttpServletRequest request, String RSAModulus ,String RSAExponent ) {
 		if(RSAModulus == null || RSAModulus.length() == 0) { 
 			rsaServiceImpl.initRsa(request);
 		}else {
@@ -82,7 +80,7 @@ public class Admin {
 		int cnt = adminDao.loginck(avo);
 		RedirectView rv =null;
 		if(cnt == 1) {
-			 session.setAttribute("SID", avo.getMid());
+			 session.setAttribute("ADMINSID", avo.getMid());
 			 rv = new RedirectView("/YummyMap/admin/main.mmy");
 		}else {
 			 rv = new RedirectView("/YummyMap/admin/login.mmy?noad=b");
@@ -96,14 +94,7 @@ public class Admin {
 	public ModelAndView mainView(ModelAndView mv , HttpSession session) {
 
 
-//		String sid = (String) session.getAttribute("SID");
 		String view = "admin/main";
-//		if (sid == null || sid.length() == 0) {
-//			view = "/YummyMap/admin/login.mmy";
-//			RedirectView rv = new RedirectView(view);
-//			mv.setView(rv);
-//			return mv;
-//		}
 		
 		ArrayList<ResCntVO> list = (ArrayList<ResCntVO>) chartServiceImpl.resChart();
 		
@@ -114,17 +105,12 @@ public class Admin {
 		mv.setViewName(view);		
 		return mv;
 	}
+	 
 	//회원 관리 페이지 화면 *(회원관리 페이지) 뷰 요청
 	@RequestMapping("/member.mmy")
-	public ModelAndView memberView(ModelAndView mv , AdminVO avo ,PageUtil page ,String opts ,HttpSession session) {
+	public ModelAndView memberView(ModelAndView mv , AdminVO avo ,PageUtil page ,String opts) {
 		String view = "admin/member";
-		if(session.getAttribute("SID") == null) {
-			view = "/YummyMap/admin/login.mmy";
-			RedirectView rv = new RedirectView(view);
-			mv.setView(rv);
-			return mv;
-		}
-			
+
 		
 		page.setNowPage(page.getNowPage());
 		if(opts == null) {
@@ -239,7 +225,7 @@ public class Admin {
 	@RequestMapping("/adminEdit.mmy")
 	public ModelAndView adminEdit(ModelAndView mv , HttpSession session , AdminVO avo) {
 		
-		avo.setMid((String) session.getAttribute("SID"));
+		avo.setMid((String) session.getAttribute("ADMINSID"));
 		avo = adminDao.getMemberInfo(avo);
 		
 		String view = "admin/adminreview";
@@ -335,7 +321,7 @@ public class Admin {
 	//관리자 로그아웃 처리 함수
 	@RequestMapping("/logoutProc.mmy")
 	public ModelAndView logout(HttpSession session, ModelAndView mv) {
-		session.removeAttribute("SID");
+		session.removeAttribute("ADMINSID");
 		String view = "/YummyMap/admin/login.mmy";
 		RedirectView rv = new RedirectView(view);
 		mv.setView(rv);

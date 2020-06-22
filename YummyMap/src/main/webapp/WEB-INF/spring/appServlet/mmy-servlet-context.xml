@@ -21,7 +21,8 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-	<beans:bean id="Interceptor" class="www.mmy.YummyMap.interceptor.LoginCheckInterceptor" />
+	<beans:bean id="LoginCkInterceptor" class="www.mmy.YummyMap.interceptor.LoginCheckInterceptor" />
+	<beans:bean id="NoLoginViewInterceptor" class="www.mmy.YummyMap.interceptor.NoLoginViewItct" />
 	
 	<interceptors>
 		<interceptor>
@@ -37,7 +38,13 @@
 			<exclude-mapping  path="/member/**Process.mmy"/>
 			<exclude-mapping  path="/*.mmy"/>
 			<exclude-mapping  path="/main/*.mmy"/>
-			<beans:ref bean="Interceptor"/>
+			<beans:ref bean="LoginCkInterceptor"/>
+		</interceptor>
+		
+		<interceptor>
+			<mapping path="/admin/login.mmy"/>
+			<mapping path="/member/loginView.mmy"/>
+			<beans:ref bean="NoLoginViewInterceptor" />
 		</interceptor>
 	</interceptors>	
 	

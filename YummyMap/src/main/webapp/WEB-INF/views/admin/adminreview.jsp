@@ -30,7 +30,7 @@
 				<div class="member_nav text-right mt-3">
 					<div class="ctQZg">
 						<!-- <a href="#" class="badge badge-light nav-item" id="join">Join</a>-->
-						<div class="badge badge-light nav-item">${SID}</div>
+						<div class="badge badge-light nav-item">${ADMINSID}</div>
 						<a href="./adminedit.mmy" class="badge badge-light nav-item">정보수정</a>
 						<a href="./logoutProc.mmy" class="badge badge-light nav-item" id="logout">LOGOUT</a>
 					</div>

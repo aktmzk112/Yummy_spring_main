@@ -43,22 +43,17 @@ $(function(){
 	
 	$('.next').click(function(){
 		let aa= $(this).attr('id');
-		let inid = $('#search-input').val();
-		let opt = $('#opt').val();
-		$('#searchs').val(inid);
-		$('#opts').val(opt);
+
+		search();
 		$('#nowPage').val(aa);
 		$('#frm').attr('action','/YummyMap/admin/boardList.mmy');
 		$('#frm').submit();
 	});
 	
 	$('.pre').click(function(){
-		let inid = $('#search-input').val();
-		let opt = $('#opt').val();
+		search();
 		let aa = $(this).attr('id');
 		$('#nowPage').val(aa);
-		$('#searchs').val(inid);
-		$('#opts').val(opt);
 		$('#frm').attr('action','/YummyMap/admin/boardList.mmy');
 		$('#frm').submit();
 	});
@@ -89,7 +84,6 @@ $(function(){
 		$("input:checkbox[name='no']:checked").each(function(){
 			txtnos.push($(this).val());	
 		});
-		alert(txtnos);
 		if(txtnos.length == 0){
 			alert('선택을 먼저 부탁드립니다');
 			return;
@@ -132,7 +126,6 @@ $(function(){
 	$('.title').click(function(){
 		
 		tno = $(this).parent().prevAll('.ckd').attr('id');
-		alert(tno);
 		let inid = $('#search-input').val();
 		let opt = $('#opt').val();
 		$('#searchs').val(inid);
