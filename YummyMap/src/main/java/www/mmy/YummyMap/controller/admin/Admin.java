@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import www.mmy.YummyMap.Service.admin.AdminService;
 import www.mmy.YummyMap.Service.chart.ChartServiceImpl;
 import www.mmy.YummyMap.Service.rsa.RsaServiceImpl;
 import www.mmy.YummyMap.dao.AdminDAO;
@@ -30,6 +31,9 @@ import www.mmy.YummyMap.vo.admin.ResCntVO;
 public class Admin {
 	@Autowired
 	AdminDAO adminDao;
+	@Autowired
+	AdminService adminSrc;
+	
 	
 	ChartServiceImpl chartServiceImpl;
 	RsaServiceImpl rsaServiceImpl;
@@ -41,16 +45,12 @@ public class Admin {
 	
 	//관리자 로그인 뷰 전담 함수
 	@RequestMapping("/login.mmy")
-	public String loginView(HttpServletRequest request, String RSAModulus ,String RSAExponent ) {
-		if(RSAModulus == null || RSAModulus.length() == 0) { 
-			rsaServiceImpl.initRsa(request);
-		}else {
-	        request.setAttribute("RSAModulus", RSAModulus); // rsa modulus 를 request 에 추가
-	        request.setAttribute("RSAExponent", RSAExponent); // rsa exponent 를 request 에 추가
-		}
+	public String loginView(HttpServletRequest request) {
+		adminSrc.PublicKeySrvc(request);
 
 		return "admin/adminLogin";
 	}
+
 	
 	
 	//관리자 로그인 전담 함수
@@ -149,15 +149,10 @@ public class Admin {
 	
 	//회원정보 수정 페이지
 	@RequestMapping("/memberEdit.mmy")
-	public ModelAndView memberEdit(AdminVO avo , ModelAndView mv , HttpServletRequest request, String RSAModulus ,String RSAExponent) {
+	public ModelAndView memberEdit(AdminVO avo , ModelAndView mv , HttpServletRequest request) {
 		String view = "admin/remember";
 		
-		if(RSAModulus == null || RSAModulus.length() == 0) { 
-			rsaServiceImpl.initRsa(request);
-		}else {
-	        request.setAttribute("RSAModulus", RSAModulus); // rsa modulus 를 request 에 추가
-	        request.setAttribute("RSAExponent", RSAExponent); // rsa exponent 를 request 에 추가
-		}
+		adminSrc.PublicKeySrvc(request);
 		
 		avo = adminDao.getMemberInfo(avo);
 		avo.setIssue();
@@ -223,7 +218,10 @@ public class Admin {
 	
 	//관리자 정보 수정 페이지 요청
 	@RequestMapping("/adminEdit.mmy")
-	public ModelAndView adminEdit(ModelAndView mv , HttpSession session , AdminVO avo) {
+	public ModelAndView adminEdit(ModelAndView mv , HttpSession session , AdminVO avo , HttpServletRequest request) {
+		
+	
+		adminSrc.PublicKeySrvc(request);
 		
 		avo.setMid((String) session.getAttribute("ADMINSID"));
 		avo = adminDao.getMemberInfo(avo);
@@ -238,10 +236,25 @@ public class Admin {
 	
 	//관리자 정보 수정 전담 함수
 	@RequestMapping("/adminEditProc.mmy")
-	public ModelAndView adminEditProc(HttpSession session , AdminVO avo , ModelAndView mv) {
+	public ModelAndView adminEditProc(HttpSession session , AdminVO avo , ModelAndView mv ,String RSAModulus) {
 		String view = "/YummyMap/admin/member.mmy";
 		
-		avo.setMid((String) session.getAttribute("SID")); 
+		
+		PrivateKey privateKey = rsaServiceImpl.getMap().get(RSAModulus);
+		
+		try {
+			avo.setMname(rsaServiceImpl.decryptRsa(privateKey, avo.getMname()));
+			if(avo.getMpw() == null || avo.getMpw().equals("")) {} else {
+				avo.setMpw(rsaServiceImpl.decryptRsa(privateKey, avo.getMpw()));
+			}
+			avo.setMtel(rsaServiceImpl.decryptRsa(privateKey, avo.getMtel()));
+			avo.setEmail(rsaServiceImpl.decryptRsa(privateKey, avo.getEmail()));
+			avo.setDomain(rsaServiceImpl.decryptRsa(privateKey, avo.getDomain()));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		avo.setMid((String) session.getAttribute("ADMINSID")); 
 		
 		avo.setMemail(avo.getEmail() + '@' + avo.getDomain());
 			

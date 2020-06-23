@@ -15,11 +15,15 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 	<link rel="stylesheet" href="/YummyMap/css/admin/base.css">
 	<link rel="stylesheet" href="/YummyMap/css/admin/adminre.css">
-	<script type="text/javascript" src="../../js/jquery-3.5.0.min.js"></script>
+	<script type="text/javascript" src="/YummyMap/js/jquery-3.5.0.min.js"></script>
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="/YummyMap/js/admin/adminedit.js"></script>
+	<script type="text/javascript" src="/YummyMap/js/RSA/rsa.js"></script>
+	<script type="text/javascript" src="/YummyMap/js/RSA/jsbn.js"></script>
+	<script type="text/javascript" src="/YummyMap/js/RSA/prng4.js"></script>
+	<script type="text/javascript" src="/YummyMap/js/RSA/rng.js"></script>
 	<title>관리자 수정 페이지</title>
 </head>
 
@@ -67,6 +71,8 @@
 					</div>
 
 					<form action="" method="POST" id="frm">
+						<input type="hidden" id="RSAModulus" name="RSAModulus" value="${RSAModulus}"/>
+       					<input type="hidden" id="RSAExponent" name="RSAExponent" value="${RSAExponent}"/> 
 						<input type="hidden" name="nowPage" id="nowPage" value="${param.nowpage}">
 						<input type="hidden" name="mid"  value="${MVO.mid}">
 						<div class="mt-4 row ml-1">

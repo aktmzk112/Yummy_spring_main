@@ -39,8 +39,6 @@ public class MemberController {
 	@RequestMapping("/loginView.mmy")
 	public String looginView(HttpServletResponse response, HttpServletRequest request) {
 
-		
-		
 		String view = "member/Login";
 		return view;
 	}

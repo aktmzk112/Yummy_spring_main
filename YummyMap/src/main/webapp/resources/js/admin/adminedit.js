@@ -5,6 +5,14 @@
 */
 $(function(){
 	
+	$(document).keydown(function(event){
+		if( event.keyCode == 82 || event.keyCode == 116){
+			$('#frm').attr('action','/YummyMap/admin/adminEdit.mmy');
+			$('#frm').submit();
+			return false; 	
+		}
+	});
+	
 	$('#pw').keyup(function(){
 		let pw = $('#pw').val();
 		let pwck = pwchk(pw);
@@ -115,6 +123,8 @@ $(function(){
 				return;
 			}
 			
+			
+			
 		}
 		
 		
@@ -181,6 +191,20 @@ $(function(){
 			$('#staticBackdrop').modal();
 			return;
 		}
+		
+	   let rsa = new RSAKey();
+	   
+	   rsa.setPublic($('#RSAModulus').val(),$('#RSAExponent').val());
+	   let sname =  $('#name').val(); 
+	   
+	   if(pwval){
+		   $('#pw').val(rsa.encrypt(pwval));
+	   }
+	   
+	   $('#name').val(rsa.encrypt(sname));
+	   $('#tel').val(rsa.encrypt(tel));
+	   $('#mail').val(rsa.encrypt(emailid));
+	   $('#domain').val(rsa.encrypt(domain));
 		
 		$('#frm').attr('action','/YummyMap/admin/adminEditProc.mmy');
 		$('#frm').submit();

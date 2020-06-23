@@ -3,6 +3,8 @@ package www.mmy.YummyMap.interceptor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -12,10 +14,9 @@ import org.springframework.web.servlet.ModelAndView;
  * @author 유태희
  * @since 2020/06/17
  * 
- * 
  */
+
 public class LoginCheckInterceptor implements HandlerInterceptor {
-	
 	
 	//해당 함수는 전처리 함수
 	@Override

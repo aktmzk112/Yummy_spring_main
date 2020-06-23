@@ -7,12 +7,13 @@ package www.mmy.YummyMap.interceptor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
-
+@Repository
 public class NoLoginViewItct implements HandlerInterceptor {
 
-	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		String sid = (String) request.getSession().getAttribute("SID");
