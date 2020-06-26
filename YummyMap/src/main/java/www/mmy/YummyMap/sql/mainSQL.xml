@@ -5,9 +5,9 @@
 					
 <mapper namespace="mainSql">
 
-	<select id="upSoDetailInfo" resultType="upsoVo" parameterType="String">
+	<select id="upSoDetailInfo" resultType="upsoVo" parameterType="int">
 		SELECT
-			upso_id id, place_name, category_name, phone, road_address_name, longitude x, latitude y, place_url, image_url,
+			upso_id id, place_name, category_name, phone, road_address_name, longitude x, latitude y, place_url,
 			NVL(cont_sum, 0) cont_sum,  NVL(star_avg, 0) star_avg
 		FROM
 			upso,( SELECT  
@@ -28,15 +28,15 @@
 	</select>
 	<select id="getUpSoList_keyword" resultType="upsoVo" parameterType="Map">
 		SELECT
-		     rnum, id, place_name, category_name, phone, road_address_name,  x,  y, place_url, image_url, cont_sum,   star_avg
+		     rnum, id, place_name, category_name, phone, road_address_name,  x,  y, place_url, cont_sum,   star_avg, save_name AS img_save_name
 		FROM
 		    (
 		        SELECT
-		                rownum rnum,  id, place_name, category_name, phone, road_address_name,  x,  y, place_url, image_url, cont_sum,   star_avg               
+		                rownum rnum,  id, place_name, category_name, phone, road_address_name,  x,  y, place_url, TRUNC(cont_sum, 1) cont_sum,  TRUNC(star_avg, 1) star_avg               
 		        FROM
 		            (
 		                SELECT
-		                            upso.upso_id id, place_name, category_name, phone, road_address_name, longitude x, latitude y, place_url, image_url,
+		                            upso.upso_id id, place_name, category_name, phone, road_address_name, longitude x, latitude y, place_url,
 		                            NVL(cont_sum, 0) cont_sum,  NVL(star_avg, 0) star_avg
 		                FROM
 		                    upso, ( SELECT  
@@ -66,15 +66,24 @@
 		                    </if>
 		                ORDER BY
 		                <if test='searchInfoVo.order_standard.equals("star_avg")'>
-		                    star_avg
+		                    star_avg DESC
 		                </if>
 		                <if test='searchInfoVo.order_standard.equals("cont_sum")'>
-		                    cont_sum
+		                    cont_sum DESC
 		                </if>
 		                )
-		        )
+		        ) sub1,
+		        (
+		            SELECT
+		                save_name, res_no
+		            FROM
+		                review_img
+		            WHERE
+		                main_img = 'Y'
+		        ) sub2
 		WHERE
-		    rnum BETWEEN #{pageUtil.startCont} AND #{pageUtil.endCont}
+    		sub1.id = sub2.res_no(+)
+		    AND rnum BETWEEN #{pageUtil.startCont} AND #{pageUtil.endCont}
 	</select>
 	<select id="countUpso_category" resultType="int" parameterType="searchInfoVo">
 		SELECT
@@ -96,7 +105,7 @@
 
 	<select id="upSoList_geolocation" resultType="upsoVo" parameterType="searchInfoVo">
 		SELECT 
-			upso_id id, place_name, category_name, phone, road_address_name, longitude x, latitude y, place_url, image_url,
+			upso_id id, place_name, category_name, phone, road_address_name, longitude x, latitude y, place_url,
 			NVL(cont_sum, 0) cont_sum,  NVL(star_avg, 0) star_avg,
 			SQRT( POWER(( 37.4917910 - LATITUDE) * 110979.309, 2)
 			      + POWER((127.4875970 - LONGITUDE) *  88907.949, 2)
@@ -127,7 +136,7 @@
 	 	ORDER BY z
 	</select>
 	
-	<select id="showUpSo" resultType="int" parameterType="String">
+	<select id="showUpso" resultType="int" parameterType="int">
 		SELECT
 			count(upso_id)
 		FROM
@@ -147,38 +156,9 @@
 			AND rownum = 1
 	</select>
 	
-	<select id="upsoListGroupByCategory" resultType="upsoVo" parameterType="searchInfoVo">
+	<select id="reviewList" resultType="reviewVo" parameterType="int">
 		SELECT
-			upso.upso_id id, place_name, category_name, phone, road_address_name, longitude x, latitude y, place_url, image_url, 
-			NVL(cont_sum, 0) cont_sum,  NVL(star_avg, 0) star_avg
-		FROM
-			upso, ( SELECT  
-						res_id, 
-	                	COUNT(rev_no) AS cont_sum,
-	                    AVG(rating_upso) AS star_avg
-	           		FROM 
-	           			upso_review
-	           		WHERE 
-	           			isShow='Y' 
-	           		GROUP BY  
-	           			res_id 
-	           		),
-	           		( SELECT
-	           			upso_id 
-	           		  FROM
-	           		  	keyword
-	           		  WHERE
-	           		  	keyword = #{keyword}
-	           		) sub
-		WHERE
-			upso.isShow = 'Y'
-			AND upso.upso_id = sub.upso_id
-			AND upso.upso_id = res_id(+)
-			AND category_name LIKE '%${category_name}%'
-	</select>
-	
-	<select id="reviewList" resultType="reviewVo" parameterType="String">
-		SELECT
+		    /*+ INDEX_DESC(upso_review UPSO_REVIEW_PK)*/ 	
 			rev_no, mid, res_id, rev_txt, rating_upso, TO_CHAR(cr_date, 'yyyy"년"mm"월"dd"일" hh24"시"mi"분"')  cr_date
 		FROM
 			upso_review
@@ -186,6 +166,69 @@
 			res_id = #{upso_id}
 			AND isShow = 'Y'
 	</select>
+	
+	<select id="imgListForReview" resultType="imageFileVo" parameterType="int">
+		SELECT
+		    /*+ INDEX(review_img REVIEW_IMG_PK)*/ 
+		    rev_img_no, original_name,  save_name, rev_no, TO_CHAR(save_date, 'yyyy"년"mm"월"dd"일" hh24"시"mi"분"')  save_date
+		FROM
+		    review_img
+		WHERE
+		    rev_no = #{rev_no}
+	</select>
+	
+	<select id="getUpsoImg" resultType="String" parameterType="int">
+		SELECT
+		    /*+  INDEX_DESC(review_img REVIEW_IMG_PK) */
+		   save_name
+		FROM
+		    review_img
+		WHERE
+		    res_no = #{upso_id}
+		    AND rownum = 1		
+	</select>
+	
+	<select id="countImgGroupByUpso" parameterType="int" resultType="int">
+		SELECT
+			count(rev_img_no)
+		FROM
+			review_img
+		WHERE
+			res_no = #{upso_id}
+	</select>
+	
+	<select id="category_list_keyword" resultType="String" parameterType="String">
+		SELECT
+		    category
+		FROM
+		(
+		    SELECT
+		              REPLACE( REPLACE(SUBSTR(category_name, INSTR(category_name, '>',1)+1, INSTR(category_name, '>',1, 1)), '>',''),' ','' ) category
+		    FROM
+		            upso,
+		            (
+		                SELECT
+		                    upso_id 
+		                FROM
+		                    keyword
+		                WHERE
+		                    keyword = #{keyword}
+		            ) sub
+		    WHERE
+		        upso.isShow = 'Y'
+		        AND upso.upso_id = sub.upso_id
+		)
+		GROUP BY
+		    category
+		ORDER BY
+    		category DESC
+	</select>
+	
+	
+	
+	
+	
+	
 	
 	<insert id="insertUpSo" parameterType="upsoVo">
 		INSERT INTO
@@ -198,7 +241,7 @@
 			<if test="road_address_name == null or road_address_name == ''">
 			#{address_name},
 			</if>
-			#{x},#{y},#{place_url},#{image_url}, 'Y'		
+			#{x},#{y},#{place_url}, 'Y'		
 		)
 	</insert>
 	
@@ -212,7 +255,7 @@
 			#{keyword_id}, #{keyword}, #{query_keyword}, #{query_location}, #{upso_id}
 		)
 	</insert>
-	
+
 	<insert id="insertReview" parameterType="reviewVo">
 	<selectKey keyProperty="rev_no" resultType="int" order="BEFORE">
 		SELECT NVL(MAX(rev_no)+1 , 1) FROM upso_review
@@ -221,6 +264,16 @@
 			upso_review (rev_no, mid, res_id, rev_txt, rating_upso)
 		VALUES (
 			#{rev_no}, #{mid}, #{res_id}, #{rev_txt}, #{rating_upso}		
+		)
+	</insert>
+	<insert id="insertReviewImg" parameterType="imageFileVo">
+	<selectKey keyProperty="rev_img_no" resultType="int" order="BEFORE">
+		SELECT NVL(MAX(rev_img_no)+1 , 1) FROM review_img
+	</selectKey>
+		INSERT INTO
+			review_img (rev_img_no, original_name, save_name, rev_no, res_no, main_img)
+		VALUES (
+			#{rev_img_no}, #{original_name}, #{save_name}, #{rev_no}, #{res_no}, #{is_main}
 		)
 	</insert>
 

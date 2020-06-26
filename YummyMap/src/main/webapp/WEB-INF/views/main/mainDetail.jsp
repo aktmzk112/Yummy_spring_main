@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
@@ -138,7 +139,7 @@
 		        
 		        </div>
 			</div>
-			<div class="upso-mapBox"></div>
+			<div id="upso-mapBox"></div>
 		</div>
 
 
@@ -147,17 +148,24 @@
 	        <div class="reviewBtn" onclick="showInputBox()">
 	            <i class="fas fa-pen"></i>
 	        </div>
-	        <form method="POST" action="/YummyMap/main/reviewProcess.mmy" id="reviewForm">
+	        <form method="post" action="/YummyMap/main/reviewProcess.mmy" id="reviewForm" enctype="multipart/form-data" >
 		        <div class="writeBox mb-4 dnone ">
-		            <div class="d-flex starBox" id="star_grade">
+		        	<div>
+		        		<label class="border review-img-btn" id="img-label" for="reviewImgFile0">사진 추가</label>
+		        		<div class="imgNameBox pb-2" id="imgNameBox"></div>
+		        		<div class="dnone" id="fileInputBox">
+		        			<input type="file" id="reviewImgFile0" name="reviewImgFile" onchange="imgFileAppend()" />
+		        		</div>
+		        	</div>
+		            <div class="d-flex starBox mt-1" id="star_grade">
 		                <i class="fas fa-star" id="1" onclick="setRating()"></i>
 		                <i class="fas fa-star" id="2" onclick="setRating()"></i>
 		                <i class="fas fa-star" id="3" onclick="setRating()"></i>
 		                <i class="fas fa-star" id="4" onclick="setRating()"></i>
 		                <i class="fas fa-star" id="5" onclick="setRating()"></i>
 		            </div>
-		            <input type="hidden" name="rating_upso" id="rating_upso">
-		            <input type="hidden" name="res_id" id="res_id" value="${upsoVo.id}">
+		            <input class="dnone" type="text" name="rating_upso" id="rating_upso">
+		            <input class="dnone" type="text" name="res_id" id="res_id" value="${upsoVo.id}">
 		            <div class="input-group mt-1 mb-0">
 		                <input type="text" name="rev_txt" id="rev_txt" class="form-control" >
 		                <div class="input-group-append">
@@ -174,6 +182,13 @@
 	    </c:if>
 	    <c:forEach var="reviewVo" items="${reviewList}">
 	        <div class="review-item border-bottom pt-4">
+	        	<div class="d-flex">
+		        	<c:forEach var="imgVo" items="${reviewVo.imgList}">
+	        		<div class="reviewImg pr-2">
+	        			<a href="/YummyMap/resources/reviewImg/${imgVo.save_name}"><img src="/YummyMap/resources/reviewImg/${imgVo.save_name}"></a>
+	        		</div>
+		        	</c:forEach>
+	        	</div>
 	            <div class="reviewId">${reviewVo.mid}</div>
 	            <div class="d-flex reviewStarBox">
 	            <c:forEach begin="1" end="${reviewVo.rating_upso}" >
@@ -187,7 +202,7 @@
 	    </div>
     </div>
 </body>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d8654c7466588faa58bc40d0b9bef6ce&libraries=services"></script>
+<!-- <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d8654c7466588faa58bc40d0b9bef6ce"></script> -->
 <script type="text/javascript">
 function submitKeyword(){
 	if(event.keyCode == 13) {
@@ -201,7 +216,7 @@ function setRating(){
 	let rating = event.target.getAttribute('id');
 	document.getElementById('rating_upso').value = rating;
 }
-function submitReview(data) {
+function submitReview() {
 	let rev_txt = document.getElementById('rev_txt').value;
 	let rating_upso = document.getElementById('rating_upso').value;
 	let res_id = document.getElementById('res_id').value;
@@ -220,6 +235,34 @@ function showInputBox() {
     $('.writeBox').show();
 }
 
+let no = 0;
+function imgFileAppend() {
+	let inputTag = document.getElementById("reviewImgFile"+no);
+	no++;
+	let fReader = new FileReader();
+	fReader.readAsDataURL(inputTag.files[0]);
+	fReader.onloadend = function(event){
+	    var img = document.createElement('img');
+	    let result = event.target.result;
+	    img.src = event.target.result;
+	    img.style.width = '100px';
+	    img.style.height = '100px';
+	    img.style.margin = '0px 10px 0px 0px';
+	    document.getElementById('imgNameBox').append(img);
+	    var inputBox = document.createElement('input');
+	    inputBox.setAttribute('name', 'reviewImgFile');
+	    inputBox.type = 'file';
+	    inputBox.id = 'reviewImgFile'+no;
+	    inputBox.setAttribute('onchange', 'imgFileAppend()');
+	    document.getElementById('fileInputBox').append(inputBox);
+	    document.getElementById('img-label').setAttribute('for', 'reviewImgFile'+no);
+	    
+	}
+}
+
+
+
+/*
 // 카카오map
 var mapContainer = document.getElementById('upso-mapBox'), // 지도를 표시할 div 
 mapOption = { 
@@ -228,7 +271,7 @@ mapOption = {
 };
 
 var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
-s
+
 //마커가 표시될 위치입니다 
 var markerPosition  = new kakao.maps.LatLng(33.450701, 126.570667); 
 
@@ -239,5 +282,6 @@ position: markerPosition
 
 //마커가 지도 위에 표시되도록 설정합니다
 marker.setMap(map);
+*/
 </script>
 </html>

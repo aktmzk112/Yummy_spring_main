@@ -3,7 +3,7 @@ package www.mmy.YummyMap.vo.admin;
 import java.sql.Date;
 import java.sql.Time;
 import java.text.SimpleDateFormat;
-
+ 
 public class AdminVO {
 	private int mno, rno;
 	private String mname , mid , mpw, mtel  ,issue , memail , sDate ,email , domain;

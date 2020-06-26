@@ -132,7 +132,7 @@ function submitKeyword(){
 		let keyword = event.target.value;
 		if(!keyword)
 			return;
-		location.href = "/YummyMap/main/getList.mmy?keyword="+keyword;
+		location.href = "/YummyMap/main/getList.mmy?keyword="+keyword+"&nowPage=1";
 	}
 }
 

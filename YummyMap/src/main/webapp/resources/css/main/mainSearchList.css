@@ -43,6 +43,9 @@ img{
 	color: rgba(0,0,0,0.6);
 	padding-top: 9px;
 }
+.category-box{
+	height: 70px;
+}
 .sortBox div{
 	letter-spacing: 1px;
 	font-size: 8pt;
@@ -52,7 +55,6 @@ img{
 .item{
     width: 400px;
     height: 350px;
-    border: 1px solid rgba(0,0,0,0.1);
 }
 
 .imgBox{

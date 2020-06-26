@@ -66,6 +66,7 @@ public class DaumSearchRestApiService {
 				path.append(basePath);
 				path.append("image?query=");
 				path.append(query);
+				//path.append("&sort=recency");
 				pathUrl = new URL(path.toString());
 				break;
 			}

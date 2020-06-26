@@ -9,12 +9,15 @@ public class SearchInfoVO {
 	private int upsoCount; // 업소 리스트 토탈카운트 변수
 	private double x; // 검색 요청자의 경도값
 	private double y; // 검색 요청자의 위도값
-	private String upso_id;
+	private int upso_id;
 	private String keyword; // 사용자가 입력한 현재 검색어 입니다
 	private String query_location; // 검색어에 장소키워드가 포함되었을때 담을 변수입니다
 	private String query_keyword; // 검색어에 카테고리 혹은 음식 키워드가 포함되었을때 담을 변수입니다
 	private String category_name; // 카테고리 정렬시 카테고리를 담을 변수입니다
 	private String order_standard = "star_avg"; // 정렬방식을 지정하는 변수입니다. 기본값 star_avg
+	private String category_filtering; // 카테고리 필터링을 노출할지 여부를 담을 변수. Y or N
+	private boolean isFirst; // 처음 요청된 키워드라면 true, 이미 요청된적이 있는 키워드라면 false
+
 	public int getKeyword_id() {
 		return keyword_id;
 	}
@@ -40,10 +43,10 @@ public class SearchInfoVO {
 	public void setY(double y) {
 		this.y = y;
 	}
-	public String getUpso_id() {
+	public int getUpso_id() {
 		return upso_id;
 	}
-	public void setUpso_id(String upso_id) {
+	public void setUpso_id(int upso_id) {
 		this.upso_id = upso_id;
 	}
 	public String getKeyword() {
@@ -82,12 +85,25 @@ public class SearchInfoVO {
 	public void setOrder_standard(String order_standard) {
 		this.order_standard = order_standard;
 	}
+	
+	public String getCategory_filtering() {
+		return category_filtering;
+	}
+	public void setCategory_filtering(String category_filtering) {
+		this.category_filtering = category_filtering;
+	}
+	
+	public boolean isFirst() {
+		return isFirst;
+	}
+	public void setFirst(boolean isFirst) {
+		this.isFirst = isFirst;
+	}
 	@Override
 	public String toString() {
 		return "SearchInfoVO [keyword_id=" + keyword_id + ", upsoCount=" + upsoCount + ", x=" + x + ", y=" + y
 				+ ", upso_id=" + upso_id + ", keyword=" + keyword + ", query_location=" + query_location
 				+ ", query_keyword=" + query_keyword + ", category_name=" + category_name + ", order_standard="
-				+ order_standard + "]";
+				+ order_standard + ", category_filtering=" + category_filtering + ", isFirst=" + isFirst + "]";
 	}
-
 }

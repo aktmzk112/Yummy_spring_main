@@ -1,8 +1,16 @@
 package www.mmy.YummyMap.vo;
 
+import java.util.Arrays;
+import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
+
 public class ReviewVO {
-	private int rev_no, rating_upso;
-	private String mid, res_id, rev_txt, cr_date;
+	private int rev_no, rating_upso, res_id;
+	private String mid, rev_txt, cr_date;
+	private MultipartFile[] reviewImgFile;
+	private List<ImageFileVO> imgList;
+	
 	public int getRev_no() {
 		return rev_no;
 	}
@@ -21,10 +29,10 @@ public class ReviewVO {
 	public void setMid(String mid) {
 		this.mid = mid;
 	}
-	public String getRes_id() {
+	public int getRes_id() {
 		return res_id;
 	}
-	public void setRes_id(String res_id) {
+	public void setRes_id(int res_id) {
 		this.res_id = res_id;
 	}
 	public String getRev_txt() {
@@ -39,9 +47,22 @@ public class ReviewVO {
 	public void setCr_date(String cr_date) {
 		this.cr_date = cr_date;
 	}
+	public MultipartFile[] getReviewImgFile() {
+		return reviewImgFile;
+	}
+	public void setReviewImgFile(MultipartFile[] reviewImgFile) {
+		this.reviewImgFile = reviewImgFile;
+	}
+	public List<ImageFileVO> getImgList() {
+		return imgList;
+	}
+	public void setImgList(List<ImageFileVO> imgList) {
+		this.imgList = imgList;
+	}
 	@Override
 	public String toString() {
 		return "ReviewVO [rev_no=" + rev_no + ", rating_upso=" + rating_upso + ", mid=" + mid + ", res_id=" + res_id
-				+ ", rev_txt=" + rev_txt + ", cr_date=" + cr_date + "]";
+				+ ", rev_txt=" + rev_txt + ", cr_date=" + cr_date + ", reviewImgFile=" + Arrays.toString(reviewImgFile)
+				+ ", imgList=" + imgList + "]";
 	}
 }

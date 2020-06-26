@@ -7,25 +7,18 @@ package www.mmy.YummyMap.Service.main;
  *  		www.mmy.YummyMap.dao.MainDAO
  *  		www.mmy.YummyMap.Service.main.UpSoServiceImpl
  */
-import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.reflect.TypeToken;
 
-import www.mmy.YummyMap.Service.api.DaumSearchRestApiService;
-import www.mmy.YummyMap.Service.api.KaKaoMapRestApiService;
 import www.mmy.YummyMap.dao.MainDAO;
 import www.mmy.YummyMap.util.PageUtil;
+import www.mmy.YummyMap.vo.ImageFileVO;
 import www.mmy.YummyMap.vo.RatingUpsoVO;
 import www.mmy.YummyMap.vo.ReviewVO;
 import www.mmy.YummyMap.vo.SearchInfoVO;
@@ -37,136 +30,62 @@ public class MainService {
 	private UpsoService upsoService;
 	private MainDAO mainDao;
 	@Autowired
-	private KaKaoMapRestApiService kakaoMapService;
+	private FileService fileService;
 	@Autowired
-	private DaumSearchRestApiService daumSearchService;
+	private KeywordService keywordService; 
 	
-	public MainService(UpsoService upsoService, MainDAO mainDao) {
+	
+	public MainService(ParsingUpsoService upsoService, MainDAO mainDao) {
 		this.upsoService = upsoService;
 		this.mainDao = mainDao;
 	}
 	
-	// 검색 키워드를 분석해주는 메소드입니다. 
-	public SearchInfoVO analyzeKeyword(SearchInfoVO searchInfoVo) {
-		SearchInfoVO tmp = mainDao.isShowKeyword(searchInfoVo.getKeyword());
-
-		if(tmp == null) {
-			searchInfoVo.setUpsoCount(0);
-			// 키워드 분석을 위한 데이터
-			JsonObject jsonObject = kakaoMapService.searchList(searchInfoVo, 1);
-			JsonObject meta = jsonObject.getAsJsonObject("meta");
-			JsonElement selected_region = meta.getAsJsonObject("same_name").get("selected_region");
-			JsonElement keyword = meta.getAsJsonObject("same_name").get("keyword");
-			String query_location = selected_region.toString().replaceAll("\"", "");
-			String query_keyword = keyword.toString().replaceAll("\"", "");
-			if(query_location.length() == 0) {
-				JsonObject jsonObject_subway = kakaoMapService.searchSubway(query_keyword);
-				JsonObject meta_subway = jsonObject_subway.getAsJsonObject("meta");
-				JsonElement total_count = meta_subway.get("total_count");
-				int count = Integer.parseInt(total_count.toString());
-				if(count != 0) {
-					searchInfoVo.setQuery_location(query_keyword);
-				} else {
-					searchInfoVo.setQuery_keyword(query_keyword);
-				}
-			} else {
-				searchInfoVo.setQuery_location(query_location);
-				if(query_keyword.length() != 0)
-					searchInfoVo.setQuery_keyword(query_keyword);
-			}
-		} else {
-			String category_name = searchInfoVo.getCategory_name();
-			if(category_name != null)
-				tmp.setCategory_name(category_name);
-			String order_standard = searchInfoVo.getOrder_standard();
-			tmp.setOrder_standard(order_standard);
-			searchInfoVo = tmp;
+	/*
+	 * 분석된 키워드의 결과를 토대로 업소 리스트를 조회합니다.
+	 * 조회 결과는 페이징처리되며, 페이징처리 조건은 PageUtil을 통하여 설정 할 수 있습니다.
+	 */
+	public List<UpsoVO> doSearchAndGetList(SearchInfoVO searchInfoVo, PageUtil pageUtil) {
+		searchInfoVo = keywordService.analyzeKeyword(searchInfoVo);
+		/*
+		 *  만약 해당키워드로의 검색요청이 최초일 경우 api파싱과 db저장을 진행한다.
+		 *  insertUpso() 매개변수로 UpsoVO, SearchInfoVO 를 입력한다.
+		 *  매개변수 중 UpsoVO가 null일 경우 자동적으로 파싱 작업이 이루어진다. 
+		 */
+		if(searchInfoVo.isFirst()) {
+			upsoService.insertUpso(null, searchInfoVo);
+			keywordService.insertKeyword(searchInfoVo);
 		}
-		if(searchInfoVo.getQuery_keyword() == null)
-			searchInfoVo.setQuery_keyword("");
-		if(searchInfoVo.getQuery_location() == null)
-			searchInfoVo.setQuery_location("");
-		return searchInfoVo;
+		setPageUtil(pageUtil, searchInfoVo);
+		List<UpsoVO> upsoList = upsoService.getUpsoList(searchInfoVo, pageUtil);
+		return upsoList;
 	}
 	
-	/*
-	 * REST API를 통해 업소 정보를 조회하는 메소드입니다.
-	 * 해당 키워드로 업소 리스트를 요청한뒤, DB 저장 유무를 통해 새로운 업소 정보와 키워드 데이터를 저장합니다.
-	 * parameter: analyzeKeyword()를 통해 분석된 SearchInfoVO [키워드]
-	 */
-	public void setUpsoList(SearchInfoVO searchInfoVo) {
-		Gson gson = new Gson();
-		boolean is_continue = true;
-		int page = 1;
-		do {
-			JsonObject jsonObject = kakaoMapService.searchList(searchInfoVo, page);
-			JsonArray jsonList = (JsonArray) jsonObject.get("documents");
-			Type listType = new TypeToken<ArrayList<UpsoVO>>(){}.getType();
-			List<UpsoVO> upSolist = gson.fromJson(jsonList.toString(), listType);
-			int totalCount = upSolist.size();
-			searchInfoVo.setUpsoCount(totalCount);
-			for(int i=0; i<totalCount; i++) {
-				UpsoVO upsoVo = upSolist.get(i);
-				searchInfoVo.setUpso_id(upsoVo.getId());
-				// 해당 업소가 기존에 DB에 저장되었는지 조회합니다.
-				boolean isShow_upso = upsoService.isShowUpSo(upsoVo.getId());
-				if(isShow_upso) {
-					// 뉴 키워드만 DB에 저장합니다.
-					upsoService.insertKeyword(searchInfoVo);
-					continue;
-				}
-				// 이미지 정보를 요청해옵니다.
-				setUpsoImage(upsoVo, searchInfoVo);
-				upsoService.insertUpSo(upsoVo);
-				upsoService.insertKeyword(searchInfoVo);
-			}
-			// 검색결과 페이지가 더 있는지 조회합니다.
-			JsonElement is_end = jsonObject.getAsJsonObject("meta").get("is_end");
-			if(is_end.toString().equals("false")) {
-				is_continue = true;
-				page++;
-				jsonObject = kakaoMapService.searchList(searchInfoVo, page);
-			} else {
-				is_continue = false;
-			}
-		} while (is_continue);
+	private void setPageUtil(PageUtil pageUtil, SearchInfoVO searchInfoVo) {
+		int totalCount = searchInfoVo.getUpsoCount();
+		pageUtil.setTotalCount(totalCount);
+		pageUtil.setPageRow(10);
+		pageUtil.setPageGroup(5);
+		pageUtil.totalfun();
 	}
 	
-	/*
-	 * 키워드에 해당하는 업소 리스트를 DB에서 조회합니다.
-	 * 매개변수로는 analyzeKeyword() 를 통해 분석된 값을 전달합니다.
-	 * parameter : SearchInfoVO
-	 * return	 : List<UpsoVO>
-	 */
-	public List<UpsoVO> getUpsoList(SearchInfoVO searchInfoVo, PageUtil pageUtil) {
-		List<UpsoVO> upSoList = mainDao.getUpSoList_keyword(searchInfoVo, pageUtil);
-		return upSoList;
+	
+	public List<String> getCategoryList(SearchInfoVO searchInfoVo) {
+		String keyword = searchInfoVo.getKeyword();
+		List<String> categoryList = mainDao.getCategoryList(keyword);
+		int countCategory = categoryList.size();
+		if(countCategory > 1) {
+			searchInfoVo.setCategory_filtering("Y");
+		} else {
+			searchInfoVo.setCategory_filtering("N");
+		}
+		return categoryList;
 	}
 	
 	public UpsoVO getUpsoDetail(UpsoVO upsoVo) {
-		upsoVo = upsoService.getUpSoDetailInfo(upsoVo.getId());
+		upsoVo = upsoService.getUpsoDetailInfo(upsoVo.getId());
 		return upsoVo;
 	}
 
-	
-	// 다음 RestAPI를 통해 이미지 url을 받아오는 메소드입니다.
-	public UpsoVO setUpsoImage(UpsoVO upsoVo, SearchInfoVO searchInfoVo) {
-		String keyword = searchInfoVo.getQuery_location() + " " + upsoVo.getPlace_name();
-		JsonObject resultObj = daumSearchService.upsoImageSearch(keyword);
-		String total_count = resultObj.getAsJsonObject("meta").get("total_count").toString().replace("\"","");
-		int count = 0;
-		if(total_count != null)
-			count = Integer.parseInt(total_count);
-		if(count != 0) {
-			JsonArray jsonList = (JsonArray) resultObj.get("documents");
-			JsonElement jsonElement =  jsonList.get(0);
-			String image_url = jsonElement.getAsJsonObject().get("image_url").toString().replaceAll("\"", "");
-			upsoVo.setImage_url(image_url);
-		} else {
-			upsoVo.setImage_url("/YummyMap/img/main/noimage.jpg");
-		}
-		return upsoVo;
-	}
 	
 	public int upsoCount_group_category(SearchInfoVO searchInfoVo) {
 		int result = 0;
@@ -177,31 +96,59 @@ public class MainService {
 	/*
 	 * 업소의 리뷰 분석 정보를 가져오는 메소드입니다.
 	 */
-	public RatingUpsoVO getRatingInfo(String upso_id) {
-		if(upso_id == null) {
+	public RatingUpsoVO getRatingInfo(int upso_id) {
+		if(upso_id == 0) {
 			return new RatingUpsoVO();
 		}
 		RatingUpsoVO ratingVo = upsoService.getRatingInfo(upso_id);
 		return ratingVo;
 	}
 	
-	public List<ReviewVO> getReviewList(String upso_id){
-		if(upso_id == null) {
+	/*
+	 * 업소에 등록된 리뷰 정보 리스트를 가져옵니다.
+	 */
+	public List<ReviewVO> getReviewList(int upso_id){
+		if(upso_id == 0) {
 			return new ArrayList<ReviewVO>();
 		}
 		List<ReviewVO> reviewList = upsoService.getReviewList(upso_id);
+		for(int i=0; i < reviewList.size(); i++) {
+			ReviewVO reviewVo = reviewList.get(i);
+			int rev_no = reviewVo.getRev_no();
+			List<ImageFileVO> imageList = upsoService.getReviewImgList(rev_no);
+			reviewVo.setImgList(imageList);
+		}
 		return reviewList;
 	}
-	
+	 
 	/*
 	 * 업소 리뷰를 저장해주는 메소드입니다.
 	 * return : 성공 - true, 실패 - false
 	 */
-	public boolean insertReview(ReviewVO reviewVo, String userId) {
+	public boolean insertReview(ReviewVO reviewVo, HttpSession session) {
+		int insertCount = 0;
+		String userId = (String)session.getAttribute("SID");
 		if(userId == null || userId.equals(""))
 			return false;
 		reviewVo.setMid(userId);
 		boolean result = upsoService.insertReview(reviewVo);
+		if(result) {
+			List<ImageFileVO> imageFileVoList = fileService.uploadProcess(session, reviewVo.getReviewImgFile());
+			int rev_no = reviewVo.getRev_no();
+			int res_no = reviewVo.getRes_id();
+			for(int i=0; i < imageFileVoList.size(); i++) {
+				ImageFileVO imageFileVo  = imageFileVoList.get(i);
+				imageFileVo.setRev_no(rev_no);
+				imageFileVo.setRes_no(res_no);
+				result = fileService.insertReviewImgFile(imageFileVo);
+				if(result)
+					insertCount++;
+			}
+			if(imageFileVoList.size() == insertCount)
+				result = true;
+			else
+				result = false;
+		}
 		return result;
 	}
 }

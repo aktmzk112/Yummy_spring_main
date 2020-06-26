@@ -3,12 +3,12 @@ package www.mmy.YummyMap.controller.main;
 
 
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -35,30 +35,33 @@ public class MainController {
 	
 	@RequestMapping("/main/getList.mmy")
 	public ModelAndView searchList(ModelAndView mv, SearchInfoVO searchInfoVo, PageUtil pageUtil) {
-		searchInfoVo = mainService.analyzeKeyword(searchInfoVo);
-		String category_name = searchInfoVo.getCategory_name();
-		int count = 0;
-		if(category_name == null) {
-			count = searchInfoVo.getUpsoCount();
-			if(count == 0) {
-				mainService.setUpsoList(searchInfoVo);			
-			} else {
-				pageUtil.setTotalCount(count);
-			}
-		} else {
-			count = mainService.upsoCount_group_category(searchInfoVo);
-			pageUtil.setTotalCount(count);
-		}
-		pageUtil.setPageRow(10);
-		pageUtil.setPageGroup(5);
-		pageUtil.totalfun();
-		List<UpsoVO> upSoVoList = mainService.getUpsoList(searchInfoVo, pageUtil);
+		// 키워드 분석메소드 호출
+		List<UpsoVO> upsoList = mainService.doSearchAndGetList(searchInfoVo, pageUtil);
+		// DB에서 조회된 업소들의 카테고리 리스트 가져오기
+		List<String> categoryList = mainService.getCategoryList(searchInfoVo);
+		
 		mv.setViewName("main/mainSearchList");
-		mv.addObject("upSoVoList",upSoVoList);
+		mv.addObject("upSoVoList",upsoList);
+		mv.addObject("categoryList",categoryList);
 		mv.addObject("searchInfoVo",searchInfoVo);
 		mv.addObject("pageUtil",pageUtil);
 		return mv;
 	}
+	
+	/*
+	 * 추상화 작업
+	 */
+	public ModelAndView searchList2(ModelAndView mv, SearchInfoVO searchInfoVo, PageUtil pageUtil) {
+		// doParsingApi();
+		// mainService.setPageUtil();
+		// List<UpsoVO> upsoList = mainService.getUpsoList(SearchInfoVO searchInfoVo, PageUtil pageUtil);
+		// List<String> categoryList = mainService.getCategoryList(searchInfoVo);
+		
+		mv.setViewName("main/mainSearchList");
+		return mv;
+	}
+	
+	
 	@RequestMapping("/main/getDetail.mmy")
 	public ModelAndView getUpsoDetail(UpsoVO upsoVo, ModelAndView mv) {
 		upsoVo = mainService.getUpsoDetail(upsoVo);
@@ -70,11 +73,10 @@ public class MainController {
 		mv.addObject("reviewList",reviewList);
 		return mv;
 	}
-	
-	@RequestMapping("/main/reviewProcess.mmy")
-	public ModelAndView reviewProcess(ModelAndView mv, ReviewVO reviewVo, HttpSession session, RedirectView redirect) {
-		String userId = (String)session.getAttribute("SID");
-		boolean result = mainService.insertReview(reviewVo, userId);
+
+	@RequestMapping( method = RequestMethod.POST, value = "/main/reviewProcess.mmy")
+	public ModelAndView reviewProcess(ReviewVO reviewVo, ModelAndView mv,  HttpSession session, RedirectView redirect) {
+		boolean result = mainService.insertReview(reviewVo, session);
 		String param = "?id="+reviewVo.getRes_id();
 		redirect.setUrl(ProjectUrl.UPSO_DETAIL_VIEW.getUrl()+param);
 		

@@ -26,7 +26,7 @@
 	 	</select> 
 		
 		<!-- 업소별 rating 조회 쿼리 -->
-		<select id="upso_rating_total" parameterType="String" resultType="ratingUpsoVo">
+		<select id="upso_rating_total" parameterType="int" resultType="ratingUpsoVo">
 		SELECT
 		     count(rev_no) rating_value_count, rating_upso rating_value
 		FROM

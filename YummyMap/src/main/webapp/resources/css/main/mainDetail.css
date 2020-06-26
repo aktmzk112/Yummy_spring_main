@@ -144,6 +144,33 @@ img{
 	color: rgba(0, 0, 0, 0.6);
 	letter-spacing: 1px; 	
 }
+.review-img-btn{
+	font-size: 10pt;
+	text-align: center;
+	padding-top: 4px;
+	background-color: #F86624;
+	color: white;
+	font-weight: 500;
+	width: 70px;
+	height: 30px;
+	border-radius: 5px;
+	cursor: pointer;
+}
+.review-img-btn:hover{
+	background-color:white;
+	color: #F86624;
+}
+.imgNameBox{
+	font-size: 10pt;
+	color: rgba(0,0,0,0.6);
+}
+.reviewImg{
+	width: 100px;
+	height: 100px;
+}
+
+
+
 
 .chart-star-box{
 	height: 15px;

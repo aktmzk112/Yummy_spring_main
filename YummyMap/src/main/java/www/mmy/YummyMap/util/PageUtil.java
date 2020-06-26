@@ -135,7 +135,11 @@ public class PageUtil {
 	public void setEndPage(int endPage) {
 		this.endPage = endPage;
 	}
-	
-	
-	
+	@Override
+	public String toString() {
+		return "PageUtil [nowPage=" + nowPage + ", totalPage=" + totalPage + ", totalCount=" + totalCount + ", pageRow="
+				+ pageRow + ", pageGroup=" + pageGroup + ", startPage=" + startPage + ", endPage=" + endPage
+				+ ", startCont=" + startCont + ", endCont=" + endCont + ", prePage=" + prePage + ", nextPage="
+				+ nextPage + "]";
+	}
 }

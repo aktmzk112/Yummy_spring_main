@@ -1,22 +1,30 @@
 package www.mmy.YummyMap.Service.api;
 
 /**
- * 카카오맵 RestApi처리를 위해 제작되었다.
+ * 카카오맵 RestApi처리를 위해 제작되었습니다.
  * 
  * @ @author 김종형
  */
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
 
 import www.mmy.YummyMap.vo.SearchInfoVO;
+import www.mmy.YummyMap.vo.UpsoVO;
 
 @Service
 public class KaKaoMapRestApiService {
@@ -139,6 +147,59 @@ public class KaKaoMapRestApiService {
 			e.printStackTrace();
 		}
 		return pathUrl;
+	}
+	
+	/*
+	 * 카카오맵 RestAPI 파싱을통한 결과를 List로 반환합니다.
+	 */
+	public List<UpsoVO> getUpsoList(SearchInfoVO searchInfoVo) {
+		List<UpsoVO> result_upsoList = new ArrayList<UpsoVO>();
+		Gson gson = new Gson();
+		boolean is_continue = true;
+		int page = 1;
+		do {
+			JsonObject jsonObject = searchList(searchInfoVo, page);
+			JsonArray jsonList = (JsonArray) jsonObject.get("documents");
+			Type listType = new TypeToken<ArrayList<UpsoVO>>(){}.getType();
+			List<UpsoVO> upsoList = gson.fromJson(jsonList.toString(), listType);
+			for(int i=0; i<upsoList.size(); i++) {
+				UpsoVO upsoVo = upsoList.get(i);
+				result_upsoList.add(upsoVo);
+			}
+			// 검색결과 페이지가 더 있는지 조회합니다.
+			is_continue = continueParsing(jsonObject);
+			if(is_continue)
+				page++;
+		} while (is_continue);		
+		return result_upsoList;
+	}
+	
+	/*
+	 * 검색결과 페이지가 더 있는지 조회합니다.
+	 */
+	public boolean continueParsing(JsonObject jsonObject) {
+		boolean result = false;
+		JsonElement is_end = jsonObject.getAsJsonObject("meta").get("is_end");
+		if(is_end.toString().equals("false")) {
+			result = true;
+		} else {
+			result = false;
+		}
+		return result;
+	}
+	
+	public JsonObject getUpsoMetaObject(SearchInfoVO searchInfoVo) {
+		JsonObject jsonObject = searchList(searchInfoVo, 1);
+		JsonObject meta = jsonObject.getAsJsonObject("meta");
+		return meta;
+	}
+	
+	public int getCountSubwayStation(String query_keyword) {
+		JsonObject jsonObject_subway = searchSubway(query_keyword);
+		JsonObject meta_subway = jsonObject_subway.getAsJsonObject("meta");
+		JsonElement total_count = meta_subway.get("total_count");
+		int count = Integer.parseInt(total_count.toString());
+		return count;
 	}
 
 }

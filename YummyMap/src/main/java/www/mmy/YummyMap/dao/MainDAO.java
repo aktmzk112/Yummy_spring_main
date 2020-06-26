@@ -12,6 +12,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import www.mmy.YummyMap.util.PageUtil;
+import www.mmy.YummyMap.vo.ImageFileVO;
 import www.mmy.YummyMap.vo.MemberVO;
 import www.mmy.YummyMap.vo.RatingUpsoVO;
 import www.mmy.YummyMap.vo.ReviewVO;
@@ -30,8 +31,8 @@ public class MainDAO {
 	/*
 	 * 업소가 DB 테이블에 저장되어있는지 조회합니다
 	 */
-	public int isShowUpSo(String upso_id) {
-		return sqlSession.selectOne("mainSql.showUpSo", upso_id);
+	public int isShowUpSo(int upso_id) {
+		return sqlSession.selectOne("mainSql.showUpso", upso_id);
 	}
 	/*
 	 * 입력된 키워드의 분석된 정보를 조회합니다.
@@ -57,7 +58,7 @@ public class MainDAO {
 	/*
 	 * 업소의 디테일한 정보를 조회합니다.
 	 */
-	public UpsoVO getUpSoDetailInfo(String upso_id) {
+	public UpsoVO getUpSoDetailInfo(int upso_id) {
 		return sqlSession.selectOne("mainSql.upSoDetailInfo", upso_id);
 	}
 	/*
@@ -93,20 +94,55 @@ public class MainDAO {
 	 * 업소의 리뷰 평점 정보를 조회합니다.
 	 * param : upso_id (업소 id)
 	 */
-	public List<RatingUpsoVO> getUpsoRatingInfo(String upso_id) {
+	public List<RatingUpsoVO> getUpsoRatingInfo(int upso_id) {
 		return sqlSession.selectList("chartSQL.upso_rating_total", upso_id);
 	}
 	/*
 	 * 업소정보에 등록된 모든 리뷰를 조회합니다.
 	 *  param : upso_id (업소 id)
 	 */
-	public List<ReviewVO> getReviewList(String upso_id) {
+	public List<ReviewVO> getReviewList(int upso_id) {
 		return sqlSession.selectList("mainSql.reviewList", upso_id);
 	}
+	/*
+	 * 리뷰에 첨부된 이미지파일을 조회합니다.
+	 * param : rev_no (DB에 저장된 리뷰 키값)
+	 */
+	public List<ImageFileVO> getReviewImgList(int rev_no){
+		return sqlSession.selectList("mainSql.imgListForReview", rev_no);
+	}
+	
 	/*
 	 * 리뷰정보를 DB에 저장합니다.
 	 */
 	public int insertReview(ReviewVO reviewVo) {
 		return sqlSession.insert("mainSql.insertReview", reviewVo);
+	}
+	/*
+	 * 리뷰에 첨부된 이미지 정보를 DB에 저장합니다.
+	 */
+	public int insertReviewImg(ImageFileVO imageFileVo) {
+		return sqlSession.insert("mainSql.insertReviewImg", imageFileVo);
+	}
+	
+	/*
+	 * 업소에 등록된 리뷰중 등록된 사진이 있다면 첫번째로 등록된 사진을 가져옵니다.
+	 */
+	public String getUpsoImg(int upso_id) {
+		return sqlSession.selectOne("mainSql.getUpsoImg", upso_id);
+	}
+	/*
+	 * 업소에 등록된 리뷰중 함께 등록된 사진의 총 카운트를 조회하는 메소드입니다.
+	 */
+	public int getCountImgGroupByUpso(int upso_id) {
+		return sqlSession.selectOne("mainSql.countImgGroupByUpso", upso_id);
+	}
+	/*
+	 * 키워드를 통해 조회된 업소 리스트에서 카테고리 리스트를 따로 조회하는 메소드입니다.
+	 * param : 검색keyword를 받습니다.
+	 * 			업소 리스트 조회할때와 동일한 키워드를 입력해야 동일한 결과를 받습니다.
+	 */
+	public List<String> getCategoryList(String keyword) {
+		return sqlSession.selectList("mainSql.category_list_keyword", keyword);
 	}
 }

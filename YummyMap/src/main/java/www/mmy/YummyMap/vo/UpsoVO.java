@@ -1,10 +1,16 @@
 package www.mmy.YummyMap.vo;
 
 public class UpsoVO {
-	private int cont_sum;
+	private int id, cont_sum;
 	private double star_avg;
 	private double x, y;
-	private String id, place_name, category_name, phone, address_name, road_address_name, place_url, image_url;
+	private String place_name, category_name, phone, address_name, road_address_name, place_url, img_save_name;
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public int getCont_sum() {
 		return cont_sum;
 	}
@@ -28,12 +34,6 @@ public class UpsoVO {
 	}
 	public void setY(double y) {
 		this.y = y;
-	}
-	public String getId() {
-		return id;
-	}
-	public void setId(String id) {
-		this.id = id;
 	}
 	public String getPlace_name() {
 		return place_name;
@@ -71,17 +71,17 @@ public class UpsoVO {
 	public void setPlace_url(String place_url) {
 		this.place_url = place_url;
 	}
-	public String getImage_url() {
-		return image_url;
+	public String getImg_save_name() {
+		return img_save_name;
 	}
-	public void setImage_url(String image_url) {
-		this.image_url = image_url;
+	public void setImg_save_name(String img_save_name) {
+		this.img_save_name = img_save_name;
 	}
 	@Override
 	public String toString() {
-		return "UpsoVO [cont_sum=" + cont_sum + ", star_avg=" + star_avg + ", x=" + x + ", y=" + y + ", id=" + id
+		return "UpsoVO [id=" + id + ", cont_sum=" + cont_sum + ", star_avg=" + star_avg + ", x=" + x + ", y=" + y
 				+ ", place_name=" + place_name + ", category_name=" + category_name + ", phone=" + phone
 				+ ", address_name=" + address_name + ", road_address_name=" + road_address_name + ", place_url="
-				+ place_url + ", image_url=" + image_url + "]";
+				+ place_url + ", img_save_name=" + img_save_name + "]";
 	}
 }
