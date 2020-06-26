@@ -48,20 +48,6 @@ public class MainController {
 		return mv;
 	}
 	
-	/*
-	 * 추상화 작업
-	 */
-	public ModelAndView searchList2(ModelAndView mv, SearchInfoVO searchInfoVo, PageUtil pageUtil) {
-		// doParsingApi();
-		// mainService.setPageUtil();
-		// List<UpsoVO> upsoList = mainService.getUpsoList(SearchInfoVO searchInfoVo, PageUtil pageUtil);
-		// List<String> categoryList = mainService.getCategoryList(searchInfoVo);
-		
-		mv.setViewName("main/mainSearchList");
-		return mv;
-	}
-	
-	
 	@RequestMapping("/main/getDetail.mmy")
 	public ModelAndView getUpsoDetail(UpsoVO upsoVo, ModelAndView mv) {
 		upsoVo = mainService.getUpsoDetail(upsoVo);
