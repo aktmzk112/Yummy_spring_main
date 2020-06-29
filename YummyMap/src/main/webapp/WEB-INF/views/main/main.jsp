@@ -21,7 +21,7 @@
                 <a href="">YUMMY MAP</a>
             </div>
             <ul class="topNavItemHD d-flex justify-content-end pr-4 pt-1">
-                <li><a class="topNavItem-iconHD" href=""><i class="far fa-heart"></i></a></li>
+                <li><div class="topNavItem-icon" onclick="showModal()"><i class="far fa-heart"></i></div></li>
                 <li><a class="topNavItem-iconHD" href=""><i class="fas fa-user"></i></a></li>
                 <c:if test="${SID == null}">
                 <li><a class="topNavItem-iconHD" href="/YummyMap/member/loginView.mmy"><i class="fas fa-toggle-off"></i></a></li>
@@ -45,7 +45,7 @@
                 <a href="">YUMMY MAP</a>
             </div>
             <ul class="topNavItem d-flex justify-content-end pr-4 pt-2">
-                <li><a class="topNavItem-icon" href=""><i class="far fa-heart"></i></a></li>
+                <li><div class="topNavItem-icon" onclick="showModal()"><i class="far fa-heart"></i></div></li>
                 <li><a class="topNavItem-icon" href=""><i class="fas fa-user"></i></a></li>
                 <c:if test="${SID == null}">
                 <li><a class="topNavItem-icon" href="/YummyMap/member/loginView.mmy"><i class="fas fa-toggle-off"></i></a></li>
@@ -84,29 +84,27 @@
         </div>
     </div>
     <div class="itemBody container mb-5">
-        <div class="itemBody-title">전국 인기 순위</div>
+        <div class="itemBody-title">이번주 핫 맛집!</div>
         <div class="d-flex mt-3">
-            <div class="item-card border mr-3" style="background-image: url(/YummyMap/img/main/img111.jpg)">
+        <c:forEach var="weeklyUpso" items="${weeklyUpsoList}">
+        <c:if test="${empty weeklyUpso.img_save_name}">
+            <div class="item-card border mr-3" onclick="getUpsoDetail('${weeklyUpso.id}')" style="background-image: url(/YummyMap/resources/reviewImg/noImage1.jpg) ">
                 <div class="d-flex justify-content-center">
-                    <div class="item-card-title">구로디지털단지역 맛집 베스트</div>
+                    <div class="item-card-title">${weeklyUpso.place_name}</div>
                 </div>
             </div>
-            <div class="item-card border mr-3" style="background-image: url(/YummyMap/img/main/noimage.jpg)">
+        </c:if>
+        <c:if test="${!empty weeklyUpso.img_save_name}">
+            <div class="item-card border mr-3" onclick="getUpsoDetail('${weeklyUpso.id}')" style="background-image: url(/YummyMap/resources/reviewImg/${weeklyUpso.img_save_name})">
                 <div class="d-flex justify-content-center">
-                    <div class="item-card-title"></div>
+                    <div class="item-card-title">${weeklyUpso.place_name}</div>
                 </div>
             </div>
-            <div class="item-card border mr-1" style="background-image: url(/YummyMap/img/main/noimage.jpg)">
-                <div class="d-flex justify-content-center">
-                    <div class="item-card-title"></div>
-                </div>
-            </div>
+        </c:if>
+        </c:forEach>
         </div>
-        <div class="d-flex justify-content-end">
-            <div class="mr-2 mt-4 border p-2 pager">이전</div>
-            <div class="mr-2 mt-4 border p-2 pager">다음</div>
-        </div>
-        <div class="itemBody-title">요즘 뜨는 맛집</div>
+
+        <div class="itemBody-title">야미맵 필수 맛집!</div>
         <div class="d-flex mt-3">
             <div class="item-card border mr-3">
     
@@ -118,11 +116,55 @@
     
             </div>
         </div>
-        <div class="d-flex justify-content-end">
-            <div class="mr-2 mt-4 border p-2 pager">이전</div>
-            <div class="mr-2 mt-4 border p-2 pager">다음</div>
-        </div>
+
     </div>
+    
+<!-- Modal -->
+<div class="modal fade " id="myUpsoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">나의 맛집</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+        <c:if test="${searchInfoVo.upsoCount == 0}">
+        	<div class="modal-sub-title border-bottom pb-2">나의 맛집이 아직 등록되지 않았습니다.</div>
+        	<div class="modal-sub-title2 pt-3 pb-3">내 주변 맛집 추천 리스트</div>
+        </c:if>
+        <c:forEach var="myPickUpso" items="${myPickUpsoList}">
+          <div class="d-flex pb-2 border-bottom pt-2">
+              <div class="myUpsoImgBox">
+              <c:if test="${empty myPickUpso.img_save_name}">
+                  <img src="/YummyMap/resources/reviewImg/noImage.jpg" alt="">
+              </c:if>
+              <c:if test="${!empty myPickUpso.img_save_name}">
+                  <img src="/YummyMap/resources/reviewImg/${myPickUpso.img_save_name}" alt="">
+              </c:if>
+              </div>
+              <div class="pl-3">
+                  <div class="myUpsoName">${myPickUpso.place_name}</div>
+                  <div class="myUpsoAddr pb-4">${myPickUpso.road_address_name}</div>
+                  <div class="d-flex">
+                    <div class="myUpsoStar d-flex pr-3">
+                        <i class="fas fa-star mr-1"></i>
+                        <div class="font-size-11">${myPickUpso.star_avg}</div>
+                    </div>
+                    <div class="myUpsoRCount d-flex">
+                        <i class="fas fa-pen mr-1"></i>
+                        <div class="font-size-11">${myPickUpso.cont_sum}</div>
+                    </div>
+                    <div class="myUpsoBtn" onclick="getUpsoDetail('${myPickUpso.id}')">클릭!</div>
+                  </div>
+              </div>
+          </div>
+        </c:forEach>
+        </div>
+      </div>
+    </div>
+  </div>    
 </body>
 <script type="text/javascript">
 
@@ -154,6 +196,26 @@ document.getElementById('kakaoLogout').onclick = function(){
 	 window.open('http://localhost/YummyMap/kakaoLogout.mmy','','top=0, left=0, width=1, height=1');
 }
 
+function getUpsoDetail(data) {
+	let id = data;
+	location.href = "/YummyMap/main/getDetail.mmy?id="+id;
+}
+
+function showModal() {
+	let user_id = '${SID}';
+	if(!user_id) {
+		alert('로그인 후 이용해주세요');
+		return;
+	}
+    if (!$(".modal.in").length) {
+         $(".modal-dialog").css({
+           top: 100,
+           left: 0,
+         });
+       }
+   $('#myUpsoModal').modal();
+   
+}
 
 </script>
 </html>

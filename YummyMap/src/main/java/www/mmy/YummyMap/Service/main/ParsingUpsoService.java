@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import www.mmy.YummyMap.Service.api.KaKaoMapRestApiService;
+import www.mmy.YummyMap.dao.MainDAO;
 import www.mmy.YummyMap.util.PageUtil;
 import www.mmy.YummyMap.vo.ImageFileVO;
 import www.mmy.YummyMap.vo.RatingUpsoVO;
@@ -16,20 +17,22 @@ import www.mmy.YummyMap.vo.UpsoVO;
 @Service
 public class ParsingUpsoService implements UpsoService {
 
+	private MainDAO mainDao;
 	private UpsoService simpleUpsoService;
 	private KaKaoMapRestApiService kakaoMapService;
 	@Autowired
 	private KeywordService keywordService; 
 	
 	
-	public ParsingUpsoService(SimpleUpsoService simpleUpsoService, KaKaoMapRestApiService kakaoMapService) {
+	public ParsingUpsoService(MainDAO mainDao, SimpleUpsoService simpleUpsoService, KaKaoMapRestApiService kakaoMapService) {
+		this.mainDao = mainDao;
 		this.simpleUpsoService = simpleUpsoService;
 		this.kakaoMapService = kakaoMapService;
 	}
 	
 	@Override
-	public UpsoVO getUpsoDetailInfo(int upso_id) {
-		return simpleUpsoService.getUpsoDetailInfo(upso_id);
+	public UpsoVO getUpsoDetailInfo(int upso_id, String user_id) {
+		return simpleUpsoService.getUpsoDetailInfo(upso_id, user_id);
 	}
 	@Override
 	public boolean isShowUpso(int upso_id) {
@@ -47,6 +50,7 @@ public class ParsingUpsoService implements UpsoService {
 		}
 		int totalCount = 0;
 		List<UpsoVO> upsoList = kakaoMapService.getUpsoList(searchInfoVo);
+		searchInfoVo.setUpsoCount(upsoList.size());
 		for(int i=0; i < upsoList.size(); i++) {
 			UpsoVO upso = upsoList.get(i);
 			int upso_id = upso.getId();
@@ -58,7 +62,6 @@ public class ParsingUpsoService implements UpsoService {
 			searchInfoVo.setUpso_id(upso_id);
 			keywordService.insertKeyword(searchInfoVo);
 		}
-		searchInfoVo.setUpsoCount(upsoList.size());
 		return totalCount;
 	}
 	
@@ -82,6 +85,24 @@ public class ParsingUpsoService implements UpsoService {
 	@Override
 	public boolean insertReview(ReviewVO reviewVo) {
 		return simpleUpsoService.insertReview(reviewVo);
+	}
+
+	@Override
+	public List<UpsoVO> showWeeklyUpso() {
+		return simpleUpsoService.showWeeklyUpso();
+	}
+
+	@Override
+	public List<UpsoVO> showMyUpso(SearchInfoVO searchInfoVo) {
+		List<UpsoVO> myUpsoList = simpleUpsoService.showMyUpso(searchInfoVo);
+		
+		int countMyUpso = myUpsoList.size();
+		searchInfoVo.setUpsoCount(countMyUpso);
+		
+		if(countMyUpso == 0) {
+			myUpsoList = mainDao.selectSubMyPickUpsoList(searchInfoVo);
+		}
+		return myUpsoList;
 	}
 	
 	

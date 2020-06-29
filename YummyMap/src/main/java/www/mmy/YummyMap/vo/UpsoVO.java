@@ -4,7 +4,7 @@ public class UpsoVO {
 	private int id, cont_sum;
 	private double star_avg;
 	private double x, y;
-	private String place_name, category_name, phone, address_name, road_address_name, place_url, img_save_name;
+	private String place_name, category_name, phone, address_name, road_address_name, place_url, img_save_name, is_pick;
 	public int getId() {
 		return id;
 	}
@@ -77,11 +77,17 @@ public class UpsoVO {
 	public void setImg_save_name(String img_save_name) {
 		this.img_save_name = img_save_name;
 	}
+	public String getIs_pick() {
+		return is_pick;
+	}
+	public void setIs_pick(String is_pick) {
+		this.is_pick = is_pick;
+	}
 	@Override
 	public String toString() {
 		return "UpsoVO [id=" + id + ", cont_sum=" + cont_sum + ", star_avg=" + star_avg + ", x=" + x + ", y=" + y
 				+ ", place_name=" + place_name + ", category_name=" + category_name + ", phone=" + phone
 				+ ", address_name=" + address_name + ", road_address_name=" + road_address_name + ", place_url="
-				+ place_url + ", img_save_name=" + img_save_name + "]";
+				+ place_url + ", img_save_name=" + img_save_name + ", is_pick=" + is_pick + "]";
 	}
 }

@@ -22,8 +22,8 @@ public class SimpleUpsoService implements UpsoService{
 	}
 	
 	@Override
-	public UpsoVO getUpsoDetailInfo(int upso_id) {
-		UpsoVO upSoVo = mainDao.getUpSoDetailInfo(upso_id);
+	public UpsoVO getUpsoDetailInfo(int upso_id, String user_id) {
+		UpsoVO upSoVo = mainDao.getUpSoDetailInfo(upso_id, user_id);
 		return upSoVo;
 	}
 
@@ -109,10 +109,22 @@ public class SimpleUpsoService implements UpsoService{
 		return isSuccess;
 	}
 
-	
+	@Override
+	public List<UpsoVO> showWeeklyUpso() {
+		List<UpsoVO> weeklyUpsoList = mainDao.selectWeeklyUpso();
+		return weeklyUpsoList;
+	}
+
 	public int insertKeyword(SearchInfoVO searchInfoVo) {
 		int resultCnt = mainDao.insertKeyword(searchInfoVo);
 		return resultCnt;
+	}
+
+	@Override
+	public List<UpsoVO> showMyUpso(SearchInfoVO searchInfoVo) {
+		String user_id = searchInfoVo.getUser_id();
+		List<UpsoVO> myUpsoList = mainDao.selectMyPickUpsoList(user_id);
+		return myUpsoList;
 	}
 }
 

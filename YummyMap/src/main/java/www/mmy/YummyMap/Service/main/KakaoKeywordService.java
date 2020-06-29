@@ -58,22 +58,31 @@ public class KakaoKeywordService implements KeywordService {
 	
 	@Override
 	public boolean insertKeyword(SearchInfoVO searchInfoVo) {
-		checkSearchInfoVo(searchInfoVo);
-		int insertCount = mainDao.insertKeyword(searchInfoVo);
+		boolean is_insert = checkSearchInfoVo(searchInfoVo);
+		int insertCount = 0;
+		if(is_insert)
+			insertCount = mainDao.insertKeyword(searchInfoVo);
 		boolean result = (insertCount == 1) ? true : false;
 		return result;
 	}
 	
 	/*
 	 * null 데이터를 검사합니다.
+	 * 또한 키워드로 조회된 업소결과를 찾고 해당 키워드를 데이터베이스에 저장할지 여부를 판별합니다.
+	 * return :
+	 * 		저장해야 할 경우 true
+	 * 		저장하지 않아야 할 경우 false
 	 */
-	private void checkSearchInfoVo(SearchInfoVO searchInfoVo) {
+	private boolean checkSearchInfoVo(SearchInfoVO searchInfoVo) {
 		String query_keyword = searchInfoVo.getQuery_keyword();
 		if(query_keyword == null)
 			searchInfoVo.setQuery_keyword("");
 		String query_location = searchInfoVo.getQuery_location();
 		if(query_location == null)
 			searchInfoVo.setQuery_location("");
+		int upsoCount = searchInfoVo.getUpsoCount();
+		boolean result = (upsoCount == 0) ? false : true;
+		return result;
 	}
 	
 	/*

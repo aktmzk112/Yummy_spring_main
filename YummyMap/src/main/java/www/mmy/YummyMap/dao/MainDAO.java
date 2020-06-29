@@ -29,6 +29,13 @@ public class MainDAO {
 	}
 	
 	/*
+	 * 금주의 핫 맛집 TOP3를 조회합니다.
+	 */
+	public List<UpsoVO> selectWeeklyUpso() {
+		return sqlSession.selectList("mainSql.weeklyUpso");
+	}
+	
+	/*
 	 * 업소가 DB 테이블에 저장되어있는지 조회합니다
 	 */
 	public int isShowUpSo(int upso_id) {
@@ -58,8 +65,9 @@ public class MainDAO {
 	/*
 	 * 업소의 디테일한 정보를 조회합니다.
 	 */
-	public UpsoVO getUpSoDetailInfo(int upso_id) {
-		return sqlSession.selectOne("mainSql.upSoDetailInfo", upso_id);
+	public UpsoVO getUpSoDetailInfo(int upso_id, String user_id) {
+		Map<String, Object> paramMap = getPickProcessParamMap(upso_id, user_id);
+		return sqlSession.selectOne("mainSql.upSoDetailInfo", paramMap);
 	}
 	/*
 	 * 키워드에 해당하는 업소 리스트를 출력합니다.
@@ -145,4 +153,43 @@ public class MainDAO {
 	public List<String> getCategoryList(String keyword) {
 		return sqlSession.selectList("mainSql.category_list_keyword", keyword);
 	}
+	
+	/*
+	 * 로그인한 유저가 해당 업소를 픽 했는지 여부를 조회하는 메소드입니다.
+	 */
+	public int isPick(int upso_id, String user_id) {
+		Map<String, Object> paramMap = getPickProcessParamMap(upso_id, user_id);
+		return sqlSession.selectOne("mainSql.pickCount", paramMap);
+	}
+	
+	/*
+	 * 내가 찜한 업소 리스트를 출력합니다.
+	 */
+	public List<UpsoVO> selectMyPickUpsoList(String user_id) {
+		return sqlSession.selectList("mainSql.myPickUpsoList", user_id);
+	}
+	/*
+	 * 내가 찜한 업소가 없을시 대체 흐름으로 출력합니다.
+	 */
+	public List<UpsoVO> selectSubMyPickUpsoList(SearchInfoVO searchInfoVo) {
+		return sqlSession.selectList("mainSql.sub_myPickUpsoList", searchInfoVo);
+	}
+
+	public int insertPickData(int upso_id, String user_id) {
+		Map<String, Object> paramMap = getPickProcessParamMap(upso_id, user_id);
+		return sqlSession.insert("mainSql.isertPick", paramMap);
+	}
+
+	public int deletePickData(int upso_id, String user_id) {
+		Map<String, Object> paramMap = getPickProcessParamMap(upso_id, user_id);
+		return sqlSession.update("mainSql.removePick", paramMap);
+	}
+	
+	private Map<String, Object> getPickProcessParamMap(int upso_id, String user_id) {
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("upso_id", upso_id);
+		paramMap.put("user_id", user_id);
+		return paramMap;
+	}
+
 }

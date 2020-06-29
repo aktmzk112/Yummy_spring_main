@@ -19,7 +19,7 @@
     <div class="topNav border-bottom pl-4 pt-1 shadow-sm" id="topNav">
         <div class="d-flex m-0">
             <div class="topNavLogo">
-                <a href="">YUMMY MAP</a>
+                <a href="/YummyMap/main.mmy">YUMMY MAP</a>
             </div>
             <ul class="topNavItem d-flex justify-content-end pr-4 pt-1">
                 <li><a class="topNavItem-icon" href=""><i class="far fa-heart"></i></a></li>
@@ -57,9 +57,13 @@
 					<div class="upso-avg">${upsoVo.star_avg}</div>		
 	        	</div>
 	        	<div>
-			        <div class="pickHeart mb-1">                        
-			            <i class="far fa-heart unPick"></i>
-			            <!-- <i class="fas fa-heart pick"></i> -->
+			        <div class="pickHeart mb-1">
+			        <c:if test="${upsoVo.is_pick == 0}">
+				    <i class="far fa-heart unPick" onclick="pickProcess('${upsoVo.id}')"></i>
+			        </c:if>
+			        <c:if test="${upsoVo.is_pick != 0}">
+		            <i class="fas fa-heart pick" onclick="pickProcess('${upsoVo.id}')"></i>
+			        </c:if>
 			        </div>
 	        	</div>
 	        </div>
@@ -258,6 +262,33 @@ function imgFileAppend() {
 	    document.getElementById('img-label').setAttribute('for', 'reviewImgFile'+no);
 	    
 	}
+}
+
+function pickProcess(data){
+	let upso_id = data;
+	let user_id = '${SID}';
+	if(!user_id) {
+		alert('로그인 후 이용해주세요.');		
+		return;
+	}
+	var xhr;  
+	if (window.XMLHttpRequest) {  
+		xhr = new XMLHttpRequest();
+	} 
+	else {  
+		xhr = new ActiveXObject("Microsoft.XMLHTTP");
+	}
+
+	xhr.onreadystatechange = function() {  
+	    if (xhr.readyState == 4 && xhr.status == 200) {
+	         var obj = JSON.parse(xhr.response);
+	        if(obj.result == true)
+	        	location.reload();
+
+	    }
+	}
+	xhr.open("GET", "/YummyMap/main/pick.mmy?upso_id="+upso_id, true);  
+	xhr.send(); 
 }
 
 

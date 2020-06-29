@@ -53,7 +53,6 @@ public class MainService {
 		 */
 		if(searchInfoVo.isFirst()) {
 			upsoService.insertUpso(null, searchInfoVo);
-			keywordService.insertKeyword(searchInfoVo);
 		}
 		setPageUtil(pageUtil, searchInfoVo);
 		List<UpsoVO> upsoList = upsoService.getUpsoList(searchInfoVo, pageUtil);
@@ -81,8 +80,9 @@ public class MainService {
 		return categoryList;
 	}
 	
-	public UpsoVO getUpsoDetail(UpsoVO upsoVo) {
-		upsoVo = upsoService.getUpsoDetailInfo(upsoVo.getId());
+	public UpsoVO getUpsoDetail(UpsoVO upsoVo, HttpSession session) {
+		String user_id = getUserIdInSession(session);
+		upsoVo = upsoService.getUpsoDetailInfo(upsoVo.getId(), user_id);
 		return upsoVo;
 	}
 
@@ -127,8 +127,8 @@ public class MainService {
 	 */
 	public boolean insertReview(ReviewVO reviewVo, HttpSession session) {
 		int insertCount = 0;
-		String userId = (String)session.getAttribute("SID");
-		if(userId == null || userId.equals(""))
+		String userId = getUserIdInSession(session);
+		if(userId.equals(""))
 			return false;
 		reviewVo.setMid(userId);
 		boolean result = upsoService.insertReview(reviewVo);
@@ -151,4 +151,54 @@ public class MainService {
 		}
 		return result;
 	}
+	
+	/*
+	 * 주간 맛집을 선택합니다.
+	 */
+	public List<UpsoVO> getWeeklyUpso() {
+		List<UpsoVO> weeklyUpsoList = upsoService.showWeeklyUpso();
+		return weeklyUpsoList;
+	}
+	
+	/*
+	 * 나가 픽한 업소 리스트를 가져옵니다.
+	 */
+	public List<UpsoVO> getMyUpsoList(SearchInfoVO searchInfoVo, HttpSession session) {
+		String userId = getUserIdInSession(session);
+		if(userId.equals(""))
+			return null;
+		searchInfoVo.setUser_id(userId);
+		List<UpsoVO> myUpsoList = upsoService.showMyUpso(searchInfoVo);
+		return myUpsoList;
+	}
+
+	public boolean upsoPickProcess(HttpSession session, int upso_id) {
+		String user_id = getUserIdInSession(session);
+		boolean is_pick = pickOrUnPick(user_id, upso_id);
+		int count = 0;
+		if(is_pick) {
+			count = mainDao.deletePickData(upso_id, user_id);
+		} else if(!is_pick) {
+			count = mainDao.insertPickData(upso_id, user_id);
+		}
+		boolean result = (count == 0) ? false : true;
+		return result;
+	}
+
+	private boolean pickOrUnPick(String user_id, int upso_id) {
+		int pickCount = mainDao.isPick(upso_id, user_id);
+		boolean result = (pickCount == 0) ? false : true;
+		return result;
+	}
+
+	private String getUserIdInSession(HttpSession session) {
+		String user_id = (String) session.getAttribute("SID");
+		if(user_id == null)
+			user_id = "";
+		return user_id;
+	}
+
+
+
+
 }

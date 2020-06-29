@@ -10,6 +10,7 @@ public class SearchInfoVO {
 	private double x; // 검색 요청자의 경도값
 	private double y; // 검색 요청자의 위도값
 	private int upso_id;
+	private String user_id;
 	private String keyword; // 사용자가 입력한 현재 검색어 입니다
 	private String query_location; // 검색어에 장소키워드가 포함되었을때 담을 변수입니다
 	private String query_keyword; // 검색어에 카테고리 혹은 음식 키워드가 포함되었을때 담을 변수입니다
@@ -99,11 +100,18 @@ public class SearchInfoVO {
 	public void setFirst(boolean isFirst) {
 		this.isFirst = isFirst;
 	}
+	public String getUser_id() {
+		return user_id;
+	}
+	public void setUser_id(String user_id) {
+		this.user_id = user_id;
+	}
 	@Override
 	public String toString() {
 		return "SearchInfoVO [keyword_id=" + keyword_id + ", upsoCount=" + upsoCount + ", x=" + x + ", y=" + y
-				+ ", upso_id=" + upso_id + ", keyword=" + keyword + ", query_location=" + query_location
-				+ ", query_keyword=" + query_keyword + ", category_name=" + category_name + ", order_standard="
-				+ order_standard + ", category_filtering=" + category_filtering + ", isFirst=" + isFirst + "]";
+				+ ", upso_id=" + upso_id + ", user_id=" + user_id + ", keyword=" + keyword + ", query_location="
+				+ query_location + ", query_keyword=" + query_keyword + ", category_name=" + category_name
+				+ ", order_standard=" + order_standard + ", category_filtering=" + category_filtering + ", isFirst="
+				+ isFirst + "]";
 	}
 }

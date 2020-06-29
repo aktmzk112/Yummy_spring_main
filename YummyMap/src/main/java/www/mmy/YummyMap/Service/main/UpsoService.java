@@ -11,7 +11,7 @@ import www.mmy.YummyMap.vo.UpsoVO;
 
 public interface UpsoService {
 
-	public UpsoVO getUpsoDetailInfo(int upso_id);
+	public UpsoVO getUpsoDetailInfo(int upso_id, String user_id);
 	
 	public boolean isShowUpso(int upso_id);
 
@@ -26,5 +26,9 @@ public interface UpsoService {
 	public List<ImageFileVO> getReviewImgList(int rev_no);
 	
 	public boolean insertReview(ReviewVO reviewVo);
+	
+	public List<UpsoVO> showWeeklyUpso();
+	
+	public List<UpsoVO> showMyUpso(SearchInfoVO searchInfoVo);
 
 }

@@ -18,7 +18,7 @@
     <div class="topNav border-bottom pl-4 pt-1 shadow-sm" id="topNav">
         <div class="d-flex m-0">
             <div class="topNavLogo">
-                <a href="">YUMMY MAP</a>
+                <a href="/YummyMap/main.mmy">YUMMY MAP</a>
             </div>
             <ul class="topNavItem d-flex justify-content-end pr-4 pt-1">
                 <li><a class="topNavItem-icon" href=""><i class="far fa-heart"></i></a></li>
