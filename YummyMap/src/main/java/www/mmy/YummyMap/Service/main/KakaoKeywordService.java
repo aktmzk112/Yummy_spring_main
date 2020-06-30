@@ -1,10 +1,12 @@
 package www.mmy.YummyMap.Service.main;
+
 import org.springframework.stereotype.Service;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import www.mmy.YummyMap.Service.api.KaKaoMapRestApiService;
+import www.mmy.YummyMap.Service.api.KakaoMapService;
+import www.mmy.YummyMap.Service.api.KakaoMapService.KakaoMapCategoryCode;
 import www.mmy.YummyMap.dao.MainDAO;
 /**
  * KeywordService 구현 클래스입니다.
@@ -18,9 +20,9 @@ import www.mmy.YummyMap.vo.SearchInfoVO;
 public class KakaoKeywordService implements KeywordService {
 
 	private MainDAO mainDao;
-	private KaKaoMapRestApiService kakaoMapService;
+	private KakaoMapService kakaoMapService;
 	
-	public KakaoKeywordService(MainDAO mainDao, KaKaoMapRestApiService kakaoMapService) {
+	public KakaoKeywordService(MainDAO mainDao, KakaoMapService kakaoMapService) {
 		this.mainDao = mainDao;
 		this.kakaoMapService = kakaoMapService;
 	}
@@ -33,9 +35,10 @@ public class KakaoKeywordService implements KeywordService {
 		if(serverData == null) {
 			clientData.setFirst(true);
 			// 키워드 분석을 위한 데이터
-			JsonObject meta = kakaoMapService.getUpsoMetaObject(clientData);
-			JsonElement selected_region = meta.getAsJsonObject("same_name").get("selected_region");
-			JsonElement keyword = meta.getAsJsonObject("same_name").get("keyword");
+			JsonObject meta = kakaoMapService.getUpsoMetaObject(clientData, KakaoMapCategoryCode.UPSO);
+			JsonObject same_name = meta.getAsJsonObject("same_name");
+			JsonElement selected_region = kakaoMapService.getJsonElement(same_name, "selected_region");
+			JsonElement keyword = kakaoMapService.getJsonElement(same_name, "keyword");
 			String query_location = selected_region.toString().replaceAll("\"", "");
 			String query_keyword = keyword.toString().replaceAll("\"", "");
 			
@@ -123,8 +126,5 @@ public class KakaoKeywordService implements KeywordService {
 			serverData.setCategory_name(category_name);
 		serverData.setOrder_standard(order_standard);
 	}
-
-
-	
 
 }

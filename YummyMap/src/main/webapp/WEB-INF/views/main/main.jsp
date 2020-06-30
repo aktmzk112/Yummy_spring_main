@@ -34,8 +34,8 @@
         <div class="d-flex justify-content-center">
             <div class="searchBoxHD d-flex">
                 <div class="searchBox-fontHD"><i class="fas fa-search"></i></div>
-                <input type="text"  onkeydown="submitKeyword()">
-                <div class="searchBox-textHD">검색</div>
+                <input type="text" id="Asearch" onkeydown="submitKeyword()">
+                <div class="searchBox-textHD" onclick="submitKeyword_click('a')">검색</div>
             </div>
         </div>
     </div>
@@ -66,8 +66,8 @@
         <div class="d-flex justify-content-center pt-3">
             <div class="searchBox d-flex">
                 <div class="searchBox-font"><i class="fas fa-search"></i></div>
-                <input type="text"  onkeydown="submitKeyword()">
-                <div class="searchBox-text ml-1">검색</div>
+                <input type="text" id="Bsearch" onkeydown="submitKeyword()">
+                <div class="searchBox-text ml-1" onclick="submitKeyword_click('b')">검색</div>
             </div>
         </div>
         <div class="d-flex justify-content-end pt-4 pr-5">
@@ -177,7 +177,14 @@ function submitKeyword(){
 		location.href = "/YummyMap/main/getList.mmy?keyword="+keyword+"&nowPage=1";
 	}
 }
-
+function submitKeyword_click(data){
+	let keyword;
+	if(data == 'a') 
+		keyword = document.getElementById('Asearch').value;
+	else if(data == 'b')
+		keyword = document.getElementById('Bsearch').value;
+	location.href = "/YummyMap/main/getList.mmy?keyword="+keyword;
+}
 
 onmousewheel = function(e){
     let currentWheelDelta = e.wheelDelta;

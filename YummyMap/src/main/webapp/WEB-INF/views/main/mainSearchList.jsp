@@ -41,7 +41,7 @@
     </div>
     <div class="itemBody container mb-5">
    	    <c:if test="${searchInfoVo.category_filtering == 'Y'}">
-	    <div class="title mt-4">${searchInfoVo.query_location} 인기 검색 순위</div>
+	    <div class="title mt-4">${searchInfoVo.keyword} 맛집 인기 순위</div>
 	     <div class="d-flex justify-content-end">
 	     	<div class="border d-flex p-1 sortBox">
 				<div class="mr-2 border-right pr-2 pl-2" onclick="listSort('star_avg')">평점</div>
@@ -55,7 +55,7 @@
     	</div>
     	</c:if>
    	    <c:if test="${searchInfoVo.category_filtering == 'N'}">
-    	<div class="title mt-4">${searchInfoVo.query_location} ${searchInfoVo.query_keyword} 인기 검색 순위</div>
+    	<div class="title mt-4">${searchInfoVo.keyword} 맛집 인기 순위</div>
 	     <div class="d-flex justify-content-end">
 	     	<div class="border d-flex p-1 sortBox">
 				<div class="mr-2 border-right pr-2 pl-2" onclick="listSort('star_avg')">평점</div>
